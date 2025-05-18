@@ -1,0 +1,9 @@
+[project]
+name = "image_vectorizer"
+version = "0.1.0"
+dependencies = [
+    "opencv-python",
+    "Pillow",
+    "numpy>=1.26.0"  # Ensures Python 3.12 compatibility
+]
+requires-python = ">=3.8"
