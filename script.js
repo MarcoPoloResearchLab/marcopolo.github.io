@@ -6,7 +6,7 @@ const PORTRAIT_SVG = "assets/marko_polo_portrait_vectorized.svg";
 const TITLE_SVG = "assets/title.svg";
 
 /* ---------- visual tuning ---------- */
-const PORTRAIT_SCALE = 3.0;
+const PORTRAIT_SCALE = 2.0;
 const TITLE_SCALE = 1.8; 
 const TITLE_BOTTOM_MARGIN = 0.2; 
 
