@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Google Analytics -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-4C2YBPDF1N"
@@ -13,257 +14,25 @@
       gtag("js", new Date());
       gtag("config", "G-4C2YBPDF1N");
     </script>
+
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>Marko Polo Research Lab</title>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&family=Great+Vibes&display=swap"
       rel="stylesheet"
     />
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        background: #f4f4f4;
-        color: #333;
-        font-family: "Roboto", sans-serif;
-        line-height: 1.6;
-      }
-      .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 20px;
-      }
-      #top-content-section {
-        width: 100%;
-        background: #fdf5e6;
-        padding: 30px 0;
-        text-align: center;
-      }
-      #marko-polo-canvas-container {
-        width: 80%;
-        max-width: 600px;
-        height: 50vh;
-        min-height: 350px;
-        margin: 0 auto 20px;
-        position: relative;
-      }
-      #marko-polo-canvas {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
-      .hero-text-block {
-        color: #5d4037;
-        padding: 20px;
-      }
-      .animated-svg-title-container {
-        margin-bottom: 10px;
-        min-height: 1.2em;
-        line-height: 1.1;
-        width: 100%;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .animated-svg-title {
-        width: 100%;
-        display: block;
-        overflow: visible;
-      }
-      .animated-svg-title #animatedTextPath {
-        font-family: "Great Vibes", cursive;
-        font-size: 4.5em;
-        font-weight: 400;
-        stroke: #5d4037;
-        stroke-width: 2;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        fill: none;
-        visibility: hidden;
-      }
-      .tagline {
-        font-family: "Roboto", sans-serif;
-        font-size: 1.3em;
-        margin: 0 auto 25px;
-        max-width: 600px;
-        color: #6d4c41;
-      }
-      .hero-cta-button {
-        display: inline-block;
-        background: #795548;
-        color: #fdf5e6;
-        padding: 12px 30px;
-        border-radius: 5px;
-        font-family: "Montserrat", sans-serif;
-        font-weight: 700;
-        text-decoration: none;
-        margin-top: 20px;
-        border: 2px solid #5d4037;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-        transition: 0.3s;
-      }
-      .hero-cta-button:hover {
-        background: #5d4037;
-        color: #fff;
-        transform: translateY(-3px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-      }
-      section {
-        background: #fff;
-        padding: 50px 40px;
-        margin: 30px auto;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      }
-      h2 {
-        font-family: "Montserrat", sans-serif;
-        color: #5d4037;
-        margin: 0 0 40px;
-        text-align: center;
-        font-size: 2.2em;
-      }
-      ul {
-        list-style: none;
-        padding: 0;
-      }
-      li {
-        padding: 10px 0;
-        font-size: 1.1em;
-      }
-      a {
-        color: #5d4037;
-        text-decoration: none;
-        transition: 0.3s;
-      }
-      a:hover {
-        color: #3e2723;
-        text-decoration: underline;
-      }
-      .project-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-      }
-      .project-card {
-        background: #fff;
-        border: 1px solid #d1d9e6;
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        transition: 0.3s;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      }
-      .project-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      }
-      .project-icon-block {
-        width: 100%;
-        height: 180px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #fdf5e6;
-      }
-      .project-icon-block img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-      }
-      .project-card-content {
-        padding: 25px;
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-      }
-      .project-card-content h3 {
-        font-family: "Montserrat", sans-serif;
-        margin: 0;
-        color: #5d4037;
-        font-size: 1.5em;
-      }
-      .project-card-content p {
-        margin: 20px 0;
-        flex-grow: 1;
-        font-size: 1em;
-      }
-      .learn-more {
-        background: #8bc34a;
-        color: #fff;
-        padding: 12px 24px;
-        border-radius: 4px;
-        font-weight: bold;
-        text-decoration: none;
-        align-self: flex-start;
-        transition: 0.3s;
-      }
-      .learn-more:hover {
-        background: #689f38;
-      }
-      footer {
-        background: #4e342e;
-        color: #d7ccc8;
-        text-align: center;
-        padding: 30px 10px;
-        margin-top: 50px;
-        font-size: 0.9em;
-      }
-      @media (max-width: 768px) {
-        .animated-svg-title #animatedTextPath {
-          font-size: 3.5em;
-        }
-        .tagline {
-          font-size: 1.1em;
-        }
-        #marko-polo-canvas-container {
-          height: 45vh;
-          min-height: 300px;
-        }
-        h2 {
-          font-size: 1.8em;
-        }
-        .project-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-      @media (max-width: 600px) {
-        .animated-svg-title #animatedTextPath {
-          font-size: 2.8em;
-        }
-        .tagline {
-          font-size: 1em;
-        }
-        .hero-cta-button {
-          padding: 12px 25px;
-          font-size: 0.9em;
-        }
-        #marko-polo-canvas-container {
-          height: 40vh;
-          min-height: 250px;
-        }
-        section {
-          padding: 30px 20px;
-        }
-        h2 {
-          font-size: 1.6em;
-          margin-bottom: 30px;
-        }
-        .project-icon-block {
-          height: 150px;
-        }
-        .project-card-content {
-          padding: 20px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="styles.css" />
   </head>
+
   <body>
+    <!-- ───── HERO (fills full viewport) ───── -->
     <section id="top-content-section">
       <div id="marko-polo-canvas-container">
         <canvas id="marko-polo-canvas"></canvas>
       </div>
+
       <div class="hero-text-block">
         <div class="animated-svg-title-container">
           <svg
@@ -282,14 +51,19 @@
             </text>
           </svg>
         </div>
+
         <p class="tagline">
           Exploring new frontiers in Business-to-Customer software with elegant,
           concise, and fast solutions.
         </p>
+
         <a href="#projects" class="hero-cta-button">Discover Our Work</a>
       </div>
     </section>
+
+    <!-- ───── MAIN CONTENT (unchanged) ───── -->
     <div class="container">
+      <!-- About -->
       <section id="about-us">
         <h2>Our Mission</h2>
         <p>
@@ -299,15 +73,19 @@
           worlds – in our case, businesses and their customers.
         </p>
       </section>
+
+      <!-- Services -->
       <section id="services">
         <h2>Our Expedition Services</h2>
         <ul>
           <li>Custom B2C Software Development</li>
           <li>User-Focused Design &amp; Prototyping</li>
           <li>Performance Optimization &amp; Scalability</li>
-          <li>Technology Roadmapping &amp; Consultation</li>
+          <li>Technology Road-mapping &amp; Consultation</li>
         </ul>
       </section>
+
+      <!-- Projects -->
       <section id="projects">
         <h2>Discoveries &amp; Creations</h2>
         <div class="project-grid">
@@ -364,270 +142,24 @@
           </div>
         </div>
       </section>
+
+      <!-- Contact -->
       <section id="contact-us">
         <h2>Chart Your Course With Us</h2>
         <p>
           Ready to embark on your next project or have a question? Reach out and
-          let's explore the possibilities.
+          lets explore the possibilities.
         </p>
         <p>Email: <a href="mailto:contact@mprlab.com">contact@mprlab.com</a></p>
       </section>
     </div>
+
+    <!-- Footer -->
     <footer>
       <p>© 2024-2025 Marko Polo Research Lab - Navigating the Digital World.</p>
     </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-      const PORTRAIT_SVG_URL = "assets/marko_polo_portrait_vectorized.svg";
-      const OUTPUT_SCALE_FACTOR = 3.0;
-      const TARGET_DRAW_DURATION_SECONDS = 6;
-      const FPS = 60;
-      const LINE_COLOR = 0x5d4037;
-      const LINE_WIDTH = 1.2;
-      let scene, camera, renderer;
-      const portraitLines = [];
-      let currentPortraitLineIndex = 0,
-        totalPortraitPoints = 0,
-        portraitPointsPerFrame = 1;
-      let animatedTextElement,
-        textPathLength = 0,
-        animationStartTime = 0,
-        textAnimationCompleted = false,
-        portraitAnimationCompleted = false,
-        textSetupComplete = false;
-      function parseSVGPathDataForThreeJS(d, svgW, svgH, scale) {
-        const pts = [];
-        let cp = { x: 0, y: 0 },
-          sp = { x: 0, y: 0 };
-        const cmds = d.match(/[a-zA-Z][^a-zA-Z]*/g) || [];
-        const abs = (v, i, r) => (r ? (i % 2 ? cp.y + v : cp.x + v) : v);
-        for (const s of cmds) {
-          const t = s[0],
-            T = t.toUpperCase(),
-            r = t !== T;
-          const v = s
-            .slice(1)
-            .trim()
-            .split(/[ ,]+/)
-            .filter(Boolean)
-            .map(Number);
-          const push = (p) =>
-            pts.push({
-              x: (p.x / svgW - 0.5) * scale,
-              y: (0.5 - p.y / svgH) * scale,
-            });
-          let i = 0;
-          switch (T) {
-            case "M":
-            case "L":
-              for (i = 0; i < v.length; i += 2) {
-                cp.x = abs(v[i], 0, r);
-                cp.y = abs(v[i + 1], 1, r);
-                if (T === "M" && i === 0) sp = { ...cp };
-                push(cp);
-              }
-              break;
-            case "H":
-              v.forEach((e) => {
-                cp.x = r ? cp.x + e : e;
-                push(cp);
-              });
-              break;
-            case "V":
-              v.forEach((e) => {
-                cp.y = r ? cp.y + e : e;
-                push(cp);
-              });
-              break;
-            case "C":
-              while (i + 5 < v.length) {
-                const p0 = { ...cp };
-                const p1 = { x: abs(v[i], 0, r), y: abs(v[i + 1], 1, r) };
-                const p2 = { x: abs(v[i + 2], 0, r), y: abs(v[i + 3], 1, r) };
-                const p3 = { x: abs(v[i + 4], 0, r), y: abs(v[i + 5], 1, r) };
-                for (let k = 1; k <= 10; k++) {
-                  const t = k / 10,
-                    it = 1 - t;
-                  const x =
-                    it * it * it * p0.x +
-                    3 * it * it * t * p1.x +
-                    3 * it * t * t * p2.x +
-                    t * t * t * p3.x;
-                  const y =
-                    it * it * it * p0.y +
-                    3 * it * it * t * p1.y +
-                    3 * it * t * t * p2.y +
-                    t * t * t * p3.y;
-                  push({ x, y });
-                }
-                cp = { ...p3 };
-                i += 6;
-              }
-              break;
-            case "Q":
-              while (i + 3 < v.length) {
-                const p0 = { ...cp };
-                const p1 = { x: abs(v[i], 0, r), y: abs(v[i + 1], 1, r) };
-                const p2 = { x: abs(v[i + 2], 0, r), y: abs(v[i + 3], 1, r) };
-                for (let k = 1; k <= 8; k++) {
-                  const t = k / 8,
-                    it = 1 - t;
-                  const x = it * it * p0.x + 2 * it * t * p1.x + t * t * p2.x;
-                  const y = it * it * p0.y + 2 * it * t * p1.y + t * t * p2.y;
-                  push({ x, y });
-                }
-                cp = { ...p2 };
-                i += 4;
-              }
-              break;
-            case "Z":
-              push(sp);
-              cp = { ...sp };
-              break;
-          }
-        }
-        return pts;
-      }
-      async function loadPortraitPaths(url) {
-        try {
-          const res = await fetch(url);
-          if (!res.ok) throw new Error(res.status);
-          const txt = await res.text();
-          const doc = new DOMParser().parseFromString(txt, "image/svg+xml");
-          const root = doc.documentElement;
-          const vb = root.getAttribute("viewBox")?.split(/[ ,]+/);
-          const W =
-            parseFloat(root.getAttribute("width")) || +(vb ? vb[2] : 300);
-          const H =
-            parseFloat(root.getAttribute("height")) || +(vb ? vb[3] : 300);
-          return [...doc.querySelectorAll("path")]
-            .map((p) =>
-              parseSVGPathDataForThreeJS(
-                p.getAttribute("d"),
-                W,
-                H,
-                OUTPUT_SCALE_FACTOR
-              )
-            )
-            .filter((a) => a.length > 1);
-        } catch (e) {
-          console.error(e);
-          return [];
-        }
-      }
-      function setupTitle() {
-        if (textSetupComplete) return;
-        animatedTextElement = document.getElementById("animatedTextPath");
-        if (!animatedTextElement) {
-          textSetupComplete = true;
-          textAnimationCompleted = true;
-          return;
-        }
-        textPathLength =
-          typeof animatedTextElement.getTotalLength === "function"
-            ? animatedTextElement.getTotalLength()
-            : animatedTextElement.getComputedTextLength();
-        if (textPathLength === 0)
-          textPathLength = animatedTextElement.getComputedTextLength();
-        animatedTextElement.style.strokeDasharray =
-          textPathLength + " " + textPathLength;
-        animatedTextElement.style.strokeDashoffset = textPathLength;
-        animatedTextElement.style.visibility = "visible";
-        textSetupComplete = true;
-      }
-      async function initThreeJS() {
-        scene = new THREE.Scene();
-        const box = document.getElementById("marko-polo-canvas-container");
-        camera = new THREE.PerspectiveCamera(
-          75,
-          box.offsetWidth / box.offsetHeight,
-          0.1,
-          1000
-        );
-        camera.position.set(0, 0, 3);
-        renderer = new THREE.WebGLRenderer({
-          canvas: document.getElementById("marko-polo-canvas"),
-          antialias: true,
-          alpha: true,
-        });
-        renderer.setPixelRatio(devicePixelRatio);
-        renderer.setSize(box.offsetWidth, box.offsetHeight);
-        const mat = new THREE.LineBasicMaterial({
-          color: LINE_COLOR,
-          linewidth: LINE_WIDTH,
-        });
-        const paths = await loadPortraitPaths(PORTRAIT_SVG_URL);
-        paths.forEach((p) => {
-          const pts = p.map((v) => new THREE.Vector3(v.x, v.y, 0));
-          const geo = new THREE.BufferGeometry();
-          geo.setAttribute(
-            "position",
-            new THREE.BufferAttribute(new Float32Array(pts.length * 3), 3)
-          );
-          geo.setDrawRange(0, 0);
-          const line = new THREE.Line(geo, mat);
-          line.userData = { pts, drawn: 0 };
-          scene.add(line);
-          portraitLines.push(line);
-          totalPortraitPoints += pts.length;
-        });
-        portraitPointsPerFrame = Math.max(
-          1,
-          Math.ceil(totalPortraitPoints / (TARGET_DRAW_DURATION_SECONDS * FPS))
-        );
-        animationStartTime = Date.now();
-        animate();
-      }
-      function animate() {
-        requestAnimationFrame(animate);
-        const elapsed = (Date.now() - animationStartTime) / 1000;
-        if (!portraitAnimationCompleted) {
-          for (let i = 0; i < portraitPointsPerFrame; i++) {
-            const line = portraitLines[currentPortraitLineIndex];
-            if (!line) {
-              portraitAnimationCompleted = true;
-              break;
-            }
-            if (line.userData.drawn < line.userData.pts.length) {
-              const arr = line.geometry.attributes.position.array;
-              const p = line.userData.pts[line.userData.drawn];
-              const idx = line.userData.drawn * 3;
-              arr[idx] = p.x;
-              arr[idx + 1] = p.y;
-              arr[idx + 2] = 0;
-              line.userData.drawn++;
-              line.geometry.setDrawRange(0, line.userData.drawn);
-              line.geometry.attributes.position.needsUpdate = true;
-            } else currentPortraitLineIndex++;
-          }
-          if (currentPortraitLineIndex >= portraitLines.length)
-            portraitAnimationCompleted = true;
-        }
-        if (!textAnimationCompleted && textSetupComplete) {
-          const prog = Math.min(elapsed / TARGET_DRAW_DURATION_SECONDS, 1);
-          animatedTextElement.style.strokeDashoffset =
-            textPathLength * (1 - prog);
-          if (prog >= 1) {
-            textAnimationCompleted = true;
-            animatedTextElement.style.fill = "#5d4037";
-          }
-        }
-        renderer.render(scene, camera);
-      }
-      function onResize() {
-        const b = document.getElementById("marko-polo-canvas-container");
-        camera.aspect = b.offsetWidth / b.offsetHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(b.offsetWidth, b.offsetHeight);
-      }
-      window.addEventListener("resize", onResize, false);
-      document.addEventListener("DOMContentLoaded", () => {
-        if (typeof THREE === "undefined") {
-          return;
-        }
-        setupTitle();
-        initThreeJS();
-      });
-    </script>
+    <script src="script.js"></script>
   </body>
 </html>
