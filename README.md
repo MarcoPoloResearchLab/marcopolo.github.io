@@ -11,7 +11,7 @@ uv run --with opencv-python --with numpy --with Pillow python vectorize_image.py
 
 ```shell
 uv run --with fonttools --with svgpathtools --with svgwrite python text_to_svg.py \
-       "Marko Polo Research Lab" --font GreatVibes-Regular.ttf --out title.svg
+       "Marko Polo Research Lab" --font assets/GreatVibes-Regular.ttf --out title.svg
 ```
 
 ## License
