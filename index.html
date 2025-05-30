@@ -1,190 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-4C2YBPDF1N"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+  <head>
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-4C2YBPDF1N"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-4C2YBPDF1N");
+    </script>
 
-    gtag('config', 'G-4C2YBPDF1N');
-  </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marko Polo Research Lab</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-  <style>
-    /* Global Styles */
-    body {
-      margin: 0;
-      padding: 0;
-      background-color: #ffffff;
-      color: #333333;
-      font-family: 'Roboto', sans-serif;
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 20px;
-    }
-    /* Header (Hero Section) */
-    header {
-      background-color: #4CAF50;
-      color: #ffffff;
-      padding: 40px 20px;
-      text-align: center;
-      background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('your-hero-image.jpg'); /* Replace with your own image URL if desired */
-      background-size: cover;
-      background-position: center;
-    }
-    header h1 {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 3em;
-      margin-bottom: 10px;
-    }
-    header p {
-      font-size: 1.2em;
-      margin: 0;
-    }
-    /* Section Styles */
-    section {
-      background-color: #ffffff;
-      padding: 40px;
-      margin: 20px 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    h2 {
-      font-family: 'Montserrat', sans-serif;
-      color: #4CAF50;
-      margin-top: 0;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      padding: 10px 0;
-    }
-    a {
-      color: #4CAF50;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    a:hover {
-      color: #388E3C;
-      text-decoration: underline;
-    }
-    /* Projects Section */
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-    }
-    .project-card {
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      padding: 20px;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-    .project-card h3 {
-      font-family: 'Montserrat', sans-serif;
-      margin-top: 0;
-      color: #4CAF50;
-    }
-    .project-card p {
-      margin-bottom: 20px;
-    }
-    .learn-more {
-      display: inline-block;
-      background-color: #4CAF50;
-      color: #ffffff;
-      padding: 10px 20px;
-      border-radius: 4px;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background-color 0.3s;
-    }
-    .learn-more:hover {
-      background-color: #388E3C;
-    }
-    /* Footer */
-    footer {
-      background-color: #333333;
-      color: #ffffff;
-      text-align: center;
-      padding: 20px 10px;
-      margin-top: 40px;
-    }
-    /* Responsive Typography */
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2.2em;
-      }
-      header p {
-        font-size: 1em;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="container">
-      <h1>Marko Polo Research Lab</h1>
-      <p>Elegant, concise, and fast solutions for Business-to-Customer software</p>
-    </div>
-  </header>
-  
-  <div class="container">
-    <section id="about-us">
-      <h2>About Us</h2>
-      <p>At Marko Polo Research Lab, we specialize in crafting software solutions that deliver exceptional user experiences. Our team values elegance, speed, and precision in every project we undertake.</p>
-    </section>
-    
-    <section id="services">
-      <h2>Our Services</h2>
-      <ul>
-        <li>Custom B2C software development</li>
-        <li>User-focused designs</li>
-        <li>Performance optimization</li>
-      </ul>
-    </section>
-    
-    <section id="projects">
-      <h2>Our Projects</h2>
-      <div class="project-grid">
-        <div class="project-card">
-          <h3>Social Threader</h3>
-          <p>A web-based tool that intelligently breaks long text into smaller chunks for social media platforms like Twitter, Bluesky, Threads, and Mastodon.</p>
-          <a class="learn-more" href="https://threader.mprlab.com" target="_blank">Learn More</a>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Marko Polo Research Lab</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <!-- ───── HERO (fills full viewport) ───── -->
+    <section id="top-content-section">
+      <div id="marko-polo-canvas-container">
+        <canvas id="marko-polo-canvas"></canvas>
+      </div>
+
+      <div class="hero-text-block">
+        <div class="animated-svg-title-container">
+          <svg
+            class="animated-svg-title"
+            viewBox="0 0 1200 150"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <text
+              id="animatedTextPath"
+              x="50%"
+              y="50%"
+              dy=".35em"
+              text-anchor="middle"
+            >
+              Marko Polo Research Lab
+            </text>
+          </svg>
         </div>
-        <div class="project-card">
-          <h3>Countdown Calendar</h3>
-          <p>A sleek calendar tool that counts down to designated dates, keeping you informed about upcoming events and deadlines.</p>
-          <a class="learn-more" href="https://countdown.mprlab.com/" target="_blank">Learn More</a>
-        </div>
-        <div class="project-card">
-          <h3>Nearest City Finder</h3>
-          <p>A command-line tool and web application that finds the closest city by driving distance using the Google Maps API.</p>
-          <a class="learn-more" href="https://github.com/MarkoPoloResearchLab/NearestCityFinder" target="_blank">Learn More</a>
-        </div>
+
+        <p class="tagline">The new platform you can stand on.</p>
+
+        <a href="#projects" class="hero-cta-button">Discover Our Work</a>
       </div>
     </section>
-    
-    <section id="contact-us">
-      <h2>Contact Us</h2>
-      <p>Email: <a href="mailto:contact@mprlab.com">contact@mprlab.com</a></p>
-    </section>
-  </div>
-  
-  <footer>
-    <p>&copy; 2024, 2025 Marko Polo Research Lab</p>
-  </footer>
-</body>
+
+    <!-- ───── MAIN CONTENT (unchanged) ───── -->
+    <div class="container">
+      <!-- About -->
+      <section id="about-us">
+        <h2>Our Mission</h2>
+        <p>
+          At Marko Polo Research Lab, we build exceptional products that are
+          simple, reliable, and help people get things done. We create
+          intuitive, productive tools, avoiding unnecessary complexity. We
+          listen to user feedback and never stop tweaking and tuning.
+        </p>
+      </section>
+
+      <!-- Projects -->
+      <section id="projects">
+        <h2>Discoveries &amp; Creations</h2>
+        <div class="project-grid">
+          <div class="project-card">
+            <div class="project-icon-block">
+              <canvas id="social-threader-canvas"></canvas>
+            </div>
+            <div class="project-card-content">
+              <h3>Social Threader</h3>
+              <p>
+                A web-based tool that intelligently breaks long text into
+                smaller chunks for social media platforms.
+              </p>
+              <a
+                class="learn-more"
+                href="https://threader.mprlab.com"
+                target="_blank"
+                >Launch App</a
+              >
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-icon-block">
+              <canvas id="countdown-calendar-canvas"></canvas>
+            </div>
+            <div class="project-card-content">
+              <h3>Countdown Calendar</h3>
+              <p>A sleek calendar tool that counts down to designated dates.</p>
+              <a
+                class="learn-more"
+                href="https://countdown.mprlab.com/"
+                target="_blank"
+                >Launch App</a
+              >
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-icon-block">
+              <canvas id="city-finder-canvas"></canvas>
+            </div>
+            <div class="project-card-content">
+              <h3>Nearest City Finder</h3>
+              <p>
+                CLI and web application that finds the closest city by driving
+                distance.
+              </p>
+              <a
+                class="learn-more"
+                href="https://github.com/MarkoPoloResearchLab/NearestCityFinder"
+                target="_blank"
+                >View on GitHub</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section id="contact-us">
+        <h2>Chart Your Course With Us</h2>
+        <p>
+          Ready to embark on your next project or have a question? Reach out and
+          lets explore the possibilities.
+        </p>
+        <p>Email: <a href="mailto:contact@mprlab.com">contact@mprlab.com</a></p>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2024-2025 Marko Polo Research Lab</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>

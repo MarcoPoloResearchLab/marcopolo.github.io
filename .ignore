@@ -1,0 +1,6 @@
+.git
+.venv
+*.ttf
+*.jpg
+*.svg
+*.lock
