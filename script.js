@@ -4,16 +4,24 @@
 /* ---------- asset paths ---------- */
 const PORTRAIT_SVG = "assets/marko_polo_portrait_vectorized.svg";
 const TITLE_SVG = "assets/title.svg";
+const SOCIAL_THREADER_SVG = "assets/social_threader.svg";
+const COUNTDOWN_CALENDAR_SVG = "assets/countdown_claendar.svg";
+const CITY_FINDER_SVG = "assets/city_finder.svg";
 
 /* ---------- visual tuning ---------- */
 const PORTRAIT_SCALE = 2.0;
 const TITLE_SCALE = 1.8; 
 const TITLE_BOTTOM_MARGIN = 0.2; 
+const PROJECT_SCALE = 1.5;
+const PROJECT_X_SCALE_FACTOR = 0.80;
+const PROJECT_Y_SCALE_FACTOR = 0.30;
 
 /* ---------- timing ---------- */
 const DRAW_SECONDS = 3;
+const PROJECT_DRAW_SECONDS = 3;
 const FPS = 60;
 const TOTAL_FRAMES = DRAW_SECONDS * FPS;
+const PROJECT_TOTAL_FRAMES = PROJECT_DRAW_SECONDS * FPS;
 
 /* ---------- stroke ---------- */
 const COLOR = 0x5d4037;
@@ -27,6 +35,9 @@ let portraitDrawn = 0, titleDrawn = 0;
 let frameCount = 0;
 let portraitSegsTemp = []; 
 let titleSegsTemp = []; 
+
+/* ---------- project animations ---------- */
+const projectAnimations = new Map();
 
 /* ───── SVG parsing ───── */
 function parsePath(d, W, H, scale) {
@@ -132,7 +143,7 @@ async function loadSVG(url, scale) {
 }
 
 /* ───── THREE.js helpers ───── */
-function makeLines(segs) {
+function makeLines(segs, targetScene) {
   const mat = new THREE.LineBasicMaterial({ color: COLOR, linewidth: WIDTH });
   return segs.map(seg => {
     const geo = new THREE.BufferGeometry();
@@ -143,7 +154,7 @@ function makeLines(segs) {
     geo.setDrawRange(0, 0);
     const line = new THREE.Line(geo, mat);
     line.userData = { pts: seg, drawn: 0 };
-    scene.add(line);
+    targetScene.add(line);
     return line;
   });
 }
@@ -179,6 +190,15 @@ function worldHeight() {
 function worldWidth() {
   const h = worldHeight();
   return h * camera.aspect;
+}
+
+function projectWorldHeight(projectCamera) {
+  return 2 * projectCamera.position.z * Math.tan(THREE.MathUtils.degToRad(projectCamera.fov / 2));
+}
+
+function projectWorldWidth(projectCamera) {
+  const h = projectWorldHeight(projectCamera);
+  return h * projectCamera.aspect;
 }
 
 function positionPortrait(portraitSegs) {
@@ -240,6 +260,150 @@ function positionTitle(titleSegmentsToPosition) {
   );
 }
 
+function positionProjectSegments(segments, projectCamera) {
+  const allPoints = segments.flatMap(s => s);
+  if (!allPoints.length) return;
+
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  allPoints.forEach(p => {
+    if (p.x < minX) minX = p.x;
+    if (p.x > maxX) maxX = p.x;
+    if (p.y < minY) minY = p.y;
+    if (p.y > maxY) maxY = p.y;
+  });
+
+  const initialWidth = maxX - minX;
+  const initialHeight = maxY - minY;
+  const initialCenterX = (minX + maxX) / 2;
+  const initialCenterY = (minY + maxY) / 2;
+
+  const wWidth = projectWorldWidth(projectCamera);
+  const wHeight = projectWorldHeight(projectCamera);
+  
+  const targetWidth = wWidth * PROJECT_X_SCALE_FACTOR;
+  const targetHeight = wHeight * PROJECT_Y_SCALE_FACTOR;
+  
+  let xScaleFactor = 1;
+  if (initialWidth > 0.0001) {
+    xScaleFactor = targetWidth / initialWidth;
+  }
+  
+  let yScaleFactor = 1;
+  if (initialHeight > 0.0001) {
+    yScaleFactor = targetHeight / initialHeight;
+  }
+
+  segments.forEach(seg =>
+    seg.forEach(p => {
+      p.x = (p.x - initialCenterX) * xScaleFactor;
+      p.y = (p.y - initialCenterY) * yScaleFactor;
+    })
+  );
+}
+
+/* ───── Project Animation Setup ───── */
+async function initProjectAnimation(canvasId, svgPath) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+
+  const container = canvas.parentElement;
+  
+  const projectScene = new THREE.Scene();
+  const projectCamera = new THREE.PerspectiveCamera(
+    75, 
+    container.offsetWidth / container.offsetHeight, 
+    0.1, 
+    100 
+  );
+  projectCamera.position.z = 4;
+  
+  const projectRenderer = new THREE.WebGLRenderer({
+    canvas: canvas,
+    alpha: true,
+    antialias: true
+  });
+  projectRenderer.setPixelRatio(window.devicePixelRatio);
+  projectRenderer.setSize(container.offsetWidth, container.offsetHeight);
+
+  const loadedSegments = await loadSVG(svgPath, PROJECT_SCALE);
+  if (loadedSegments.length === 0) return;
+
+  const segmentsTemp = JSON.parse(JSON.stringify(loadedSegments));
+  positionProjectSegments(loadedSegments, projectCamera);
+  
+  const projectLines = makeLines(loadedSegments, projectScene);
+  const projectTotalPts = loadedSegments.reduce((s, a) => s + a.length, 0);
+
+  projectAnimations.set(canvasId, {
+    scene: projectScene,
+    camera: projectCamera,
+    renderer: projectRenderer,
+    lines: projectLines,
+    totalPts: projectTotalPts,
+    frameCount: 0,
+    drawn: 0,
+    isAnimating: false,
+    segments: loadedSegments,
+    segmentsTemp: segmentsTemp
+  });
+
+  const resizeHandler = () => {
+    projectCamera.aspect = container.offsetWidth / container.offsetHeight;
+    projectCamera.updateProjectionMatrix();
+    projectRenderer.setSize(container.offsetWidth, container.offsetHeight);
+    
+    const animation = projectAnimations.get(canvasId);
+    if (animation && animation.segmentsTemp.length > 0) {
+      const freshSegments = JSON.parse(JSON.stringify(animation.segmentsTemp));
+      positionProjectSegments(freshSegments, projectCamera);
+      animation.lines.forEach((line, index) => {
+        const seg = freshSegments[index];
+        const pos = line.geometry.attributes.position;
+        for (let i = 0; i < seg.length; i++) pos.setXYZ(i, seg[i].x, seg[i].y, 0);
+        pos.needsUpdate = true;
+        line.userData.pts = seg;
+        if (animation.frameCount > PROJECT_TOTAL_FRAMES) line.geometry.setDrawRange(0, seg.length);
+      });
+    }
+  };
+  
+  window.addEventListener("resize", resizeHandler);
+}
+
+function startProjectAnimation(canvasId) {
+  const animation = projectAnimations.get(canvasId);
+  if (!animation || animation.isAnimating) return;
+
+  animation.isAnimating = true;
+  animation.frameCount = 0;
+  animation.drawn = 0;
+
+  animation.lines.forEach(line => {
+    line.userData.drawn = 0;
+    line.geometry.setDrawRange(0, 0);
+  });
+
+  const animate = () => {
+    if (!animation.isAnimating) return;
+    
+    if (animation.frameCount <= PROJECT_TOTAL_FRAMES) {
+      const prog = animation.frameCount / PROJECT_TOTAL_FRAMES;
+      const ptsToDrawProject = Math.floor(prog * animation.totalPts);
+      
+      draw(animation.lines, ptsToDrawProject - animation.drawn);
+      animation.drawn = ptsToDrawProject;
+      animation.frameCount++;
+      
+      requestAnimationFrame(animate);
+    } else {
+      animation.isAnimating = false;
+    }
+    
+    animation.renderer.render(animation.scene, animation.camera);
+  };
+  
+  animate();
+}
 
 /* ───── Animation loop ───── */
 function animate() {
@@ -333,13 +497,34 @@ async function init() {
     positionPortrait(loadedPortraitSegs); 
     positionTitle(loadedTitleSegs); 
     
-    portraitLines.push(...makeLines(loadedPortraitSegs));
-    titleLines.push(...makeLines(loadedTitleSegs)); 
+    portraitLines.push(...makeLines(loadedPortraitSegs, scene));
+    titleLines.push(...makeLines(loadedTitleSegs, scene)); 
     
     portraitTotalPts = loadedPortraitSegs.reduce((s, a) => s + a.length, 0);
     titleTotalPts = loadedTitleSegs.reduce((s, a) => s + a.length, 0);
     
     animate();
+
+    await Promise.all([
+      initProjectAnimation("social-threader-canvas", SOCIAL_THREADER_SVG),
+      initProjectAnimation("countdown-calendar-canvas", COUNTDOWN_CALENDAR_SVG),
+      initProjectAnimation("city-finder-canvas", CITY_FINDER_SVG)
+    ]);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const canvasId = entry.target.id;
+          setTimeout(() => startProjectAnimation(canvasId), 0);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    ["social-threader-canvas", "countdown-calendar-canvas", "city-finder-canvas"].forEach(id => {
+      const canvas = document.getElementById(id);
+      if (canvas) observer.observe(canvas);
+    });
+
   } catch (err) {
     console.error("Error initializing:", err);
   }
