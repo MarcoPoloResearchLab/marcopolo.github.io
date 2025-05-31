@@ -7,7 +7,7 @@ const TITLE_SVG = "assets/title.svg";
 const SOCIAL_THREADER_SVG = "assets/social_threader.svg";
 const COUNTDOWN_CALENDAR_SVG = "assets/countdown_claendar.svg";
 const CITY_FINDER_SVG = "assets/city_finder.svg";
-
+const RSVP_SVG = "assets/rsvp.svg";
 /* ---------- visual tuning ---------- */
 const PORTRAIT_SCALE = 2.0;
 const TITLE_SCALE = 1.8; 
@@ -453,31 +453,8 @@ async function init() {
     camera.updateProjectionMatrix();
     renderer.setSize(box.offsetWidth, box.offsetHeight);
     
-    if (portraitLines.length > 0 && portraitSegsTemp.length > 0) {
-        const freshPortraitSegs = JSON.parse(JSON.stringify(portraitSegsTemp));
-        positionPortrait(freshPortraitSegs);
-        portraitLines.forEach((line, index) => {
-            const seg = freshPortraitSegs[index];
-            const pos = line.geometry.attributes.position;
-            for (let i = 0; i < seg.length; i++) pos.setXYZ(i, seg[i].x, seg[i].y, 0);
-            pos.needsUpdate = true;
-            line.userData.pts = seg;
-            if (frameCount > TOTAL_FRAMES) line.geometry.setDrawRange(0, seg.length);
-        });
-    }
-
-    if (titleLines.length > 0 && titleSegsTemp.length > 0) {
-        const freshTitleSegs = JSON.parse(JSON.stringify(titleSegsTemp));
-        positionTitle(freshTitleSegs); 
-        titleLines.forEach((line, index) => {
-            const seg = freshTitleSegs[index];
-            const pos = line.geometry.attributes.position;
-            for (let i = 0; i < seg.length; i++) pos.setXYZ(i, seg[i].x, seg[i].y, 0);
-            pos.needsUpdate = true;
-            line.userData.pts = seg; 
-            if (frameCount > TOTAL_FRAMES) line.geometry.setDrawRange(0, seg.length);
-        });
-    }
+    updateLines(portraitLines, portraitSegsTemp, positionPortrait);
+    updateLines(titleLines, titleSegsTemp, positionTitle);
   }, false);
   
   try {
@@ -508,7 +485,8 @@ async function init() {
     await Promise.all([
       initProjectAnimation("social-threader-canvas", SOCIAL_THREADER_SVG),
       initProjectAnimation("countdown-calendar-canvas", COUNTDOWN_CALENDAR_SVG),
-      initProjectAnimation("city-finder-canvas", CITY_FINDER_SVG)
+      initProjectAnimation("city-finder-canvas", CITY_FINDER_SVG),
+      initProjectAnimation("rsvp-canvas", RSVP_SVG)
     ]);
 
     const observer = new IntersectionObserver((entries) => {
@@ -520,7 +498,7 @@ async function init() {
       });
     }, { threshold: 0.1 });
 
-    ["social-threader-canvas", "countdown-calendar-canvas", "city-finder-canvas"].forEach(id => {
+    ["social-threader-canvas", "countdown-calendar-canvas", "city-finder-canvas", "rsvp-canvas"].forEach(id => {
       const canvas = document.getElementById(id);
       if (canvas) observer.observe(canvas);
     });
@@ -539,3 +517,18 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error("Failed to initialize:", err);
   });
 });
+
+function updateLines(lines, segsTemp, positionFunction) {
+    if (lines.length > 0 && segsTemp.length > 0) {
+        const freshSegs = JSON.parse(JSON.stringify(segsTemp));
+        positionFunction(freshSegs);
+        lines.forEach((line, index) => {
+            const seg = freshSegs[index];
+            const pos = line.geometry.attributes.position;
+            for (let i = 0; i < seg.length; i++) pos.setXYZ(i, seg[i].x, seg[i].y, 0);
+            pos.needsUpdate = true;
+            line.userData.pts = seg;
+            if (frameCount > TOTAL_FRAMES) line.geometry.setDrawRange(0, seg.length);
+        });
+    }
+}
