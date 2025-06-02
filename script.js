@@ -343,6 +343,7 @@ async function initProjectAnimation(canvasId, svgPath) {
     frameCount: 0,
     drawn: 0,
     isAnimating: false,
+    hasAnimated: false, // Add this flag
     segments: loadedSegments,
     segmentsTemp: segmentsTemp
   });
@@ -372,7 +373,7 @@ async function initProjectAnimation(canvasId, svgPath) {
 
 function startProjectAnimation(canvasId) {
   const animation = projectAnimations.get(canvasId);
-  if (!animation || animation.isAnimating) return;
+  if (!animation || animation.isAnimating || animation.hasAnimated) return; // Check hasAnimated flag
 
   animation.isAnimating = true;
   animation.frameCount = 0;
@@ -397,6 +398,7 @@ function startProjectAnimation(canvasId) {
       requestAnimationFrame(animate);
     } else {
       animation.isAnimating = false;
+      animation.hasAnimated = true; // Set flag when animation completes
     }
     
     animation.renderer.render(animation.scene, animation.camera);
