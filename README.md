@@ -14,6 +14,14 @@ uv run --with fonttools --with svgpathtools --with svgwrite python text_to_svg.p
        "Marko Polo Research Lab" --font assets/GreatVibes-Regular.ttf --out title.svg
 ```
 
+## Silhouette
+
+```shell
+uv run --with fonttools --with opencv-python --with numpy python image_to_silhouette.py \
+       --input-file assets/marko_polo_portrait.jpg \
+       --output-file mp_silhouette.png
+```
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
