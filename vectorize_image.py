@@ -1,15 +1,19 @@
+#!/usr/bin/env python3
+
+import json
+
 import cv2
 import numpy as np
 from PIL import Image
-import json
+
 
 def image_to_vector_paths(image_path,
-                           output_scale_factor=4.0,
-                           blur_ksize=(5, 5),
-                           canny_threshold1=50,
-                           canny_threshold2=150,
-                           approximation_epsilon_factor=0.002, # Factor of contour perimeter
-                           min_contour_area=10):
+                          output_scale_factor=4.0,
+                          blur_ksize=(5, 5),
+                          canny_threshold1=50,
+                          canny_threshold2=150,
+                          approximation_epsilon_factor=0.002,  # Factor of contour perimeter
+                          min_contour_area=10):
     """
     Converts a raster image to a series of vector paths.
 
@@ -33,13 +37,12 @@ def image_to_vector_paths(image_path,
         # Convert to OpenCV format
         img = np.array(pil_img)
         if pil_img.mode == 'RGBA':
-            img = cv2.cvtColor(img, cv2.COLOR_RGBA2BGR) # OpenCV uses BGR by default
+            img = cv2.cvtColor(img, cv2.COLOR_RGBA2BGR)  # OpenCV uses BGR by default
         elif pil_img.mode == 'RGB':
             img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
-        elif pil_img.mode == 'P': # Palette mode, often for GIFs or some PNGs
+        elif pil_img.mode == 'P':  # Palette mode, often for GIFs or some PNGs
             pil_img = pil_img.convert("RGB")
             img = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
-
 
         original_height, original_width = img.shape[:2]
     except Exception as e:
@@ -74,17 +77,17 @@ def image_to_vector_paths(image_path,
 
         path = []
         for point in approximated_contour:
-            x, y = point[0] # Point is [[x, y]]
+            x, y = point[0]  # Point is [[x, y]]
 
             # Normalize and center coordinates
             # (0,0) in OpenCV is top-left. In Three.js, we often want (0,0) at the center.
             # Y is inverted because OpenCV Y goes down, Three.js Y typically goes up.
             norm_x = (x / original_width - 0.5)
-            norm_y = (0.5 - y / original_height) # Invert Y
+            norm_y = (0.5 - y / original_height)  # Invert Y
 
             path.append({"x": round(norm_x, 4), "y": round(norm_y, 4)})
 
-        if len(path) > 1: # Only add paths with at least 2 points
+        if len(path) > 1:  # Only add paths with at least 2 points
             all_paths.append(path)
 
     # 5. Scale all paths together to fit output_scale_factor
@@ -104,7 +107,7 @@ def image_to_vector_paths(image_path,
     current_width_norm = max_x_norm - min_x_norm
     current_height_norm = max_y_norm - min_y_norm
 
-    if current_width_norm == 0 or current_height_norm == 0 : # Avoid division by zero if it's a point or line
+    if current_width_norm == 0 or current_height_norm == 0:  # Avoid division by zero if it's a point or line
         scale = 1.0
     else:
         if current_width_norm > current_height_norm:
@@ -126,9 +129,10 @@ def image_to_vector_paths(image_path,
 
     # 6. Format for JavaScript
     # Output as a string that can be pasted directly as a JS variable
-    js_array_string = json.dumps(scaled_paths, indent=None) # indent=None for compact output
+    js_array_string = json.dumps(scaled_paths, indent=None)  # indent=None for compact output
 
     return js_array_string
+
 
 if __name__ == '__main__':
     image_file = 'marko_polo_portrait.jpg'
@@ -137,16 +141,16 @@ if __name__ == '__main__':
     vector_data_string = image_to_vector_paths(
         image_file,
         output_scale_factor=4.0,
-        blur_ksize=(7, 7),             # Increased blur
-        canny_threshold1=100,          # Increased Canny lower threshold
-        canny_threshold2=250,          # Increased Canny upper threshold
-        approximation_epsilon_factor=0.005, # Increased simplification
-        min_contour_area=50            # Significantly increased min area
+        blur_ksize=(7, 7),  # Increased blur
+        canny_threshold1=100,  # Increased Canny lower threshold
+        canny_threshold2=250,  # Increased Canny upper threshold
+        approximation_epsilon_factor=0.005,  # Increased simplification
+        min_contour_area=50  # Significantly increased min area
     )
 
     if vector_data_string and vector_data_string != "[]":
         print("\nCOPY THE FOLLOWING JAVASCRIPT ARRAY INTO YOUR HTML FILE:\n")
         print(f"const vectorizedImagePaths = {vector_data_string};")
-        print(f"\nSuccessfully processed. Found {vector_data_string.count('[') // 2 -1 } paths.")
+        print(f"\nSuccessfully processed. Found {vector_data_string.count('[') // 2 - 1} paths.")
     else:
         print(f"Could not generate vector paths for {image_file}. Try adjusting parameters or check image path.")

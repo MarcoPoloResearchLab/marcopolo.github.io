@@ -1,180 +1,183 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <!-- Google Analytics -->
     <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-4C2YBPDF1N"
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-4C2YBPDF1N"
     ></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-4C2YBPDF1N");
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag("js", new Date());
+        gtag("config", "G-4C2YBPDF1N");
     </script>
 
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <link
+            href="data:image/png;base64,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"
             rel="icon"
-            type="image/png"
             sizes="32x32"
-            href="data:image/png;base64,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"
+            type="image/png"
     />
     <link
-            rel="shortcut icon"
-            type="image/png"
-            sizes="32x32"
             href="data:image/png;base64,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"
+            rel="shortcut icon"
+            sizes="32x32"
+            type="image/png"
     />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
     <title>Marko Polo Research Lab</title>
 
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&family=Great+Vibes&display=swap"
-      rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&family=Great+Vibes&display=swap"
+            rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+    <link href="styles.css" rel="stylesheet"/>
+</head>
 
-  <body>
-    <!-- ───── HERO (fills full viewport) ───── -->
-    <section id="top-content-section">
-      <div id="marko-polo-canvas-container">
+<body>
+<!-- ───── HERO (fills full viewport) ───── -->
+<section id="top-content-section">
+    <div id="marko-polo-canvas-container">
         <canvas id="marko-polo-canvas"></canvas>
-      </div>
+    </div>
 
-      <div class="hero-text-block">
+    <div class="hero-text-block">
         <div class="animated-svg-title-container">
-          <svg
-            class="animated-svg-title"
-            viewBox="0 0 1200 150"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <text
-              id="animatedTextPath"
-              x="50%"
-              y="50%"
-              dy=".35em"
-              text-anchor="middle"
+            <svg
+                    class="animated-svg-title"
+                    preserveAspectRatio="xMidYMid meet"
+                    viewBox="0 0 1200 150"
             >
-              Marko Polo Research Lab
-            </text>
-          </svg>
+                <text
+                        dy=".35em"
+                        id="animatedTextPath"
+                        text-anchor="middle"
+                        x="50%"
+                        y="50%"
+                >
+                    Marko Polo Research Lab
+                </text>
+            </svg>
         </div>
 
         <p class="tagline">The new platform you can stand on.</p>
 
-        <a href="#projects" class="hero-cta-button">Discover Our Work</a>
-      </div>
-    </section>
+        <a class="hero-cta-button" href="#projects">Discover Our Work</a>
+    </div>
+</section>
 
-    <!-- ───── MAIN CONTENT (unchanged) ───── -->
-    <div class="container">
-      <!-- About -->
-      <section id="about-us">
+<!-- ───── MAIN CONTENT (unchanged) ───── -->
+<div class="container">
+    <!-- About -->
+    <section id="about-us">
         <h2>Our Mission</h2>
         <p>
-          At Marko Polo Research Lab, we build exceptional products that are
-          simple, reliable, and help people get things done. We create
-          intuitive, productive tools, avoiding unnecessary complexity. We
-          listen to user feedback and never stop tweaking and tuning.
+            At Marko Polo Research Lab, we build exceptional products that are
+            simple, reliable, and help people get things done. We create
+            intuitive, productive tools, avoiding unnecessary complexity. We
+            listen to user feedback and never stop tweaking and tuning.
         </p>
-      </section>
+    </section>
 
-      <!-- Projects -->
-      <section id="projects">
+    <!-- Projects -->
+    <section id="projects">
         <h2>Discoveries &amp; Creations</h2>
         <div class="project-grid">
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="social-threader-canvas"></canvas>
+            <div class="project-card">
+                <div class="project-icon-block">
+                    <canvas id="social-threader-canvas"></canvas>
+                </div>
+                <div class="project-card-content">
+                    <h3>Social Threader</h3>
+                    <p>
+                        A web-based tool that intelligently breaks long text into
+                        smaller chunks for social media platforms.
+                    </p>
+                    <a
+                            class="learn-more"
+                            href="https://threader.mprlab.com"
+                            target="_blank"
+                    >Launch App</a
+                    >
+                </div>
             </div>
-            <div class="project-card-content">
-              <h3>Social Threader</h3>
-              <p>
-                A web-based tool that intelligently breaks long text into
-                smaller chunks for social media platforms.
-              </p>
-              <a
-                class="learn-more"
-                href="https://threader.mprlab.com"
-                target="_blank"
-                >Launch App</a
-              >
+            <div class="project-card">
+                <div class="project-icon-block">
+                    <canvas id="countdown-calendar-canvas"></canvas>
+                </div>
+                <div class="project-card-content">
+                    <h3>Countdown Calendar</h3>
+                    <p>A sleek calendar tool that counts down to designated dates.</p>
+                    <a
+                            class="learn-more"
+                            href="https://countdown.mprlab.com/"
+                            target="_blank"
+                    >Launch App</a
+                    >
+                </div>
             </div>
-          </div>
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="countdown-calendar-canvas"></canvas>
+            <div class="project-card">
+                <div class="project-icon-block">
+                    <canvas id="city-finder-canvas"></canvas>
+                </div>
+                <div class="project-card-content">
+                    <h3>Nearest City Finder</h3>
+                    <p>
+                        CLI and web application that finds the closest city by driving
+                        distance.
+                    </p>
+                    <a
+                            class="learn-more"
+                            href="https://github.com/MarkoPoloResearchLab/NearestCityFinder"
+                            target="_blank"
+                    >View on GitHub</a
+                    >
+                </div>
             </div>
-            <div class="project-card-content">
-              <h3>Countdown Calendar</h3>
-              <p>A sleek calendar tool that counts down to designated dates.</p>
-              <a
-                class="learn-more"
-                href="https://countdown.mprlab.com/"
-                target="_blank"
-                >Launch App</a
-              >
+            <div class="project-card">
+                <div class="project-icon-block">
+                    <canvas id="rsvp-canvas"></canvas>
+                </div>
+                <div class="project-card-content">
+                    <h3>RSVP</h3>
+                    <p>
+                        An events invitation platform that relies on physical QR Codes and allows printing, sending and
+                        tracking invitations to events.
+                    </p>
+                    <a
+                            class="learn-more"
+                            href="https://rsvp.mprlab.com"
+                            target="_blank"
+                    >Launch App</a
+                    >
+                </div>
             </div>
-          </div>
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="city-finder-canvas"></canvas>
-            </div>
-            <div class="project-card-content">
-              <h3>Nearest City Finder</h3>
-              <p>
-                CLI and web application that finds the closest city by driving
-                distance.
-              </p>
-              <a
-                class="learn-more"
-                href="https://github.com/MarkoPoloResearchLab/NearestCityFinder"
-                target="_blank"
-                >View on GitHub</a
-              >
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="rsvp-canvas"></canvas>
-            </div>
-            <div class="project-card-content">
-              <h3>RSVP</h3>
-              <p>
-                An events invitation platform that relies on physical QR Codes and allows printing, sending and tracking invitations to events.
-              </p>
-              <a
-                class="learn-more"
-                href="https://rsvp.mprlab.com"
-                target="_blank"
-                >Launch App</a
-              >
-            </div>
-          </div>
         </div>
-      </section>
+    </section>
 
-      <!-- Contact -->
-      <section id="contact-us">
+    <!-- Contact -->
+    <section id="contact-us">
         <h2>Chart Your Course With Us</h2>
         <p>
-          Ready to embark on your next project or have a question? Reach out and
-          lets explore the possibilities.
+            Ready to embark on your next project or have a question? Reach out and
+            lets explore the possibilities.
         </p>
         <p>Email: <a href="mailto:contact@mprlab.com">contact@mprlab.com</a></p>
-      </section>
-    </div>
+    </section>
+</div>
 
-    <!-- Footer -->
-    <footer>
-      <p>© 2024-2025 Marko Polo Research Lab</p>
-    </footer>
+<!-- Footer -->
+<footer>
+    <p>© 2024-2025 Marko Polo Research Lab</p>
+</footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="script.js"></script>
-  </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="script.js"></script>
+</body>
 </html>

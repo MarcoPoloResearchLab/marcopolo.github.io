@@ -10,9 +10,10 @@ import re
 from pathlib import Path
 
 import svgwrite
-from fontTools.ttLib import TTFont
 from fontTools.pens.svgPathPen import SVGPathPen
+from fontTools.ttLib import TTFont
 from svgpathtools import parse_path
+
 
 # ------------------------------------------------------------ #
 # Core helpers                                                 #
@@ -20,18 +21,18 @@ from svgpathtools import parse_path
 def glyph_d(glyph_name: str, glyph_set) -> str:
     pen = SVGPathPen(glyph_set)
     glyph_set[glyph_name].draw(pen)
-    return pen.getCommands()          # raw “d” for this glyph
+    return pen.getCommands()  # raw “d” for this glyph
 
 
 def text_to_d(text: str, font_file: Path, font_size: int = 1024):
     """Return (d_attr, width, height) for the supplied text."""
     font = TTFont(str(font_file))
     glyph_set = font.getGlyphSet()
-    cmap      = font.getBestCmap()
-    upm       = font["head"].unitsPerEm
-    ascent    = font["hhea"].ascent
-    descent   = abs(font["hhea"].descent)
-    hmtx      = font["hmtx"].metrics
+    cmap = font.getBestCmap()
+    upm = font["head"].unitsPerEm
+    ascent = font["hhea"].ascent
+    descent = abs(font["hhea"].descent)
+    hmtx = font["hmtx"].metrics
 
     scale = font_size / upm
     x_cursor = 0
@@ -45,13 +46,13 @@ def text_to_d(text: str, font_file: Path, font_size: int = 1024):
         raw = glyph_d(gname, glyph_set)
         path_obj = (
             parse_path(raw)
-            .translated(complex(x_cursor, ascent))   # shift baseline
-            .scaled(scale, -scale)                   # flip y-axis
+            .translated(complex(x_cursor, ascent))  # shift baseline
+            .scaled(scale, -scale)  # flip y-axis
         )
         segments.append(path_obj.d())
-        x_cursor += hmtx[gname][0]                   # advance-width
+        x_cursor += hmtx[gname][0]  # advance-width
 
-    width  = x_cursor * scale
+    width = x_cursor * scale
     height = (ascent + descent) * scale
     d_full = " ".join(segments)
 
