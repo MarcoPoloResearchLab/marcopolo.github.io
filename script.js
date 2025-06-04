@@ -49,7 +49,12 @@ function parsePath(d, W, H, scale) {
 
     for (const s of cmds) {
         const c = s[0], C = c.toUpperCase(), rel = c !== C;
-        const v = s.slice(1).trim().split(/[ ,]+/).filter(Boolean).map(Number);
+        // Extract numeric tokens (including negatives and decimals) from the
+        // command string. Regex breakdown:
+        //  [-+]?            -> optional sign
+        //  (?:\d*\.\d+|\d+) -> decimal numbers with optional leading digits or integers
+        const v = (s.slice(1).trim().match(/[-+]?(?:\d*\.\d+|\d+)/g) || [])
+            .map(parseFloat);
         let i = 0;
 
         switch (C) {
