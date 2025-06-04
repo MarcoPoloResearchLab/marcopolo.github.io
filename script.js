@@ -2,7 +2,7 @@
 const PORTRAIT_SVG = "assets/marko_polo_portrait_vectorized.svg";
 const TITLE_SVG = "assets/title.svg";
 const SOCIAL_THREADER_SVG = "assets/social_threader.svg";
-const COUNTDOWN_CALENDAR_SVG = "assets/countdown_claendar.svg";
+const COUNTDOWN_CALENDAR_SVG = "assets/countdown_calendar.svg";
 const CITY_FINDER_SVG = "assets/city_finder.svg";
 const RSVP_SVG = "assets/rsvp.svg";
 /* ---------- visual tuning ---------- */
