@@ -1,6 +1,6 @@
 # markopolo.github.io
 
-Landing page for Marko Polo Research Lab.
+Landing page for Marco Polo Research Lab.
 
 The home page features an animated hero section, an about overview and a gallery of our public apps.
 
