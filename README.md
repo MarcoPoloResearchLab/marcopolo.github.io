@@ -1,4 +1,4 @@
-# markopolo.github.io
+# marcopolo.github.io
 
 Landing page for Marco Polo Research Lab.
 
