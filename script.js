@@ -5,6 +5,7 @@ const SOCIAL_THREADER_SVG = "assets/social_threader.svg";
 const COUNTDOWN_CALENDAR_SVG = "assets/countdown_calendar.svg";
 const CITY_FINDER_SVG = "assets/city_finder.svg";
 const RSVP_SVG = "assets/rsvp.svg";
+const LLM_CROSSWORD_SVG = "assets/llm_crossword.svg";
 /* ---------- visual tuning ---------- */
 const PORTRAIT_SCALE = 2.0;
 const TITLE_SCALE = 1.8;
@@ -495,7 +496,8 @@ async function init() {
             initProjectAnimation("social-threader-canvas", SOCIAL_THREADER_SVG),
             initProjectAnimation("countdown-calendar-canvas", COUNTDOWN_CALENDAR_SVG),
             initProjectAnimation("city-finder-canvas", CITY_FINDER_SVG),
-            initProjectAnimation("rsvp-canvas", RSVP_SVG)
+            initProjectAnimation("rsvp-canvas", RSVP_SVG),
+            initProjectAnimation("llm-crossword-canvas", LLM_CROSSWORD_SVG),
         ]);
 
         const observer = new IntersectionObserver((entries) => {
@@ -507,7 +509,7 @@ async function init() {
             });
         }, {threshold: 0.1});
 
-        ["social-threader-canvas", "countdown-calendar-canvas", "city-finder-canvas", "rsvp-canvas"].forEach(id => {
+        ["social-threader-canvas", "countdown-calendar-canvas", "city-finder-canvas", "rsvp-canvas", "llm-crossword-canvas"].forEach(id => {
             const canvas = document.getElementById(id);
             if (canvas) observer.observe(canvas);
         });
