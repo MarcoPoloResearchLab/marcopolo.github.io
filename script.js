@@ -1,5 +1,5 @@
 /* ---------- asset paths ---------- */
-const PORTRAIT_SVG = "assets/marko_polo_portrait_vectorized.svg";
+const PORTRAIT_SVG = "assets/marko_polo_portrait.svg";
 const TITLE_SVG = "assets/title.svg";
 const SOCIAL_THREADER_SVG = "assets/social_threader.svg";
 const COUNTDOWN_CALENDAR_SVG = "assets/countdown_calendar.svg";
