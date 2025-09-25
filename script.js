@@ -7,6 +7,7 @@ const CITY_FINDER_SVG = "assets/city_finder.svg";
 const RSVP_SVG = "assets/rsvp.svg";
 const LLM_CROSSWORD_SVG = "assets/llm_crossword.svg";
 const OLD_MILLIONAIRE_SVG = "assets/old_millionaire.svg";
+const ALLERGY_WHEEL_SVG = "assets/allergy_wheel.svg";
 /* ---------- visual tuning ---------- */
 const PORTRAIT_SCALE = 2.0;
 const TITLE_SCALE = 1.8;
@@ -500,6 +501,7 @@ async function init() {
             initProjectAnimation("rsvp-canvas", RSVP_SVG),
             initProjectAnimation("llm-crossword-canvas", LLM_CROSSWORD_SVG),
             initProjectAnimation("old-millionaire-canvas", OLD_MILLIONAIRE_SVG),
+            initProjectAnimation("allergy-wheel-canvas", ALLERGY_WHEEL_SVG),
         ]);
 
         const observer = new IntersectionObserver((entries) => {
@@ -511,7 +513,7 @@ async function init() {
             });
         }, {threshold: 0.1});
 
-        ["social-threader-canvas", "countdown-calendar-canvas", "city-finder-canvas", "rsvp-canvas", "llm-crossword-canvas", "old-millionaire-canvas"].forEach(id => {
+        ["social-threader-canvas", "countdown-calendar-canvas", "city-finder-canvas", "rsvp-canvas", "llm-crossword-canvas", "old-millionaire-canvas", "allergy-wheel-canvas"].forEach(id => {
             const canvas = document.getElementById(id);
             if (canvas) observer.observe(canvas);
         });
