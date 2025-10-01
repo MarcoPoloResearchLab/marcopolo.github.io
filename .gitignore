@@ -15,3 +15,4 @@ Thumbs.db
 # IDE / Editor specific
 .vscode/
 .idea/
+tools/svg_tools/
