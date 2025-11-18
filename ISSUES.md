@@ -3,6 +3,8 @@
 
 Entries record newly discovered requests or changes, with their outcomes. No instructive content lives here. Read @NOTES.md for the process to follow when fixing issues.
 
+Read @AGENTS.md, @AGENTS.DOCKER.md, @AGENTS.FRONTEND.md, @AGENTS.GIT.md, @POLICY.md, @NOTES.md, @README.md and @ISSUES.md. Start working on open issues. Work autonomously and stack up PRs.
+
 Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` [x] [<ID>-<number>]`
 
 ## Features (100-199)
@@ -15,7 +17,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 
 ## Maintenance (400–499)
 
-- [ ] [MP-400] Have a docker compose orchestration using ghttp @tools/ghttp/README.md. Use a docker image from ghcr.
+- [ ] [MP-400] Prepare a docker compose orchestration using ghttp @tools/ghttp/README.md. Use a docker image from ghcr.
 
 ## Planning 
 **Do not work on these, not ready**
