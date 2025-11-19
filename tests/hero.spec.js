@@ -23,4 +23,39 @@ test.describe("Marco Polo Research Lab landing page", () => {
         await expect(page.getByRole("heading", {name: "LLM Crossword"})).toBeVisible();
         await expect(page.getByRole("link", {name: "Discover Our Work"})).toBeVisible();
     });
+
+    test("footer respects non-sticky configuration", async ({page}) => {
+        await page.goto("/index.html");
+
+        const footerHost = page.locator("mpr-footer");
+        const footerRoot = page.locator('mpr-footer footer[data-mpr-footer="root"]');
+
+        await expect(footerRoot).toHaveAttribute("data-mpr-sticky", "false");
+        await expect(footerHost).not.toHaveClass(/mpr-footer/);
+
+        const hostPosition = await footerHost.evaluate(
+            (element) => window.getComputedStyle(element).position,
+        );
+        const rootPosition = await footerRoot.evaluate(
+            (element) => window.getComputedStyle(element).position,
+        );
+
+        expect(hostPosition).toBe("static");
+        expect(rootPosition).toBe("static");
+
+        const viewportHeight = await page.evaluate(() => window.innerHeight);
+
+        await page.evaluate(() => window.scrollTo(0, 0));
+        const topAtTop = await footerRoot.evaluate(
+            (element) => element.getBoundingClientRect().top,
+        );
+
+        await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+        const topAtBottom = await footerRoot.evaluate(
+            (element) => element.getBoundingClientRect().top,
+        );
+
+        expect(topAtTop).toBeGreaterThan(viewportHeight);
+        expect(topAtBottom).toBeLessThanOrEqual(viewportHeight);
+    });
 });

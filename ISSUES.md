@@ -53,7 +53,7 @@ RSVP
 
 ## BugFixes (300–399)
 
-- [ ] [MP-300] The footer is sticker despite `sticky="false"` directive. Investigate the reason and document the reason. Check the documentation under @docs/mpr-ui/custom-elements.md and also look intot the downloaded js/css from mpr-ui we get from CDN to find the root cause. Also re-write the tesst as they pass instead of failing now. @image.png
+- [x] [MP-300] Footer stickiness came from the host element carrying `class="mpr-footer"`, so CDN CSS kept the host sticky while `sticky="false"` only toggled the internal footer; dropped the host class so the data-mpr-sticky override applies and added Playwright coverage for the non-sticky flow.
 
 ```<mpr-footer
       class="mpr-footer"
