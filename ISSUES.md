@@ -53,6 +53,13 @@ RSVP
 
 ## BugFixes (300–399)
 
+- [ ] [300] The footer is sticker despite `sticky="false"` directive. Investigate the reason and document the reason. Check the documentation under @docs/mpr-ui/custom-elements.md and also look intot the downloaded js/css from mpr-ui we get from CDN to find the root cause
+
+```<mpr-footer
+      class="mpr-footer"
+      sticky="false"
+```
+
 ## Maintenance (400–499)
 
 - [x] [MP-400] Added `docker-compose.yml` + `.env.ghttp` to run the site through `ghcr.io/temirov/ghttp` and documented the workflow in README.
