@@ -59,12 +59,15 @@
         </video>
         <button
                 aria-controls="hero-video"
-                aria-label="Toggle sound"
                 aria-pressed="false"
                 class="hero-sound-toggle hero-sound-overlay"
                 id="hero-sound-toggle"
                 type="button"
-        ></button>
+        >
+            <span class="sr-only">Toggle sound</span>
+            <span aria-hidden="true" class="hero-sound-glyph hero-sound-muted">🔇</span>
+            <span aria-hidden="true" class="hero-sound-glyph hero-sound-on">🔊</span>
+        </button>
     </div>
 
     <div class="hero-text-block">
