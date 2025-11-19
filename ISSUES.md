@@ -11,7 +11,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 
 - [x] [MP-100] Replaced the sketch-based hero with the inline hero video (muted by default with an audio toggle) and refreshed the favicon using the provided JPEG source.
 - [x] [MP-101] Changed the global theme to dark turquoise with golden typography, updating hero/sections/cards/buttons accordingly.
-- [x] [MP-102] Added the mpr-ui inspired multi-column footer (non-sticky) and removed the theme toggle concept entirely.
+- [x] [MP-102] Integrated the declarative `<mpr-footer>` from mpr-ui (non-sticky, no theme switch) plus lab-wide quick links.
 - [ ] [MP-103] Spit the site into 4 sections:
 Research
 Tools
