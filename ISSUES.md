@@ -10,7 +10,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 ## Features (100-199)
 
 - [x] [MP-100] Replaced the sketch-based hero with the inline hero video (muted by default with an audio toggle) and refreshed the favicon using the provided JPEG source.
-- [ ] [MP-101] Change the theme of the site to be dark torquise and golden: background is dark torquise, font is golden. Improvise.
+- [ ] [MP-101] Change the theme of the site to be dark turquoise and golden: background is dark turquoise, font is golden. Improvise.
 - [ ] [MP-102] Add a non-sticky footer from mpr-ui with no theme switch
 - [ ] [MP-103] Spit the site into 4 sections:
 Research
