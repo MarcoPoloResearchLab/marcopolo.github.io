@@ -10,6 +10,38 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 ## Features (100-199)
 
 - [x] [MP-100] Replaced the sketch-based hero with the inline hero video (muted by default with an audio toggle) and refreshed the favicon using the provided JPEG source.
+- [ ] [MP-101] Spit the site into 4 sections:
+Research
+Tools
+Platform
+Products
+
+The design shall be somewhat similar to the spirit of Apple's design: clean, specaious but fitting everything on one page
+
+I envision cards with rounded corners for every section
+
+The cards DO NOT move but are arranged on a page to fit.
+
+Research:
+ISSUES.md
+PhotoLab
+
+Tools:
+ctx
+gix
+ghttp
+
+Platform:
+Loopaware
+Pinguin
+ETS
+TAuth
+
+Products:
+ProductScanner
+Sheet2Tube
+Gravity Notes
+RSVP
 
 ## Improvements (200–299)
 
