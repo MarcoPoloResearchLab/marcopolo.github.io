@@ -21,3 +21,8 @@ test-results/
 playwright-report/
 docs/mpr-ui
 docs/TAuth
+# Managed by gix gitignore workflow
+.env
+.env.*
+qodana.yaml
+bin/
