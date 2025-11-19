@@ -17,7 +17,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 
 ## Maintenance (400–499)
 
-- [ ] [MP-400] Prepare a docker compose orchestration using ghttp @tools/ghttp/README.md. Use a docker image from ghcr.
+- [x] [MP-400] Added `docker-compose.yml` + `.env.ghttp` to run the site through `ghcr.io/temirov/ghttp` and documented the workflow in README.
 - [ ] [MP-401] Provide the documented Makefile automation for `make test`, `make lint`, and `make ci`. `make test` currently fails with “No rule to make target 'test'.”
 
 ## Planning 

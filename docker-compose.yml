@@ -1,0 +1,18 @@
+services:
+  site:
+    image: ghcr.io/temirov/ghttp:latest
+    container_name: mprlab-site
+    restart: unless-stopped
+    env_file:
+      - .env.ghttp
+    working_dir: ${GHTTP_SERVE_DIRECTORY}
+    command:
+      - "--bind"
+      - "${GHTTP_BIND_ADDRESS}"
+      - "--directory"
+      - "${GHTTP_SERVE_DIRECTORY}"
+      - "${CONTAINER_HTTP_PORT}"
+    ports:
+      - "${HOST_HTTP_PORT}:${CONTAINER_HTTP_PORT}"
+    volumes:
+      - ./:${GHTTP_SERVE_DIRECTORY}:ro
