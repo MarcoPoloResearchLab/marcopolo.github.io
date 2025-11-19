@@ -34,7 +34,7 @@
     <title>Marco Polo Research Lab</title>
 
     <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;700&family=Great+Vibes&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap"
             rel="stylesheet"
     />
     <link href="styles.css" rel="stylesheet"/>
@@ -49,14 +49,25 @@
                 autoplay
                 class="hero-video"
                 id="hero-video"
-                loop
                 muted
                 playsinline
                 preload="auto"
         >
+            <source src="assets/hero-loop.webm" type="video/webm"/>
             <source src="assets/hero-loop.mp4" type="video/mp4"/>
             Your browser does not support the video tag.
         </video>
+        <button
+                aria-controls="hero-video"
+                aria-pressed="false"
+                class="hero-sound-toggle hero-sound-overlay"
+                id="hero-sound-toggle"
+                type="button"
+        >
+            <span class="sr-only">Toggle sound</span>
+            <span aria-hidden="true" class="hero-sound-glyph hero-sound-muted">🔇</span>
+            <span aria-hidden="true" class="hero-sound-glyph hero-sound-on">🔊</span>
+        </button>
     </div>
 
     <div class="hero-text-block">
@@ -66,15 +77,6 @@
 
         <div class="hero-cta-group">
             <a class="hero-cta-button" href="#projects">Discover Our Work</a>
-            <button
-                    aria-controls="hero-video"
-                    aria-pressed="false"
-                    class="hero-sound-toggle"
-                    id="hero-sound-toggle"
-                    type="button"
-            >
-                Enable Sound
-            </button>
         </div>
     </div>
 </section>
