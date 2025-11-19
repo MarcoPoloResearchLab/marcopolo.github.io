@@ -13,7 +13,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 
 ## Improvements (200–299)
 
-- [ ] [MP-200] Relayout the hero text block so it sits below the video canvas (unobstructed), matching the lighter cyberpunk/HUD aesthetic.
+- [x] [MP-200] Hero text/CTA now lives below the video with refreshed cyberpunk styling so the motion stays unobstructed.
 
 ## BugFixes (300–399)
 
