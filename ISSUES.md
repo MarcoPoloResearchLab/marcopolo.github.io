@@ -13,13 +13,14 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 
 ## Improvements (200–299)
 
+- [ ] [MP-200] Relayout the hero text block so it sits below the video canvas (unobstructed), matching the lighter cyberpunk/HUD aesthetic.
+
 ## BugFixes (300–399)
 
 ## Maintenance (400–499)
 
 - [x] [MP-400] Added `docker-compose.yml` + `.env.ghttp` to run the site through `ghcr.io/temirov/ghttp` and documented the workflow in README.
 - [x] [MP-401] Added the full Node-based toolchain (`package.json`, ESLint, Stylelint, Playwright) plus Makefile targets so `make lint`, `make test`, and `make ci` all succeed.
-<<<<<<< HEAD
 - [x] [MP-402] Re-encoded the hero video to a 1280px, fast-start MP4 (~2.7 MB) and stored it as `assets/hero-loop.mp4` so the hero loads quickly on the web without the conspicuous filename.
 
 ## Planning 
