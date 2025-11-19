@@ -359,6 +359,13 @@ mpr-footer {
     margin-left: auto;
 }
 
+.mpr-footer-built-by {
+    color: var(--text-gold-strong);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
 .mpr-footer__menu-wrapper {
     position: relative;
 }
