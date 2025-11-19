@@ -4,7 +4,7 @@ body {
     padding: 0;
     background: #f4f4f4;
     color: #333;
-    font-family: "Roboto", sans-serif;
+    font-family: "Space Grotesk", "Roboto", sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
 }
@@ -30,8 +30,8 @@ body {
 
 .hero-media {
     position: relative;
-    width: min(1200px, 92vw);
-    aspect-ratio: 16 / 9;
+    width: min(1100px, 92vw);
+    aspect-ratio: 1020 / 1088;
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 40px 120px rgba(0, 0, 0, 0.55);
@@ -66,11 +66,13 @@ body {
 }
 
 .hero-title {
-    font-family: "Great Vibes", cursive;
+    font-family: "Orbitron", "Space Grotesk", sans-serif;
     font-size: clamp(3rem, 6vw, 4.8rem);
-    font-weight: 400;
+    font-weight: 500;
     color: #ffe6c7;
     margin: 0 0 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
 .tagline {
@@ -94,7 +96,7 @@ body {
     color: #fff8ed;
     padding: 12px 30px;
     border-radius: 5px;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
     text-decoration: none;
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -115,7 +117,7 @@ body {
     justify-content: center;
     padding: 12px 28px;
     border-radius: 5px;
-    font-family: "Montserrat", sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     font-weight: 600;
     background: transparent;
     color: #fdf1de;
@@ -142,7 +144,7 @@ section:not(#top-content-section) {
 }
 
 h2 {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     color: #5d4037;
     margin: 0 0 40px;
     text-align: center;
@@ -217,7 +219,7 @@ a:hover {
 }
 
 .project-card-content h3 {
-    font-family: "Montserrat", sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     margin: 0;
     color: #5d4037;
     font-size: 1.5em;
