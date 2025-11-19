@@ -1,6 +1,4 @@
 /* ---------- asset paths ---------- */
-const PORTRAIT_SVG = "assets/marko_polo_portrait.svg";
-const TITLE_SVG = "assets/title.svg";
 const SOCIAL_THREADER_SVG = "assets/social_threader.svg";
 const COUNTDOWN_CALENDAR_SVG = "assets/countdown_calendar.svg";
 const CITY_FINDER_SVG = "assets/city_finder.svg";
@@ -9,35 +7,30 @@ const LLM_CROSSWORD_SVG = "assets/llm_crossword.svg";
 const OLD_MILLIONAIRE_SVG = "assets/old_millionaire.svg";
 const ALLERGY_WHEEL_SVG = "assets/allergy_wheel.svg";
 /* ---------- visual tuning ---------- */
-const PORTRAIT_SCALE = 2.0;
-const TITLE_SCALE = 1.8;
-const TITLE_BOTTOM_MARGIN = 0.2;
 const PROJECT_SCALE = 1.5;
 const PROJECT_X_SCALE_FACTOR = 0.80;
 const PROJECT_Y_SCALE_FACTOR = 0.30;
 
 /* ---------- timing ---------- */
-const DRAW_SECONDS = 3;
 const PROJECT_DRAW_SECONDS = 3;
 const FPS = 60;
-const TOTAL_FRAMES = DRAW_SECONDS * FPS;
 const PROJECT_TOTAL_FRAMES = PROJECT_DRAW_SECONDS * FPS;
 
 /* ---------- stroke ---------- */
 const COLOR = 0x5d4037;
 const WIDTH = 1.2;
 
-/* ---------- three.js globals ---------- */
-let scene, camera, renderer;
-const portraitLines = [], titleLines = [];
-let portraitTotalPts = 0, titleTotalPts = 0;
-let portraitDrawn = 0, titleDrawn = 0;
-let frameCount = 0;
-let portraitSegsTemp = [];
-let titleSegsTemp = [];
-
 /* ---------- project animations ---------- */
 const projectAnimations = new Map();
+const PROJECT_CANVASES = [
+    {id: "social-threader-canvas", svg: SOCIAL_THREADER_SVG},
+    {id: "countdown-calendar-canvas", svg: COUNTDOWN_CALENDAR_SVG},
+    {id: "city-finder-canvas", svg: CITY_FINDER_SVG},
+    {id: "rsvp-canvas", svg: RSVP_SVG},
+    {id: "llm-crossword-canvas", svg: LLM_CROSSWORD_SVG},
+    {id: "old-millionaire-canvas", svg: OLD_MILLIONAIRE_SVG},
+    {id: "allergy-wheel-canvas", svg: ALLERGY_WHEEL_SVG},
+];
 
 /* ───── SVG parsing ───── */
 function parsePath(d, W, H, scale) {
@@ -189,15 +182,6 @@ function draw(lines, count) {
 }
 
 /* ───── Layout helpers ───── */
-function worldHeight() {
-    return 2 * camera.position.z * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-}
-
-function worldWidth() {
-    const h = worldHeight();
-    return h * camera.aspect;
-}
-
 function projectWorldHeight(projectCamera) {
     return 2 * projectCamera.position.z * Math.tan(THREE.MathUtils.degToRad(projectCamera.fov / 2));
 }
@@ -205,69 +189,6 @@ function projectWorldHeight(projectCamera) {
 function projectWorldWidth(projectCamera) {
     const h = projectWorldHeight(projectCamera);
     return h * projectCamera.aspect;
-}
-
-function positionPortrait(portraitSegs) {
-    const pts = portraitSegs.flatMap(s => s);
-    if (!pts.length) return;
-
-    /* current top-most Y of the portrait (after PORTRAIT_SCALE, centred at 0,0) */
-    let topY = -Infinity;
-    pts.forEach(p => {
-        if (p.y > topY) topY = p.y;
-    });
-
-    /* target: The top of the portrait is 1/3 of the canvas height below the canvas top */
-    const h = worldHeight();                 // visible world height
-    const targetTopY = h / 2 - h / 3;        // = h / 6 from world centre
-
-    /* uniform vertical shift so that portraitTop === targetTopY */
-    const dy = targetTopY - topY;
-
-    portraitSegs.forEach(seg =>
-        seg.forEach(p => {
-            p.y += dy;
-        })
-    );
-}
-
-function positionTitle(titleSegmentsToPosition) {
-    const allTitlePoints = titleSegmentsToPosition.flatMap(s => s);
-    if (allTitlePoints.length === 0) return;
-
-    let tMinX_orig = Infinity, tMaxX_orig = -Infinity, tMinY_orig = Infinity;
-    allTitlePoints.forEach(p => {
-        if (p.x < tMinX_orig) tMinX_orig = p.x;
-        if (p.x > tMaxX_orig) tMaxX_orig = p.x;
-        if (p.y < tMinY_orig) tMinY_orig = p.y;
-    });
-
-    const tInitialWidth = tMaxX_orig - tMinX_orig;
-    const tInitialCenterX = (tMinX_orig + tMaxX_orig) / 2;
-
-    const wWidth = worldWidth();
-    const targetTitleWidth = wWidth * 0.90;
-
-    let stretchFactor = 1;
-    if (tInitialWidth > 0.0001) {
-        stretchFactor = targetTitleWidth / tInitialWidth;
-    }
-
-    titleSegmentsToPosition.forEach(seg =>
-        seg.forEach(p => {
-            p.x = (p.x - tInitialCenterX) * stretchFactor;
-        })
-    );
-
-    const wHeight = worldHeight();
-    const canvasBottomEdgeY = -wHeight / 2;
-    const verticalShift = (canvasBottomEdgeY + TITLE_BOTTOM_MARGIN) - tMinY_orig;
-
-    titleSegmentsToPosition.forEach(seg =>
-        seg.forEach(p => {
-            p.y += verticalShift;
-        })
-    );
 }
 
 function positionProjectSegments(segments, projectCamera) {
@@ -417,133 +338,66 @@ function startProjectAnimation(canvasId) {
     animate();
 }
 
-/* ───── Animation loop ───── */
-function animate() {
-    requestAnimationFrame(animate);
-
-    if (frameCount <= TOTAL_FRAMES) {
-        const prog = frameCount / TOTAL_FRAMES;
-
-        const ptsToDrawPortrait = Math.floor(prog * portraitTotalPts);
-        const ptsToDrawTitle = Math.floor(prog * titleTotalPts);
-
-        draw(portraitLines, ptsToDrawPortrait - portraitDrawn);
-        draw(titleLines, ptsToDrawTitle - titleDrawn);
-
-        portraitDrawn = ptsToDrawPortrait;
-        titleDrawn = ptsToDrawTitle;
-        frameCount++;
+/* ───── Initialization ───── */
+async function initProjectGallery() {
+    try {
+        await Promise.all(PROJECT_CANVASES.map(({id, svg}) => initProjectAnimation(id, svg)));
+    } catch (err) {
+        console.error("Failed to prepare project animations:", err);
+        return;
     }
 
-    renderer.render(scene, camera);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const canvasId = entry.target.id;
+                setTimeout(() => startProjectAnimation(canvasId), 0);
+            }
+        });
+    }, {threshold: 0.1});
+
+    PROJECT_CANVASES.forEach(({id}) => {
+        const canvas = document.getElementById(id);
+        if (canvas) observer.observe(canvas);
+    });
 }
 
-/* ───── Initialization ───── */
-async function init() {
-    scene = new THREE.Scene();
+function setupHeroAudioToggle() {
+    const video = document.getElementById("hero-video");
+    const toggle = document.getElementById("hero-sound-toggle");
+    if (!video || !toggle) return;
 
-    const box = document.getElementById("marko-polo-canvas-container");
+    const updateToggle = () => {
+        const soundEnabled = !video.muted;
+        toggle.setAttribute("aria-pressed", String(soundEnabled));
+        toggle.textContent = soundEnabled ? "Mute Sound" : "Enable Sound";
+    };
 
-    camera = new THREE.PerspectiveCamera(
-        75,
-        box.offsetWidth / box.offsetHeight,
-        0.1,
-        100
-    );
-    camera.position.z = 4;
-
-    renderer = new THREE.WebGLRenderer({
-        canvas: document.getElementById("marko-polo-canvas"),
-        alpha: true,
-        antialias: true
-    });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(box.offsetWidth, box.offsetHeight);
-
-    window.addEventListener("resize", () => {
-        camera.aspect = box.offsetWidth / box.offsetHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(box.offsetWidth, box.offsetHeight);
-
-        updateLines(portraitLines, portraitSegsTemp, positionPortrait);
-        updateLines(titleLines, titleSegsTemp, positionTitle);
-    }, false);
-
-    try {
-        const [loadedPortraitSegs, loadedTitleSegs] = await Promise.all([
-            loadSVG(PORTRAIT_SVG, PORTRAIT_SCALE),
-            loadSVG(TITLE_SVG, TITLE_SCALE)
-        ]);
-
-        portraitSegsTemp = JSON.parse(JSON.stringify(loadedPortraitSegs));
-        titleSegsTemp = JSON.parse(JSON.stringify(loadedTitleSegs));
-
-        if (loadedPortraitSegs.length === 0 || loadedTitleSegs.length === 0) {
-            console.error("Failed to load SVG paths. Check console for details.");
-            return;
+    const ensurePlayback = () => {
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.then === "function") {
+            playPromise.catch(() => {});
         }
+    };
 
-        positionPortrait(loadedPortraitSegs);
-        positionTitle(loadedTitleSegs);
+    toggle.addEventListener("click", () => {
+        video.muted = !video.muted;
+        if (!video.muted) ensurePlayback();
+        updateToggle();
+    });
 
-        portraitLines.push(...makeLines(loadedPortraitSegs, scene));
-        titleLines.push(...makeLines(loadedTitleSegs, scene));
-
-        portraitTotalPts = loadedPortraitSegs.reduce((s, a) => s + a.length, 0);
-        titleTotalPts = loadedTitleSegs.reduce((s, a) => s + a.length, 0);
-
-        animate();
-
-        await Promise.all([
-            initProjectAnimation("social-threader-canvas", SOCIAL_THREADER_SVG),
-            initProjectAnimation("countdown-calendar-canvas", COUNTDOWN_CALENDAR_SVG),
-            initProjectAnimation("city-finder-canvas", CITY_FINDER_SVG),
-            initProjectAnimation("rsvp-canvas", RSVP_SVG),
-            initProjectAnimation("llm-crossword-canvas", LLM_CROSSWORD_SVG),
-            initProjectAnimation("old-millionaire-canvas", OLD_MILLIONAIRE_SVG),
-            initProjectAnimation("allergy-wheel-canvas", ALLERGY_WHEEL_SVG),
-        ]);
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const canvasId = entry.target.id;
-                    setTimeout(() => startProjectAnimation(canvasId), 0);
-                }
-            });
-        }, {threshold: 0.1});
-
-        ["social-threader-canvas", "countdown-calendar-canvas", "city-finder-canvas", "rsvp-canvas", "llm-crossword-canvas", "old-millionaire-canvas", "allergy-wheel-canvas"].forEach(id => {
-            const canvas = document.getElementById(id);
-            if (canvas) observer.observe(canvas);
-        });
-
-    } catch (err) {
-        console.error("Error initializing:", err);
-    }
+    updateToggle();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    setupHeroAudioToggle();
+
     if (typeof THREE === "undefined") {
         console.error("Three.js not loaded");
         return;
     }
-    init().catch(err => {
-        console.error("Failed to initialize:", err);
+
+    initProjectGallery().catch(err => {
+        console.error("Failed to initialize project gallery:", err);
     });
 });
-
-function updateLines(lines, segsTemp, positionFunction) {
-    if (lines.length > 0 && segsTemp.length > 0) {
-        const freshSegs = JSON.parse(JSON.stringify(segsTemp));
-        positionFunction(freshSegs);
-        lines.forEach((line, index) => {
-            const seg = freshSegs[index];
-            const pos = line.geometry.attributes.position;
-            for (let i = 0; i < seg.length; i++) pos.setXYZ(i, seg[i].x, seg[i].y, 0);
-            pos.needsUpdate = true;
-            line.userData.pts = seg;
-            if (frameCount > TOTAL_FRAMES) line.geometry.setDrawRange(0, seg.length);
-        });
-    }
-}
