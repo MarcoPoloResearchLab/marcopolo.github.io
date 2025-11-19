@@ -19,3 +19,8 @@ tools/
 node_modules/
 test-results/
 playwright-report/
+# Managed by gix gitignore workflow
+.env
+.env.*
+qodana.yaml
+bin/
