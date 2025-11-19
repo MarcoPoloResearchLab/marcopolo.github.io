@@ -19,6 +19,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 
 - [x] [MP-400] Added `docker-compose.yml` + `.env.ghttp` to run the site through `ghcr.io/temirov/ghttp` and documented the workflow in README.
 - [x] [MP-401] Added the full Node-based toolchain (`package.json`, ESLint, Stylelint, Playwright) plus Makefile targets so `make lint`, `make test`, and `make ci` all succeed.
+- [x] [MP-402] Re-encoded `assets/A_cyberpunk_engraving_202509270000.mp4` to a 1280px, fast-start MP4 (~2.7 MB) so the hero loads quickly on the web.
 
 ## Planning 
 **Do not work on these, not ready**
