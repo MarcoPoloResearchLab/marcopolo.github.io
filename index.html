@@ -49,7 +49,6 @@
                 autoplay
                 class="hero-video"
                 id="hero-video"
-                loop
                 muted
                 playsinline
                 preload="auto"
@@ -58,6 +57,15 @@
             <source src="assets/hero-loop.mp4" type="video/mp4"/>
             Your browser does not support the video tag.
         </video>
+        <button
+                aria-controls="hero-video"
+                aria-pressed="false"
+                class="hero-sound-toggle hero-sound-overlay"
+                id="hero-sound-toggle"
+                type="button"
+        >
+            Enable Sound
+        </button>
     </div>
 
     <div class="hero-text-block">
@@ -67,15 +75,6 @@
 
         <div class="hero-cta-group">
             <a class="hero-cta-button" href="#projects">Discover Our Work</a>
-            <button
-                    aria-controls="hero-video"
-                    aria-pressed="false"
-                    class="hero-sound-toggle"
-                    id="hero-sound-toggle"
-                    type="button"
-            >
-                Enable Sound
-            </button>
         </div>
     </div>
 </section>

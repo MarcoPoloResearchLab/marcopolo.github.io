@@ -127,6 +127,14 @@ body {
     transition: background 0.3s, color 0.3s, transform 0.3s;
 }
 
+.hero-sound-overlay {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2;
+    backdrop-filter: blur(4px);
+}
+
 .hero-sound-toggle:hover,
 .hero-sound-toggle[aria-pressed="true"] {
     background: rgba(253, 241, 222, 0.15);
@@ -314,8 +322,7 @@ footer {
         border-radius: 16px;
     }
 
-    .hero-cta-button,
-    .hero-sound-toggle {
+    .hero-cta-button {
         width: 100%;
         text-align: center;
     }
