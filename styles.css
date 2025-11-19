@@ -333,50 +333,46 @@ mpr-footer {
     padding: 0 20px;
 }
 
-.mpr-footer__brand {
-    color: var(--text-gold-strong);
+.mpr-footer .mpr-footer__layout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
 }
 
-.mpr-footer__prefix {
-    color: var(--accent-gold);
+.mpr-footer__menu-wrapper,
+.mpr-footer__menu,
+.mpr-footer__spacer,
+.mpr-footer__brand > :not(.mpr-footer__prefix) {
+    display: none !important;
 }
 
-.mpr-footer__menu-button {
-    background: rgba(0, 64, 70, 0.85);
-    color: var(--text-gold);
-    border: 1px solid var(--accent-outline);
-    border-radius: 999px;
-    transition: background 0.3s, color 0.3s;
-}
-
-.mpr-footer__menu-button:hover,
-.mpr-footer__menu-button:focus-visible {
-    background: rgba(255, 211, 105, 0.15);
-    color: var(--accent-gold);
-}
-
-.mpr-footer__menu {
-    background: var(--bg-panel-alt);
-    border: 1px solid var(--accent-outline);
-    box-shadow: 0 30px 60px var(--shadow-strong);
-}
-
-.mpr-footer__menu-item a {
-    color: var(--text-gold-strong);
+.mpr-footer__privacy {
+    margin-right: auto;
+    font-size: 0.95rem;
 }
 
 .mpr-footer__privacy a {
     color: var(--text-gold-strong);
-}
-
-.mpr-footer__menu-item a:hover,
-.mpr-footer__menu-item a:focus {
-    color: var(--accent-gold);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
 }
 
 .mpr-footer__privacy a:hover,
 .mpr-footer__privacy a:focus {
     color: var(--accent-gold);
+    border-color: var(--accent-gold);
+}
+
+.mpr-footer__prefix {
+    margin-left: auto;
+    color: var(--accent-gold);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 /* ---------- Responsive ---------- */
@@ -421,6 +417,15 @@ mpr-footer {
 
     .mpr-footer .mpr-footer__inner {
         padding: 0 16px;
+    }
+
+    .mpr-footer .mpr-footer__layout {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .mpr-footer__prefix {
+        margin-left: 0;
     }
 }
 
