@@ -1,264 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <!-- Google Analytics -->
     <script
-            async
-            src="https://www.googletagmanager.com/gtag/js?id=G-4C2YBPDF1N"
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-4C2YBPDF1N"
     ></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
+      window.dataLayer = window.dataLayer || [];
 
-        function gtag() {
-            dataLayer.push(arguments);
-        }
+      function gtag() {
+        dataLayer.push(arguments);
+      }
 
-        gtag("js", new Date());
-        gtag("config", "G-4C2YBPDF1N");
+      gtag("js", new Date());
+      gtag("config", "G-4C2YBPDF1N");
     </script>
 
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8" />
     <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/gh/MarcoPoloResearchLab/mpr-ui@latest/mpr-ui.css"
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/MarcoPoloResearchLab/mpr-ui@latest/mpr-ui.css"
     />
     <link
-            href="data:image/png;base64,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"
-            rel="icon"
-            sizes="32x32"
-            type="image/png"
+      href="data:image/png;base64,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"
+      rel="icon"
+      sizes="32x32"
+      type="image/png"
     />
     <link
-            href="data:image/png;base64,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"
-            rel="shortcut icon"
-            sizes="32x32"
-            type="image/png"
+      href="data:image/png;base64,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"
+      rel="shortcut icon"
+      sizes="32x32"
+      type="image/png"
     />
-    <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+    <meta content="width=device-width,initial-scale=1.0" name="viewport" />
     <title>Marco Polo Research Lab</title>
 
     <link
-            href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap"
-            rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
     />
-    <link href="styles.css" rel="stylesheet"/>
+    <link href="styles.css" rel="stylesheet" />
     <script type="module">
-        import Alpine from "https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/module.esm.js";
+      import Alpine from "https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/module.esm.js";
 
-        window.Alpine = Alpine;
-        Alpine.start();
+      window.Alpine = Alpine;
+      Alpine.start();
     </script>
     <script
-            defer
-            src="https://cdn.jsdelivr.net/gh/MarcoPoloResearchLab/mpr-ui@latest/mpr-ui.js"
+      defer
+      src="https://cdn.jsdelivr.net/gh/MarcoPoloResearchLab/mpr-ui@latest/mpr-ui.js"
     ></script>
-    <script
-            src="https://accounts.google.com/gsi/client"
-            async
-            defer
-    ></script>
-</head>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  </head>
 
-<body>
-<!-- ───── HERO (fills full viewport) ───── -->
-<section id="top-content-section">
-    <div class="hero-media">
+  <body>
+    <!-- ───── HERO (fills full viewport) ───── -->
+    <section id="top-content-section">
+      <div class="hero-media">
         <video
-                aria-hidden="true"
-                autoplay
-                class="hero-video"
-                id="hero-video"
-                muted
-                playsinline
-                preload="auto"
+          aria-hidden="true"
+          autoplay
+          class="hero-video"
+          id="hero-video"
+          muted
+          playsinline
+          preload="auto"
         >
-            <source src="assets/hero-loop.webm" type="video/webm"/>
-            <source src="assets/hero-loop.mp4" type="video/mp4"/>
-            Your browser does not support the video tag.
+          <source src="assets/hero-loop.webm" type="video/webm" />
+          <source src="assets/hero-loop.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
         </video>
         <button
-                aria-controls="hero-video"
-                aria-pressed="false"
-                class="hero-sound-toggle hero-sound-overlay"
-                id="hero-sound-toggle"
-                type="button"
+          aria-controls="hero-video"
+          aria-pressed="false"
+          class="hero-sound-toggle hero-sound-overlay"
+          id="hero-sound-toggle"
+          type="button"
         >
-            <span class="sr-only">Toggle sound</span>
-            <span aria-hidden="true" class="hero-sound-glyph hero-sound-muted">🔇</span>
-            <span aria-hidden="true" class="hero-sound-glyph hero-sound-on">🔊</span>
+          <span class="sr-only">Toggle sound</span>
+          <span aria-hidden="true" class="hero-sound-glyph hero-sound-muted"
+            >🔇</span
+          >
+          <span aria-hidden="true" class="hero-sound-glyph hero-sound-on"
+            >🔊</span
+          >
         </button>
-    </div>
+      </div>
 
-    <div class="hero-text-block">
+      <div class="hero-text-block">
         <h1 class="hero-title">Marco Polo Research Lab</h1>
 
         <p class="tagline">The new platform you can stand on.</p>
 
         <div class="hero-cta-group">
-            <a class="hero-cta-button" href="#projects">Discover Our Work</a>
+          <a class="hero-cta-button" href="#projects">Discover Our Work</a>
         </div>
-    </div>
-</section>
+      </div>
+    </section>
 
-<!-- ───── MAIN CONTENT (unchanged) ───── -->
-<div class="container">
-    <!-- About -->
-    <section id="about-us">
+    <!-- ───── MAIN CONTENT (unchanged) ───── -->
+    <div class="container">
+      <!-- About -->
+      <section id="about-us">
         <h2>Our Mission</h2>
         <p>
-            At Marco Polo Research Lab, we build exceptional products that are
-            simple, reliable, and help people get things done. We create
-            intuitive, productive tools, avoiding unnecessary complexity. We
-            listen to user feedback and never stop tweaking and tuning.
+          At Marco Polo Research Lab, we build exceptional products that are
+          simple, reliable, and help people get things done. We create
+          intuitive, productive tools, avoiding unnecessary complexity. We
+          listen to user feedback and never stop tweaking and tuning.
         </p>
-    </section>
+      </section>
 
-    <!-- Projects -->
-    <section id="projects">
+      <!-- Projects -->
+      <section id="projects">
         <h2>Discoveries &amp; Creations</h2>
         <div class="project-grid">
-            <div class="project-card">
-                <div class="project-icon-block">
-                    <canvas id="social-threader-canvas"></canvas>
-                </div>
-                <div class="project-card-content">
-                    <h3>Social Threader</h3>
-                    <p>
-                        A web-based tool that intelligently breaks long text into
-                        smaller chunks for social media platforms.
-                    </p>
-                    <a
-                            class="learn-more"
-                            href="https://threader.mprlab.com"
-                            target="_blank"
-                    >Launch App</a>
-                </div>
+          <div class="project-card">
+            <div class="project-icon-block">
+              <canvas id="social-threader-canvas"></canvas>
             </div>
-            <div class="project-card">
-                <div class="project-icon-block">
-                    <canvas id="countdown-calendar-canvas"></canvas>
-                </div>
-                <div class="project-card-content">
-                    <h3>Countdown Calendar</h3>
-                    <p>A sleek calendar tool that counts down to designated dates.</p>
-                    <a
-                            class="learn-more"
-                            href="https://countdown.mprlab.com/"
-                            target="_blank"
-                    >Launch App</a>
-                </div>
+            <div class="project-card-content">
+              <h3>Social Threader</h3>
+              <p>
+                A web-based tool that intelligently breaks long text into
+                smaller chunks for social media platforms.
+              </p>
+              <a
+                class="learn-more"
+                href="https://threader.mprlab.com"
+                target="_blank"
+                >Launch App</a
+              >
             </div>
-            <div class="project-card">
-                <div class="project-icon-block">
-                    <canvas id="city-finder-canvas"></canvas>
-                </div>
-                <div class="project-card-content">
-                    <h3>Nearest City Finder</h3>
-                    <p>
-                        CLI and web application that finds the closest city by driving
-                        distance.
-                    </p>
-                    <a
-                            class="learn-more"
-                            href="https://github.com/MarkoPoloResearchLab/NearestCityFinder"
-                            target="_blank"
-                    >View on GitHub</a
-                    >
-                </div>
+          </div>
+          <div class="project-card">
+            <div class="project-icon-block">
+              <canvas id="countdown-calendar-canvas"></canvas>
             </div>
-            <div class="project-card">
-                <div class="project-icon-block">
-                    <canvas id="rsvp-canvas"></canvas>
-                </div>
-                <div class="project-card-content">
-                    <h3>RSVP</h3>
-                    <p>
-                        An events invitation platform that relies on physical QR Codes and allows printing, sending, and
-                        tracking invitations to events.
-                    </p>
-                    <a
-                            class="learn-more"
-                            href="https://rsvp.mprlab.com"
-                            target="_blank"
-                    >Launch App</a>
-                </div>
+            <div class="project-card-content">
+              <h3>Countdown Calendar</h3>
+              <p>A sleek calendar tool that counts down to designated dates.</p>
+              <a
+                class="learn-more"
+                href="https://countdown.mprlab.com/"
+                target="_blank"
+                >Launch App</a
+              >
             </div>
-            <div class="project-card">
-                <div class="project-icon-block">
-                    <canvas id="llm-crossword-canvas"></canvas>
-                </div>
-                <div class="project-card-content">
-                    <h3>LLM Crossword</h3>
-                    <p>
-                        Dynamically built crosswords. Enter the topic and get a crossword created just for you.
-                    </p>
-                    <a
-                            class="learn-more"
-                            href="https://llm-crossword.mprlab.com"
-                            target="_blank"
-                    >Launch App</a>
-                </div>
+          </div>
+          <div class="project-card">
+            <div class="project-icon-block">
+              <canvas id="city-finder-canvas"></canvas>
             </div>
-            <div class="project-card">
-                <div class="project-icon-block">
-                    <canvas id="old-millionaire-canvas"></canvas>
-                </div>
-                <div class="project-card-content">
-                    <h3>Old Millionaire</h3>
-                    <p>
-                        How much money you’d need **today** to match the purchasing power of \$1,000,000 in your birth year.
-                    </p>
-                    <a
-                            class="learn-more"
-                            href="https://millionaire.mprlab.com"
-                            target="_blank"
-                    >Launch App</a>
-                </div>
+            <div class="project-card-content">
+              <h3>Nearest City Finder</h3>
+              <p>
+                CLI and web application that finds the closest city by driving
+                distance.
+              </p>
+              <a
+                class="learn-more"
+                href="https://github.com/MarkoPoloResearchLab/NearestCityFinder"
+                target="_blank"
+                >View on GitHub</a
+              >
             </div>
-            <div class="project-card">
-                <div class="project-icon-block">
-                    <canvas id="allergy-wheel-canvas"></canvas>
-                </div>
-                <div class="project-card-content">
-                    <h3>Allergy Wheel</h3>
-                    <p>
-                        Interactive allergy-learning game where kids pick food allergens, spin the wheel to win hearts, and discover dishes that match their choices.
-                    </p>
-                    <a
-                            class="learn-more"
-                            href="https://allergy.mprlab.com"
-                            target="_blank"
-                    >Launch App</a>
-                </div>
+          </div>
+          <div class="project-card">
+            <div class="project-icon-block">
+              <canvas id="rsvp-canvas"></canvas>
             </div>
+            <div class="project-card-content">
+              <h3>RSVP</h3>
+              <p>
+                An events invitation platform that relies on physical QR Codes
+                and allows printing, sending, and tracking invitations to
+                events.
+              </p>
+              <a
+                class="learn-more"
+                href="https://rsvp.mprlab.com"
+                target="_blank"
+                >Launch App</a
+              >
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-icon-block">
+              <canvas id="llm-crossword-canvas"></canvas>
+            </div>
+            <div class="project-card-content">
+              <h3>LLM Crossword</h3>
+              <p>
+                Dynamically built crosswords. Enter the topic and get a
+                crossword created just for you.
+              </p>
+              <a
+                class="learn-more"
+                href="https://llm-crossword.mprlab.com"
+                target="_blank"
+                >Launch App</a
+              >
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-icon-block">
+              <canvas id="old-millionaire-canvas"></canvas>
+            </div>
+            <div class="project-card-content">
+              <h3>Old Millionaire</h3>
+              <p>
+                How much money you’d need **today** to match the purchasing
+                power of \$1,000,000 in your birth year.
+              </p>
+              <a
+                class="learn-more"
+                href="https://millionaire.mprlab.com"
+                target="_blank"
+                >Launch App</a
+              >
+            </div>
+          </div>
+          <div class="project-card">
+            <div class="project-icon-block">
+              <canvas id="allergy-wheel-canvas"></canvas>
+            </div>
+            <div class="project-card-content">
+              <h3>Allergy Wheel</h3>
+              <p>
+                Interactive allergy-learning game where kids pick food
+                allergens, spin the wheel to win hearts, and discover dishes
+                that match their choices.
+              </p>
+              <a
+                class="learn-more"
+                href="https://allergy.mprlab.com"
+                target="_blank"
+                >Launch App</a
+              >
+            </div>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Contact -->
-    <section id="contact-us">
+      <!-- Contact -->
+      <section id="contact-us">
         <h2>Chart Your Course With Us</h2>
         <p>
-            Ready to embark on your next project or have a question? Reach out and
-            let's explore the possibilities.
+          Ready to embark on your next project or have a question? Reach out and
+          let's explore the possibilities.
         </p>
         <p>Email: <a href="mailto:contact@mprlab.com">contact@mprlab.com</a></p>
-    </section>
-</div>
+      </section>
+    </div>
 
-<!-- Footer -->
-<mpr-footer
-        class="mpr-footer"
-        sticky="false"
-        prefix-text="Built by"
-        privacy-link-label="Privacy &amp; Terms"
-        privacy-modal-content='<h3>Privacy &amp; Terms</h3><p>We only retain project metadata and contact details needed to deliver Marco Polo Research Lab services. No personal information is shared or sold.</p><p>Need data removed? Email <a href="mailto:legal@mprlab.com">legal@mprlab.com</a> with the affected product and account identifier.</p>'
-        links-collection='{"style":"drop-up","text":"Marco Polo Research Lab","links":[{"label":"Marco Polo Research Lab","url":"https://mprlab.com"},{"label":"Gravity Notes","url":"https://gravity.mprlab.com"},{"label":"LoopAware","url":"https://loopaware.mprlab.com"},{"label":"Allergy Wheel","url":"https://allergy.mprlab.com"},{"label":"Social Threader","url":"https://threader.mprlab.com"},{"label":"RSVP","url":"https://rsvp.mprlab.com"},{"label":"Countdown Calendar","url":"https://countdown.mprlab.com"},{"label":"LLM Crossword","url":"https://llm-crossword.mprlab.com"},{"label":"Prompt Bubbles","url":"https://prompts.mprlab.com"},{"label":"Wallpapers","url":"https://wallpapers.mprlab.com"}]}'
-        aria-label="Marco Polo Research Lab footer"
->
-    <span slot="menu-prefix" class="mpr-footer-built-by">Built by</span>
-</mpr-footer>
+    <!-- Footer -->
+    <mpr-footer
+      class="mpr-footer"
+      sticky="false"
+      privacy-link-label="Privacy &amp; Terms"
+      privacy-modal-content='<h3>Privacy &amp; Terms</h3><p>We only retain project metadata and contact details needed to deliver Marco Polo Research Lab services. No personal information is shared or sold.</p><p>Need data removed? Email <a href="mailto:legal@mprlab.com">legal@mprlab.com</a> with the affected product and account identifier.</p>'
+      links-collection='{
+        "style":"drop-up",
+        "text":"Built by Marco Polo Research Lab",
+        "links":[
+            {"label":"Marco Polo Research Lab","url":"https://mprlab.com"},
+            {"label":"Gravity Notes","url":"https://gravity.mprlab.com"},
+            {"label":"LoopAware","url":"https://loopaware.mprlab.com"},
+            {"label":"Allergy Wheel","url":"https://allergy.mprlab.com"},
+            {"label":"Social Threader","url":"https://threader.mprlab.com"},
+            {"label":"RSVP","url":"https://rsvp.mprlab.com"},
+            {"label":"Countdown Calendar","url":"https://countdown.mprlab.com"},
+            {"label":"LLM Crossword","url":"https://llm-crossword.mprlab.com"},
+            {"label":"Prompt Bubbles","url":"https://prompts.mprlab.com"},
+            {"label":"Wallpapers","url":"https://wallpapers.mprlab.com"}
+        ]}'
+      aria-label="Marco Polo Research Lab footer"
+    >
+    </mpr-footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="script.js"></script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
