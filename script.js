@@ -367,10 +367,14 @@ function setupHeroAudioToggle() {
     const toggle = document.getElementById("hero-sound-toggle");
     if (!video || !toggle) return;
 
+    const srLabel = toggle.querySelector(".sr-only");
+
     const updateToggle = () => {
         const soundEnabled = !video.muted;
         toggle.setAttribute("aria-pressed", String(soundEnabled));
-        toggle.textContent = soundEnabled ? "Mute Sound" : "Enable Sound";
+        if (srLabel) {
+            srLabel.textContent = soundEnabled ? "Mute sound" : "Enable sound";
+        }
     };
 
     const ensurePlayback = () => {
