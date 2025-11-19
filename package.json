@@ -1,0 +1,21 @@
+{
+  "name": "marcopolo.github.io",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "http-server -p 41730 -c-1 -s .",
+    "lint:js": "eslint script.js tests/**/*.js",
+    "lint:css": "stylelint styles.css",
+    "lint": "npm run lint:js && npm run lint:css",
+    "test": "playwright test",
+    "ci": "npm run lint && npm run test",
+    "postinstall": "playwright install --with-deps chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.2",
+    "eslint": "^8.57.0",
+    "http-server": "^14.1.1",
+    "stylelint": "^16.8.1",
+    "stylelint-config-standard": "^36.0.0"
+  }
+}
