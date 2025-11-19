@@ -111,20 +111,30 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
 .hero-sound-toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 28px;
-    border-radius: 5px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 600;
     background: transparent;
     color: #fdf1de;
     border: 2px solid rgba(253, 241, 222, 0.8);
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
-    transition: background 0.3s, color 0.3s, transform 0.3s;
+    transition: background 0.3s, color 0.3s, transform 0.3s, border-color 0.3s;
 }
 
 .hero-sound-overlay {
@@ -139,9 +149,33 @@ body {
 .hero-sound-toggle[aria-pressed="true"] {
     background: rgba(253, 241, 222, 0.15);
     color: #ffe6c7;
-    transform: translateY(-2px);
 }
 
+.hero-sound-icon {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+    stroke: none;
+}
+
+.hero-sound-icon-wave {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+}
+
+.hero-sound-icon-mute {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    display: block;
+}
+
+.hero-sound-toggle[aria-pressed="true"] .hero-sound-icon-mute {
+    display: none;
+}
 /* ---------- Sections ---------- */
 section:not(#top-content-section) {
     background: #fff;
