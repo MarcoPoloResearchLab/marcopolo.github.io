@@ -10,8 +10,8 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 ## Features (100-199)
 
 - [x] [MP-100] Replaced the sketch-based hero with the inline hero video (muted by default with an audio toggle) and refreshed the favicon using the provided JPEG source.
-- [ ] [MP-101] Change the theme of the site to be dark turquoise and golden: background is dark turquoise, font is golden. Improvise.
-- [ ] [MP-102] Add a non-sticky footer from mpr-ui with no theme switch
+- [x] [MP-101] Changed the global theme to dark turquoise with golden typography, updating hero/sections/cards/buttons accordingly.
+- [x] [MP-102] Integrated the declarative `<mpr-footer>` from mpr-ui (non-sticky, no theme switch) plus lab-wide quick links.
 - [ ] [MP-103] Spit the site into 4 sections:
 Research
 Tools
@@ -52,6 +52,13 @@ RSVP
 - [x] [MP-201] Swapped in the new hero video (web-optimized MP4) and refreshed fonts (Orbitron + Space Grotesk) to match the cyberpunk aesthetic.
 
 ## BugFixes (300–399)
+
+- [x] [MP-300] Footer stickiness came from the host element carrying `class="mpr-footer"`, so CDN CSS kept the host sticky while `sticky="false"` only toggled the internal footer; dropped the host class so the data-mpr-sticky override applies and added Playwright coverage for the non-sticky flow.
+
+```<mpr-footer
+      class="mpr-footer"
+      sticky="false"
+```
 
 ## Maintenance (400–499)
 

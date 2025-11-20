@@ -17,7 +17,7 @@ const FPS = 60;
 const PROJECT_TOTAL_FRAMES = PROJECT_DRAW_SECONDS * FPS;
 
 /* ---------- stroke ---------- */
-const COLOR = 0x5d4037;
+const COLOR = 0xffd369;
 const WIDTH = 1.2;
 
 /* ---------- project animations ---------- */
