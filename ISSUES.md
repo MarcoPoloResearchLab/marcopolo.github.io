@@ -22,21 +22,32 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
   Requirements (locked in)
   - Information architecture
     - Replace the current “About / Projects / Contact” content with four section bands: Research, Tools, Platform, Products.
+    - Section bands appear in the order: Research → Tools → Platform → Products.
     - Each section appears as a wide, full-width band on a single scrolling page.
     - Each band contains one or more project cards; there are no sliders, carousels, or auto-scrolling behaviors.
+    - The page remains a simple scrollable layout without additional section navigation or jump-link menus; users discover content by scrolling.
   - Visual design
     - Preserve the current cyberpunk/dark-turquoise + gold global theme.
     - Give each of the four sections a distinct color band treatment (background and/or accent variation) while staying within the existing palette.
+    - Each section band contains a single heading and its project cards; there is no additional per-section body copy.
     - Cards are visually distinct from their band (panel on top of band) and use rounded corners.
+    - Project visuals use simple static icons or screenshots; the section cards do not introduce new Three.js or canvas-based animations.
   - Card model
     - Each project is rendered as a standardized card containing:
       - Project name
       - Global project description (short text)
       - Project status: one of WIP, Beta, Production (rendered as a badge/label).
+    - Within each section, cards are ordered by status from Production to Beta to WIP (rendered right to left in the visual layout).
+  - Contact and interactions
+    - For projects in Production, the primary card action links directly to the live product surface (app or hosted UI), and that product surface owns detailed contact information; the landing page does not duplicate contact channels.
+    - For projects in Beta, the primary card action also links to the live product surface but surfaces the “Beta” status clearly on the card.
+    - For projects in WIP, the status badge (“WIP”) is a clear but non-interactive label; WIP cards do not expose a primary external link and instead communicate that the project is under active development.
+    - Projects without a public app URL never show a primary external link; their card relies on the WIP status and description as the call to action instead of a disabled button or generic “coming soon” label.
   - Data source
-    - Introduce a structured JSON catalog (for example `data/projects.json`) as the single source of truth for the landing page.
+    - Use `data/projects.json` as the single source of truth for the landing page.
     - Each project entry in the catalog must include at least: `name`, `description`, `status`, `category` (Research/Tools/Platform/Products), and a link field (for example `url`).
     - The page renders project cards by reading this catalog; project cards are not hard-coded into `index.html`.
+    - Every section band must have at least one project in the catalog so no section renders empty.
   - Initial project mapping (subject to refinement)
     - Research: ISSUES.md, PhotoLab
     - Tools: ctx, gix, ghttp
@@ -50,42 +61,16 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Every rendered card shows a name, description, and status badge, and either a working link or an explicit “coming soon” style when configured.
 
   TODOs / open decisions
-  - Project inventory and metadata
-    - Finalize the full set of projects that must appear on this page (beyond the initial list above).
-    - For each project, provide:
-      - Canonical display name (including exact casing and spacing).
-      - Canonical URL (app, docs, GitHub) or an explicit indication that it is not yet public.
-      - Final category assignment (Research, Tools, Platform, Products), especially for borderline cases.
-      - Final status (WIP, Beta, Production).
-      - Short, approved description text (one to two sentences, consistent tone).
-  - JSON schema details
-    - Lock down the exact schema for the JSON catalog (for example `data/projects.json`):
-      - Field names and allowed values (`category`, `status` and so on).
-      - Any optional fields we want to support now (for example `tags`, `iconId`, `repoUrl`) to avoid immediate schema churn.
-    - Decide whether the JSON is:
-      - Fetched at runtime (for example `fetch("/data/projects.json")`), or
-      - Imported as a static JavaScript module (if we want tighter typing and fewer runtime fetches).
-  - Layout and navigation
-    - Confirm the order of section bands on the page (for example Research → Tools → Platform → Products).
-    - Decide how cards are ordered within each section (curated order, alphabetical, status-priority, and so on).
-    - Decide what happens to the contact content:
-      - Stays as a distinct “Contact” band below the four sections, or
-      - Is integrated into one of the sections (for example a card or block in Products or Platform).
-    - Decide whether to add navigation or jump links (from the hero or header) to scroll to each section, and confirm the link labels.
-  - Visual nuances
-    - Clarify whether each section band needs its own short description text under the heading (for example “Research: explorations and lab notes”) or just the heading and cards.
-    - Decide on icon or animation strategy for cards:
-      - Reuse existing Three.js or canvas icons where they exist, or
-      - Move to simpler static icons or text-only cards for consistency.
-  - Empty or placeholder behavior
-    - Define how to render projects that are WIP or not yet public:
-      - Visual style and wording for “coming soon” versus disabled link.
-    - Define how to handle a section that temporarily has few or no projects (for example show “More coming soon” versus hide the section).
 
 ## Improvements (200–299)
 
 - [x] [MP-200] Hero text/CTA now lives below the video with refreshed cyberpunk styling so the motion stays unobstructed.
 - [x] [MP-201] Swapped in the new hero video (web-optimized MP4) and refreshed fonts (Orbitron + Space Grotesk) to match the cyberpunk aesthetic.
+- [ ] [MP-202] LoopAware-powered subscriptions for WIP cards
+      - On project cards with status WIP, make the WIP badge clickable so the card visually flips as if turned over and reveals a “subscribe to updates” surface.
+      - Embed the subscribe form from the LoopAware project (widget or inline form) so visitors can subscribe to news about that specific project without leaving the page.
+      - Decide whether each project maps to its own LoopAware site identifier or whether all WIP cards share a single “lab updates” subscription list, and document that mapping.
+      - Extend Playwright coverage to assert that WIP cards expose a working subscription surface and that Production/Beta cards continue to behave as in MP-103.
 
 ## BugFixes (300–399)
 
@@ -101,7 +86,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 - [x] [MP-400] Added `docker-compose.yml` + `.env.ghttp` to run the site through `ghcr.io/temirov/ghttp` and documented the workflow in README.
 - [x] [MP-401] Added the full Node-based toolchain (`package.json`, ESLint, Stylelint, Playwright) plus Makefile targets so `make lint`, `make test`, and `make ci` all succeed.
 - [x] [MP-402] Re-encoded the hero video to a 1280px, fast-start MP4 (~2.7 MB) and stored it as `assets/hero-loop.mp4` so the hero loads quickly on the web without the conspicuous filename.
-- [ ] [MP-403] Data gathering
+- [x] [MP-403] Data gathering
       - Scan ~/Development subfolders folder with depth 2
       - Find 
             - Research: ISSUES.md, PhotoLab

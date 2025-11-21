@@ -1,0 +1,182 @@
+projects:
+  - id: issues-md
+    repo: github.com/MarcoPoloResearchLab/marcopolo.github.io
+    display_name: "ISSUES.md"
+    urls:
+      app: https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md
+      docs: https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md
+      github: https://github.com/MarcoPoloResearchLab/marcopolo.github.io
+      public: true # or false for “not yet public”
+    category: Research # Research | Tools | Platform | Products
+    status: WIP # WIP | Beta | Production
+    description: >
+      Append-only lab worklog that tracks features, improvements, and maintenance activity across Marco Polo Research Lab projects.
+
+  - id: photolab
+    repo:
+    display_name: "Photolab"
+    urls:
+      app:
+      docs:
+      github:
+      public: false # or false for “not yet public”
+    category: Research
+    status: WIP
+    description: >
+      Local photo library classifier and search UI that scans image folders, writes high-confidence labels into EXIF, indexes metadata into SQLite, and serves a minimal browser-based search grid.
+
+  - id: ctx
+    repo: github.com/tyemirov/ctx
+    display_name: "ctx"
+    urls:
+      app: https://github.com/tyemirov/ctx
+      docs: https://github.com/tyemirov/ctx#readme
+      github: https://github.com/tyemirov/ctx
+      public: true
+    category: Tools
+    status: Production
+    description: >
+      Terminal-first project explorer for browsing trees, reading files with optional embedded documentation, analysing call chains, and fetching upstream docs from GitHub using one CLI.
+
+  - id: gix
+    repo: github.com/tyemirov/gix
+    display_name: "gix"
+    urls:
+      app: https://github.com/tyemirov/gix
+      docs: https://github.com/tyemirov/gix#readme
+      github: https://github.com/tyemirov/gix
+      public: true
+    category: Tools
+    status: Production
+    description: >
+      Git and GitHub maintenance CLI for keeping large fleets of repositories healthy by normalising folder names, aligning remotes, pruning stale branches, and automating audit and release workflows.
+
+  - id: ghttp
+    repo: github.com/temirov/ghttp
+    display_name: "gHTTP"
+    urls:
+      app: https://github.com/temirov/ghttp
+      docs: https://github.com/temirov/ghttp#readme
+      github: https://github.com/temirov/ghttp
+      public: true
+    category: Tools
+    status: Production
+    description: >
+      Go-powered static file server that mirrors python -m http.server while adding Markdown rendering, structured logging, and easy HTTPS provisioning for local or containerised environments.
+
+  - id: loopaware
+    repo: github.com/tyemirov/loopaware
+    display_name: "LoopAware"
+    urls:
+      app: https://loopaware.mprlab.com
+      docs: https://github.com/tyemirov/loopaware#readme
+      github: https://github.com/tyemirov/loopaware
+      public: true
+    category: Platform
+    status: Production
+    description: >
+      Customer feedback platform with an embeddable widget, Google-authenticated dashboard, and APIs for collecting, triaging, and responding to messages across sites.
+
+  - id: pinguin
+    repo: github.com/temirov/pinguin
+    display_name: "Pinguin"
+    urls:
+      app: https://github.com/temirov/pinguin
+      docs: https://github.com/temirov/pinguin#readme
+      github: https://github.com/temirov/pinguin
+      public: true
+    category: Platform
+    status: Production
+    description: >
+      Production-quality notification service that exposes a gRPC API for email and SMS, persists jobs in SQLite, and retries failures with an exponential-backoff scheduler and structured logging.
+
+  - id: ets
+    repo: github.com/tyemirov/ETS
+    display_name: "Ephemeral Token Service (ETS)"
+    urls:
+      app: https://ets.mprlab.com
+      docs: https://github.com/tyemirov/ETS#readme
+      github: https://github.com/tyemirov/ETS
+      public: true
+    category: Platform
+    status: Beta
+    description: >
+      JWT + DPoP gateway that mints short-lived, browser-bound access tokens and reverse-proxies requests to upstream APIs so front-end apps never handle provider secrets directly.
+
+  - id: tauth
+    repo: github.com/tyemirov/TAuth
+    display_name: "TAuth"
+    urls:
+      app: https://tauth.mprlab.com
+      docs: https://github.com/tyemirov/TAuth#readme
+      github: https://github.com/tyemirov/TAuth
+      public: true
+    category: Platform
+    status: Production
+    description: >
+      Google Sign-In and session service that verifies ID tokens, issues short-lived JWT cookies, and ships a tiny auth-client.js helper so single-origin apps avoid storing tokens in JavaScript.
+
+  - id: ledger
+    repo: github.com/tyemirov/ledger
+    display_name: "Ledger Service"
+    urls:
+      app: https://github.com/tyemirov/ledger
+      docs: https://github.com/tyemirov/ledger#readme
+      github: https://github.com/tyemirov/ledger
+      public: true
+    category: Platform
+    status: Beta
+    description: >
+      Standalone gRPC-based virtual credits ledger that tracks grants, reservations, captures, and releases in an append-only store backed by SQL with full auditability and idempotency.
+
+  - id: product-scanner
+    repo: github.com/MarcoPoloResearchLab/ProductScanner
+    display_name: "Product Scanner"
+    urls:
+      app: https://ps.mprlab.com
+      docs: https://github.com/MarcoPoloResearchLab/ProductScanner#readme
+      github: https://github.com/MarcoPoloResearchLab/ProductScanner
+      public: true
+    category: Products
+    status: Beta
+    description: >
+      Product detail page auditor that crawls listings, evaluates them against configurable rule packs, and reports gaps through a CLI and authenticated web dashboard.
+
+  - id: sheet2tube
+    repo: github.com/MarcoPoloResearchLab/Sheet2Tube
+    display_name: "Sheet2Tube"
+    urls:
+      app: https://sheet2tube.mprlab.com
+      docs: https://github.com/MarcoPoloResearchLab/Sheet2Tube#readme
+      github: https://github.com/MarcoPoloResearchLab/Sheet2Tube
+      public: true
+    category: Products
+    status: Beta
+    description: >
+      CSV and web toolkit that round-trips YouTube channel metadata between spreadsheets and your account while also offering a GPT-powered helper for expanding GPT(…) placeholders in CSV files.
+
+  - id: gravity-notes
+    repo: github.com/MarcoPoloResearchLab/gravity
+    display_name: "Gravity Notes"
+    urls:
+      app: https://gravity.mprlab.com
+      docs: https://github.com/MarcoPoloResearchLab/gravity#readme
+      github: https://github.com/MarcoPoloResearchLab/gravity
+      public: true
+    category: Products
+    status: Production
+    description: >
+      Single-page Markdown notebook with an inline card grid, offline-first storage, and Google-backed sync designed to keep ideas flowing without modal dialogs or context switches.
+
+  - id: rsvp
+    repo: github.com/MarcoPoloResearchLab/RSVP
+    display_name: "RSVP"
+    urls:
+      app: https://rsvp.mprlab.com
+      docs: https://github.com/MarcoPoloResearchLab/RSVP#readme
+      github: https://github.com/MarcoPoloResearchLab/RSVP
+      public: true
+    category: Products
+    status: Production
+    description: >
+      Event invitation platform that generates QR-code-powered invites, tracks responses, and supports both local and production TLS setups for secure guest flows.

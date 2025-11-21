@@ -1,4 +1,4 @@
-.PHONY: install lint test ci
+.PHONY: install lint test ci projects-json
 
 install:
 	npm install
@@ -11,3 +11,6 @@ test:
 
 ci:
 	npm run ci
+
+projects-json:
+	npx js-yaml data/projects.yml > data/projects.json
