@@ -31,6 +31,10 @@
     --mpr-chip-hover-bg: rgba(255, 211, 105, 0.28);
     --mpr-menu-hover-bg: rgba(255, 211, 105, 0.2);
     --mpr-theme-toggle-bg: rgba(0, 40, 46, 0.8);
+    --band-research: #052832;
+    --band-tools: #05333d;
+    --band-platform: #04222a;
+    --band-products: #031a21;
 }
 
 body {
@@ -207,7 +211,7 @@ a:focus {
 
 .bands {
     width: 100%;
-    margin: 60px 0 0;
+    margin: 0;
     padding: 0;
     display: block;
 }
@@ -215,26 +219,30 @@ a:focus {
 .band {
     position: relative;
     border-radius: 0;
-    padding: clamp(56px, 8vw, 110px) clamp(24px, 8vw, 140px);
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    padding: clamp(64px, 8vw, 120px) 0;
+    margin-bottom: clamp(32px, 5vw, 70px);
     border: none;
     box-shadow: none;
     overflow: hidden;
 }
 
 .band-research {
-    background: linear-gradient(125deg, #03222b, #06424d);
+    background: var(--band-research);
 }
 
 .band-tools {
-    background: linear-gradient(125deg, #052b36, #08464d);
+    background: var(--band-tools);
 }
 
 .band-platform {
-    background: linear-gradient(125deg, #041f27, #0b3e46);
+    background: var(--band-platform);
 }
 
 .band-products {
-    background: linear-gradient(125deg, #06212b, #0c3641);
+    background: var(--band-products);
 }
 
 .band-heading {
@@ -244,6 +252,7 @@ a:focus {
     max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0 clamp(24px, 6vw, 120px);
 }
 
 .band-heading h2 {
@@ -265,6 +274,7 @@ a:focus {
     max-width: 1100px;
     margin-left: auto;
     margin-right: auto;
+    padding: 0 clamp(24px, 6vw, 120px);
 }
 
 .project-card {
