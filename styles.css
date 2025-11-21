@@ -219,14 +219,15 @@ a:focus {
 .band {
     position: relative;
     border-radius: 0;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    padding: clamp(64px, 8vw, 120px) 0;
-    margin-bottom: 0;
     border: none;
     box-shadow: none;
     overflow: hidden;
+}
+
+.band-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(64px, 8vw, 120px) clamp(24px, 6vw, 120px);
 }
 
 .band-research {
@@ -249,10 +250,7 @@ a:focus {
     position: relative;
     z-index: 1;
     margin-bottom: 32px;
-    max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 clamp(24px, 6vw, 120px);
+    padding: 0;
 }
 
 .band-heading h2 {
@@ -271,10 +269,7 @@ a:focus {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 28px;
-    max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 clamp(24px, 6vw, 120px);
+    padding: 0;
 }
 
 .project-card {
@@ -559,14 +554,8 @@ mpr-footer {
         border-radius: 20px;
     }
 
-    .bands {
-        padding: 50px 16px 80px;
-        gap: 48px;
-    }
-
-    .band {
-        padding: 28px 22px 40px;
-        border-radius: 28px;
+    .band-inner {
+        padding: 40px 20px 60px;
     }
 
     .band-grid {
@@ -616,6 +605,10 @@ mpr-footer {
     .hero-cta-button {
         width: 100%;
         text-align: center;
+    }
+
+    .band-inner {
+        padding: 32px 18px 48px;
     }
 
     .band-heading h2 {
