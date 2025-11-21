@@ -60,8 +60,6 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - At least one project card rendered under each of those headings, driven by the JSON catalog.
       - Every rendered card shows a name, description, and status badge, and either a working link or an explicit “coming soon” style when configured.
 
-  TODOs / open decisions
-
 ## Improvements (200–299)
 
 - [x] [MP-200] Hero text/CTA now lives below the video with refreshed cyberpunk styling so the motion stays unobstructed.
