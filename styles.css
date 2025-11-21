@@ -223,7 +223,7 @@ a:focus {
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     padding: clamp(64px, 8vw, 120px) 0;
-    margin-bottom: clamp(32px, 5vw, 70px);
+    margin-bottom: 0;
     border: none;
     box-shadow: none;
     overflow: hidden;
