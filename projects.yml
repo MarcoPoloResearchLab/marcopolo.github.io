@@ -1,0 +1,13 @@
+projects:
+  - id: gix
+    repo: github.com/tyemirov/gix
+    display_name: "gix"
+    urls:
+      app: https://gix.example.com
+      docs: https://docs.example.com/gix
+      github: https://github.com/tyemirov/gix
+      public: true # or false for “not yet public”
+    category: Tools # Research | Tools | Platform | Products
+    status: Production # WIP | Beta | Production
+    description: >
+      One–two sentence, approved, canonical description.
