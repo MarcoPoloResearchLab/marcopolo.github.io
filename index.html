@@ -100,161 +100,36 @@
       </div>
     </section>
 
-    <!-- ───── MAIN CONTENT (unchanged) ───── -->
-    <div class="container">
-      <!-- About -->
-      <section id="about-us">
-        <h2>Our Mission</h2>
-        <p>
-          At Marco Polo Research Lab, we build exceptional products that are
-          simple, reliable, and help people get things done. We create
-          intuitive, productive tools, avoiding unnecessary complexity. We
-          listen to user feedback and never stop tweaking and tuning.
-        </p>
-      </section>
-
-      <!-- Projects -->
-      <section id="projects">
-        <h2>Discoveries &amp; Creations</h2>
-        <div class="project-grid">
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="social-threader-canvas"></canvas>
-            </div>
-            <div class="project-card-content">
-              <h3>Social Threader</h3>
-              <p>
-                A web-based tool that intelligently breaks long text into
-                smaller chunks for social media platforms.
-              </p>
-              <a
-                class="learn-more"
-                href="https://threader.mprlab.com"
-                target="_blank"
-                >Launch App</a
-              >
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="countdown-calendar-canvas"></canvas>
-            </div>
-            <div class="project-card-content">
-              <h3>Countdown Calendar</h3>
-              <p>A sleek calendar tool that counts down to designated dates.</p>
-              <a
-                class="learn-more"
-                href="https://countdown.mprlab.com/"
-                target="_blank"
-                >Launch App</a
-              >
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="city-finder-canvas"></canvas>
-            </div>
-            <div class="project-card-content">
-              <h3>Nearest City Finder</h3>
-              <p>
-                CLI and web application that finds the closest city by driving
-                distance.
-              </p>
-              <a
-                class="learn-more"
-                href="https://github.com/MarkoPoloResearchLab/NearestCityFinder"
-                target="_blank"
-                >View on GitHub</a
-              >
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="rsvp-canvas"></canvas>
-            </div>
-            <div class="project-card-content">
-              <h3>RSVP</h3>
-              <p>
-                An events invitation platform that relies on physical QR Codes
-                and allows printing, sending, and tracking invitations to
-                events.
-              </p>
-              <a
-                class="learn-more"
-                href="https://rsvp.mprlab.com"
-                target="_blank"
-                >Launch App</a
-              >
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="llm-crossword-canvas"></canvas>
-            </div>
-            <div class="project-card-content">
-              <h3>LLM Crossword</h3>
-              <p>
-                Dynamically built crosswords. Enter the topic and get a
-                crossword created just for you.
-              </p>
-              <a
-                class="learn-more"
-                href="https://llm-crossword.mprlab.com"
-                target="_blank"
-                >Launch App</a
-              >
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="old-millionaire-canvas"></canvas>
-            </div>
-            <div class="project-card-content">
-              <h3>Old Millionaire</h3>
-              <p>
-                How much money you’d need **today** to match the purchasing
-                power of \$1,000,000 in your birth year.
-              </p>
-              <a
-                class="learn-more"
-                href="https://millionaire.mprlab.com"
-                target="_blank"
-                >Launch App</a
-              >
-            </div>
-          </div>
-          <div class="project-card">
-            <div class="project-icon-block">
-              <canvas id="allergy-wheel-canvas"></canvas>
-            </div>
-            <div class="project-card-content">
-              <h3>Allergy Wheel</h3>
-              <p>
-                Interactive allergy-learning game where kids pick food
-                allergens, spin the wheel to win hearts, and discover dishes
-                that match their choices.
-              </p>
-              <a
-                class="learn-more"
-                href="https://allergy.mprlab.com"
-                target="_blank"
-                >Launch App</a
-              >
-            </div>
-          </div>
+    <!-- ───── Project Bands ───── -->
+    <main class="bands" id="projects">
+      <section class="band band-research" data-band-category="Research">
+        <div class="band-heading">
+          <h2>Research</h2>
         </div>
+        <div class="band-grid" data-band-cards></div>
       </section>
 
-      <!-- Contact -->
-      <section id="contact-us">
-        <h2>Chart Your Course With Us</h2>
-        <p>
-          Ready to embark on your next project or have a question? Reach out and
-          let's explore the possibilities.
-        </p>
-        <p>Email: <a href="mailto:contact@mprlab.com">contact@mprlab.com</a></p>
+      <section class="band band-tools" data-band-category="Tools">
+        <div class="band-heading">
+          <h2>Tools</h2>
+        </div>
+        <div class="band-grid" data-band-cards></div>
       </section>
-    </div>
+
+      <section class="band band-platform" data-band-category="Platform">
+        <div class="band-heading">
+          <h2>Platform</h2>
+        </div>
+        <div class="band-grid" data-band-cards></div>
+      </section>
+
+      <section class="band band-products" data-band-category="Products">
+        <div class="band-heading">
+          <h2>Products</h2>
+        </div>
+        <div class="band-grid" data-band-cards></div>
+      </section>
+    </main>
 
     <!-- Footer -->
     <mpr-footer
@@ -280,7 +155,6 @@
     >
     </mpr-footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

@@ -1,0 +1,130 @@
+{
+  "projects": [
+    {
+      "id": "issues-md",
+      "name": "ISSUES.md",
+      "description": "Append-only lab worklog that tracks features, improvements, and maintenance activity across Marco Polo Research Lab projects.",
+      "status": "WIP",
+      "category": "Research",
+      "url": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md",
+      "public": true
+    },
+    {
+      "id": "photolab",
+      "name": "Photolab",
+      "description": "Local photo library classifier and search UI that writes high-confidence labels into EXIF, indexes metadata into SQLite, and serves a minimal browser-based search grid.",
+      "status": "WIP",
+      "category": "Research",
+      "url": null,
+      "public": false
+    },
+    {
+      "id": "ctx",
+      "name": "ctx",
+      "description": "Terminal-first project explorer for browsing trees, reading files with embedded docs, analysing call chains, and fetching upstream docs from GitHub via one CLI.",
+      "status": "Production",
+      "category": "Tools",
+      "url": "https://github.com/tyemirov/ctx",
+      "public": true
+    },
+    {
+      "id": "gix",
+      "name": "gix",
+      "description": "Git and GitHub maintenance CLI for keeping large fleets of repositories healthy by normalising folder names, aligning remotes, and automating audit/release workflows.",
+      "status": "Production",
+      "category": "Tools",
+      "url": "https://github.com/tyemirov/gix",
+      "public": true
+    },
+    {
+      "id": "ghttp",
+      "name": "gHTTP",
+      "description": "Go-powered static file server that mirrors python -m http.server while adding Markdown rendering, structured logging, and easy HTTPS provisioning for local work or containers.",
+      "status": "Production",
+      "category": "Tools",
+      "url": "https://github.com/temirov/ghttp",
+      "public": true
+    },
+    {
+      "id": "loopaware",
+      "name": "LoopAware",
+      "description": "Customer feedback platform with an embeddable widget, Google-authenticated dashboard, and APIs for collecting, triaging, and responding to product messages.",
+      "status": "Production",
+      "category": "Platform",
+      "url": "https://loopaware.mprlab.com",
+      "public": true
+    },
+    {
+      "id": "pinguin",
+      "name": "Pinguin",
+      "description": "Production-ready notification service that exposes a gRPC API for email and SMS, persists jobs in SQLite, and retries failures with an exponential-backoff scheduler.",
+      "status": "Production",
+      "category": "Platform",
+      "url": "https://github.com/temirov/pinguin",
+      "public": true
+    },
+    {
+      "id": "ets",
+      "name": "Ephemeral Token Service (ETS)",
+      "description": "JWT + DPoP gateway that mints short-lived, browser-bound access tokens and reverse-proxies requests so front-end apps never handle provider secrets directly.",
+      "status": "Beta",
+      "category": "Platform",
+      "url": "https://ets.mprlab.com",
+      "public": true
+    },
+    {
+      "id": "tauth",
+      "name": "TAuth",
+      "description": "Google Sign-In and session service that verifies ID tokens, issues short-lived JWT cookies, and ships a tiny auth-client.js helper for same-origin apps.",
+      "status": "Production",
+      "category": "Platform",
+      "url": "https://tauth.mprlab.com",
+      "public": true
+    },
+    {
+      "id": "ledger",
+      "name": "Ledger Service",
+      "description": "Standalone gRPC-based virtual credits ledger that tracks grants, reservations, captures, and releases in an append-only store backed by SQL with full auditability.",
+      "status": "Beta",
+      "category": "Platform",
+      "url": "https://github.com/tyemirov/ledger",
+      "public": true
+    },
+    {
+      "id": "product-scanner",
+      "name": "Product Scanner",
+      "description": "Product detail page auditor that crawls listings, evaluates them against configurable rule packs, and reports gaps through a CLI and authenticated dashboard.",
+      "status": "Beta",
+      "category": "Products",
+      "url": "https://ps.mprlab.com",
+      "public": true
+    },
+    {
+      "id": "sheet2tube",
+      "name": "Sheet2Tube",
+      "description": "CSV and web toolkit that round-trips YouTube channel metadata between spreadsheets and your account plus a GPT-powered helper for expanding scripted placeholders.",
+      "status": "Beta",
+      "category": "Products",
+      "url": "https://sheet2tube.mprlab.com",
+      "public": true
+    },
+    {
+      "id": "gravity-notes",
+      "name": "Gravity Notes",
+      "description": "Single-page Markdown notebook with an inline card grid, offline-first storage, and Google-backed sync so ideas flow without modal dialogs or context switches.",
+      "status": "Production",
+      "category": "Products",
+      "url": "https://gravity.mprlab.com",
+      "public": true
+    },
+    {
+      "id": "rsvp",
+      "name": "RSVP",
+      "description": "Event invitation platform that generates QR-code-powered invites, tracks responses, and supports both local and production TLS setups for secure guest flows.",
+      "status": "Production",
+      "category": "Products",
+      "url": "https://rsvp.mprlab.com",
+      "public": true
+    }
+  ]
+}

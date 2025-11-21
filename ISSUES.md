@@ -12,7 +12,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 - [x] [MP-100] Replaced the sketch-based hero with the inline hero video (muted by default with an audio toggle) and refreshed the favicon using the provided JPEG source.
 - [x] [MP-101] Changed the global theme to dark turquoise with golden typography, updating hero/sections/cards/buttons accordingly.
 - [x] [MP-102] Integrated the declarative `<mpr-footer>` from mpr-ui (non-sticky, no theme switch) plus lab-wide quick links.
-- [ ] [MP-103] Restructure landing page into four product bands
+- [x] [MP-103] Restructure landing page into four product bands
 
   Summary
   - Rebuild the entire landing page information architecture (below the hero) around four top-level sections: Research, Tools, Platform, Products.
@@ -59,6 +59,8 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Presence of section headings “Research”, “Tools”, “Platform”, “Products”.
       - At least one project card rendered under each of those headings, driven by the JSON catalog.
       - Every rendered card shows a name, description, and status badge, and either a working link or an explicit “coming soon” style when configured.
+  Outcome
+  - Created `data/projects.json`, rebuilt the four section bands to render cards from the catalog (status-sorted with static visuals), and added Playwright assertions for headings, cards, and link behavior.
 
 ## Improvements (200–299)
 
