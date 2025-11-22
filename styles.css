@@ -266,8 +266,8 @@ a:focus {
 .band-grid {
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 24px;
     padding: 0;
 }
@@ -285,6 +285,9 @@ a:focus {
     overflow: hidden;
     min-height: 260px;
     transition: transform 0.3s ease, border-color 0.3s ease;
+    width: 320px;
+    max-width: 100%;
+    flex: 0 0 320px;
 }
 
 .project-card:hover {
@@ -617,6 +620,8 @@ mpr-footer {
 
     .project-card {
         padding: 20px;
+        width: 100%;
+        flex: 1 0 100%;
     }
 
     .mpr-footer {
