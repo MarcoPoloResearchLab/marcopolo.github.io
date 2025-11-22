@@ -128,7 +128,7 @@
       "category": "Products",
       "url": "https://gravity.mprlab.com",
       "public": true,
-      "icon": null
+      "icon": "assets/projects/gravity-notes.png"
     },
     {
       "id": "rsvp",
@@ -138,7 +138,7 @@
       "category": "Products",
       "url": "https://rsvp.mprlab.com",
       "public": true,
-      "icon": null
+      "icon": "assets/projects/rsvp.png"
     }
   ]
 }
