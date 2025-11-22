@@ -255,6 +255,7 @@ a:focus {
 
 .band-heading h2 {
     margin: 0;
+    margin-left: clamp(24px, 4vw, 64px);
     font-size: clamp(2rem, 4vw, 3rem);
     font-family: "Orbitron", "Space Grotesk", sans-serif;
     text-transform: uppercase;
