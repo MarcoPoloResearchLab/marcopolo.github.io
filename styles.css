@@ -70,7 +70,7 @@ body {
     position: relative;
     width: min(1100px, 92vw);
     aspect-ratio: 1020 / 1088;
-    border-radius: 28px;
+    border-radius: 0;
     overflow: hidden;
     box-shadow: 0 40px 120px var(--shadow-strong);
 }
@@ -579,7 +579,7 @@ mpr-footer {
 
     .hero-media {
         width: 100%;
-        border-radius: 20px;
+        border-radius: 0;
     }
 
     .mpr-footer {
@@ -619,7 +619,7 @@ mpr-footer {
     }
 
     .hero-media {
-        border-radius: 16px;
+        border-radius: 0;
     }
 
     .hero-cta-button {
