@@ -285,9 +285,9 @@ a:focus {
     overflow: hidden;
     min-height: 260px;
     transition: transform 0.3s ease, border-color 0.3s ease;
-    width: 320px;
+    width: 360px;
     max-width: 100%;
-    flex: 0 0 320px;
+    flex: 0 0 360px;
 }
 
 .project-card:hover {
