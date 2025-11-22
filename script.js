@@ -178,7 +178,9 @@ const CARD_GAP_PX = 28;
 const MOBILE_BREAKPOINT = 600;
 
 /**
- * Arrange project cards into centered full rows and a left-aligned last row.
+ * Arrange project cards into rows with fixed-width cards:
+ * - full rows alternate between left and right alignment
+ * - the final partial row (if any) is left-aligned so it tucks under the first column.
  * @param {HTMLElement} grid
  */
 function layoutBandRows(grid) {
@@ -202,26 +204,34 @@ function layoutBandRows(grid) {
 
     if (total <= maxPerRow) {
         const singleRow = document.createElement("div");
-        singleRow.className = "band-row band-row-center";
+        singleRow.className = "band-row band-row-left";
         allCards.forEach(card => singleRow.append(card));
         grid.append(singleRow);
         return;
     }
 
     let index = 0;
+    let rowIndex = 0;
     while (index < total) {
         const rowCards = allCards.slice(index, index + maxPerRow);
         const row = document.createElement("div");
         row.className = "band-row";
+
         const isLastRow = index + maxPerRow >= total;
-        if (!isLastRow || rowCards.length === maxPerRow) {
-            row.classList.add("band-row-center");
-        } else {
-            row.classList.add("band-row-left");
+        const isFullRow = rowCards.length === maxPerRow;
+
+        let alignLeft = rowIndex % 2 === 0;
+        if (isLastRow && !isFullRow) {
+            alignLeft = true;
         }
+
+        row.classList.add(alignLeft ? "band-row-left" : "band-row-right");
+
         rowCards.forEach(card => row.append(card));
         grid.append(row);
+
         index += maxPerRow;
+        rowIndex += 1;
     }
 }
 

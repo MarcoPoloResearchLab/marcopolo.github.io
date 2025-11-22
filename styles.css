@@ -279,12 +279,12 @@ a:focus {
     width: 100%;
 }
 
-.band-row-center {
-    justify-content: center;
-}
-
 .band-row-left {
     justify-content: flex-start;
+}
+
+.band-row-right {
+    justify-content: flex-end;
 }
 
 .project-card {
