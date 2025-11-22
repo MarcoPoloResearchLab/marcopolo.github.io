@@ -329,6 +329,14 @@ a:focus {
     font-size: 1.4rem;
     font-weight: 600;
     color: var(--accent-gold);
+    overflow: hidden;
+}
+
+.project-card-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
 }
 
 .status-badge {

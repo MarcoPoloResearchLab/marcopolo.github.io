@@ -7,7 +7,8 @@
       "status": "WIP",
       "category": "Research",
       "url": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md",
-      "public": true
+      "public": true,
+      "icon": "assets/projects/issues-md.png"
     },
     {
       "id": "photolab",
@@ -16,7 +17,8 @@
       "status": "WIP",
       "category": "Research",
       "url": null,
-      "public": false
+      "public": false,
+      "icon": null
     },
     {
       "id": "ctx",
@@ -25,7 +27,8 @@
       "status": "Production",
       "category": "Tools",
       "url": "https://github.com/tyemirov/ctx",
-      "public": true
+      "public": true,
+      "icon": "assets/projects/ctx.png"
     },
     {
       "id": "gix",
@@ -34,7 +37,8 @@
       "status": "Production",
       "category": "Tools",
       "url": "https://github.com/tyemirov/gix",
-      "public": true
+      "public": true,
+      "icon": "assets/projects/gix.png"
     },
     {
       "id": "ghttp",
@@ -43,7 +47,8 @@
       "status": "Production",
       "category": "Tools",
       "url": "https://github.com/temirov/ghttp",
-      "public": true
+      "public": true,
+      "icon": "assets/projects/ghttp.png"
     },
     {
       "id": "loopaware",
@@ -52,7 +57,8 @@
       "status": "Production",
       "category": "Platform",
       "url": "https://loopaware.mprlab.com",
-      "public": true
+      "public": true,
+      "icon": "assets/projects/loopaware.svg"
     },
     {
       "id": "pinguin",
@@ -61,7 +67,8 @@
       "status": "Production",
       "category": "Platform",
       "url": "https://github.com/temirov/pinguin",
-      "public": true
+      "public": true,
+      "icon": "assets/projects/pinguin.png"
     },
     {
       "id": "ets",
@@ -70,7 +77,8 @@
       "status": "Beta",
       "category": "Platform",
       "url": "https://ets.mprlab.com",
-      "public": true
+      "public": true,
+      "icon": null
     },
     {
       "id": "tauth",
@@ -79,7 +87,8 @@
       "status": "Production",
       "category": "Platform",
       "url": "https://tauth.mprlab.com",
-      "public": true
+      "public": true,
+      "icon": null
     },
     {
       "id": "ledger",
@@ -88,7 +97,8 @@
       "status": "Beta",
       "category": "Platform",
       "url": "https://github.com/tyemirov/ledger",
-      "public": true
+      "public": true,
+      "icon": "assets/projects/ledger.png"
     },
     {
       "id": "product-scanner",
@@ -97,7 +107,8 @@
       "status": "Beta",
       "category": "Products",
       "url": "https://ps.mprlab.com",
-      "public": true
+      "public": true,
+      "icon": null
     },
     {
       "id": "sheet2tube",
@@ -106,7 +117,8 @@
       "status": "Beta",
       "category": "Products",
       "url": "https://sheet2tube.mprlab.com",
-      "public": true
+      "public": true,
+      "icon": null
     },
     {
       "id": "gravity-notes",
@@ -115,7 +127,8 @@
       "status": "Production",
       "category": "Products",
       "url": "https://gravity.mprlab.com",
-      "public": true
+      "public": true,
+      "icon": "assets/projects/gravity-notes.png"
     },
     {
       "id": "rsvp",
@@ -124,7 +137,8 @@
       "status": "Production",
       "category": "Products",
       "url": "https://rsvp.mprlab.com",
-      "public": true
+      "public": true,
+      "icon": "assets/projects/rsvp.png"
     }
   ]
 }
