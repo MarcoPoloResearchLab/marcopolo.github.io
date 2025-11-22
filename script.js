@@ -176,7 +176,7 @@ async function hydrateProjectCatalog() {
 const CARD_WIDTH_PX = 520;
 const CARD_GAP_PX = 28;
 const MOBILE_BREAKPOINT = 600;
-const BAND_ROW_PADDING_PX = 10;
+const BAND_ROW_PADDING_PX = 24;
 
 /**
  * Arrange project cards into rows with fixed-width cards:
