@@ -181,7 +181,7 @@ const BAND_ROW_PADDING_PX = 10;
 /**
  * Arrange project cards into rows with fixed-width cards:
  * - full rows alternate between left and right alignment
- * - the final partial row (if any) is left-aligned so it tucks under the first column.
+ * - the final row (even if partial) follows the same alternation pattern
  * @param {HTMLElement} grid
  */
 function layoutBandRows(grid) {
@@ -201,7 +201,8 @@ function layoutBandRows(grid) {
     const containerWidth = grid.getBoundingClientRect().width || window.innerWidth;
     const step = CARD_WIDTH_PX + CARD_GAP_PX;
     const usableWidth = Math.max(0, containerWidth - BAND_ROW_PADDING_PX * 2);
-    const maxPerRow = Math.max(1, Math.floor((usableWidth + CARD_GAP_PX) / step));
+    const computedPerRow = Math.floor((usableWidth + CARD_GAP_PX) / step);
+    const maxPerRow = Math.max(1, Math.min(2, computedPerRow));
     const total = allCards.length;
 
     if (total <= maxPerRow) {
@@ -219,13 +220,7 @@ function layoutBandRows(grid) {
         const row = document.createElement("div");
         row.className = "band-row";
 
-        const isLastRow = index + maxPerRow >= total;
-        const isFullRow = rowCards.length === maxPerRow;
-
-        let alignLeft = rowIndex % 2 === 0;
-        if (isLastRow && !isFullRow) {
-            alignLeft = true;
-        }
+        const alignLeft = rowIndex % 2 === 0;
 
         row.classList.add(alignLeft ? "band-row-left" : "band-row-right");
 
