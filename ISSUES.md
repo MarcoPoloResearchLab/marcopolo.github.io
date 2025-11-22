@@ -62,6 +62,9 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
   Outcome
   - Created `data/projects.json`, rebuilt the four section bands to render cards from the catalog (status-sorted with static visuals), and added Playwright assertions for headings, cards, and link behavior.
 
+- [x] [MP-104] add an ability to visually flip the card and show the back of the card. we will embed a form from LoppAware to subscribe tio the news there later, but I want the cards with BETA and WIP status to flip when clicked on
+      - Implemented flippable card markup/CSS and JS so Beta and WIP cards toggle an `is-flipped` state on click/keyboard while Production cards remain static, and extended Playwright coverage to assert the behavior.
+
 ## Improvements (200–299)
 
 - [x] [MP-200] Hero text/CTA now lives below the video with refreshed cyberpunk styling so the motion stays unobstructed.

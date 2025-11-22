@@ -34,6 +34,9 @@ const STATUS_CLASS = Object.freeze({
     WIP: "status-badge-wip"
 });
 
+/** @type {ProjectStatus[]} */
+const FLIPPABLE_STATUSES = ["Beta", "WIP"];
+
 /**
  * Fetches the JSON catalog for the landing page.
  * @returns {Promise<Project[]>}
@@ -61,6 +64,17 @@ function buildProjectCard(project) {
     const card = document.createElement("article");
     card.className = "project-card";
     card.dataset.status = project.status.toLowerCase();
+
+    const inner = document.createElement("div");
+    inner.className = "project-card-inner";
+
+    const isFlippable = FLIPPABLE_STATUSES.includes(project.status);
+    if (isFlippable) {
+        card.classList.add("project-card-flippable");
+        card.setAttribute("role", "button");
+        card.tabIndex = 0;
+        card.setAttribute("aria-pressed", "false");
+    }
 
     const visual = document.createElement("div");
     visual.className = "project-card-visual";
@@ -103,7 +117,62 @@ function buildProjectCard(project) {
         body.append(link);
     }
 
-    card.append(header, body);
+    const front = document.createElement("div");
+    front.className = "project-card-face project-card-front";
+    front.append(header, body);
+
+    inner.append(front);
+
+    if (isFlippable) {
+        const back = document.createElement("div");
+        back.className = "project-card-face project-card-back";
+
+        const backHeader = document.createElement("div");
+        backHeader.className = "project-card-header";
+
+        const backTitle = document.createElement("h3");
+        backTitle.textContent = project.name;
+
+        const backStatus = buildStatusBadge(project.status);
+
+        backHeader.append(backTitle, backStatus);
+
+        const backBody = document.createElement("div");
+        backBody.className = "card-body";
+
+        const backCopy = document.createElement("p");
+        backCopy.textContent =
+            project.status === "WIP"
+                ? "Flip this card to preview where the LoopAware-powered subscription form for this project will appear."
+                : "Flip this card to preview the back surface where a LoopAware subscription form will live for beta updates.";
+
+        backBody.append(backCopy);
+        back.append(backHeader, backBody);
+        inner.append(back);
+
+        /**
+         * @param {MouseEvent | KeyboardEvent} event
+         */
+        const toggleFlip = event => {
+            const target = /** @type {HTMLElement} */ (event.target);
+            if (target.closest("a")) {
+                return;
+            }
+
+            const nowFlipped = card.classList.toggle("is-flipped");
+            card.setAttribute("aria-pressed", nowFlipped ? "true" : "false");
+        };
+
+        card.addEventListener("click", toggleFlip);
+        card.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+                event.preventDefault();
+                toggleFlip(event);
+            }
+        });
+    }
+
+    card.append(inner);
     return card;
 }
 

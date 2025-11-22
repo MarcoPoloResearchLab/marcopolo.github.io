@@ -40,7 +40,7 @@ test.describe("Marco Polo Research Lab landing page", () => {
                 .filter({has: page.getByRole("heading", {name: project.name})});
 
             await expect(card).toContainText(project.description);
-            await expect(card.locator(".status-badge")).toHaveText(project.status);
+            await expect(card.locator(".status-badge").first()).toHaveText(project.status);
 
             const action = card.locator("a.card-action");
             if (project.status === "WIP" || !project.url) {
@@ -48,6 +48,36 @@ test.describe("Marco Polo Research Lab landing page", () => {
             } else {
                 await expect(action).toHaveCount(1);
                 await expect(action).toHaveAttribute("href", project.url);
+            }
+        }
+    });
+
+    test("beta and WIP cards flip while production cards remain static", async ({page}) => {
+        await page.goto("/index.html");
+
+        for (const project of catalog.projects) {
+            const card = page
+                .locator(".project-card")
+                .filter({has: page.getByRole("heading", {name: project.name})});
+
+            await expect(card).toBeVisible();
+
+            const initialClasses = await card.getAttribute("class");
+            expect(initialClasses || "").not.toMatch(/is-flipped/);
+
+            const badge = card.locator(".status-badge").first();
+            await badge.click();
+
+            const classesAfterClick = await card.getAttribute("class");
+
+            if (project.status === "Beta" || project.status === "WIP") {
+                expect(classesAfterClick || "").toMatch(/is-flipped/);
+
+                await badge.click();
+                const classesAfterSecondClick = await card.getAttribute("class");
+                expect(classesAfterSecondClick || "").not.toMatch(/is-flipped/);
+            } else {
+                expect(classesAfterClick || "").not.toMatch(/is-flipped/);
             }
         }
     });
