@@ -57,48 +57,50 @@
 
   <body>
     <!-- ───── HERO (fills full viewport) ───── -->
-    <section id="top-content-section">
-      <div class="hero-media">
-        <video
-          aria-hidden="true"
-          autoplay
-          class="hero-video"
-          id="hero-video"
-          muted
-          playsinline
-          preload="auto"
-        >
-          <source src="assets/hero-loop.webm" type="video/webm" />
-          <source src="assets/hero-loop.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-        <button
-          aria-controls="hero-video"
-          aria-pressed="false"
-          class="hero-sound-toggle hero-sound-overlay"
-          id="hero-sound-toggle"
-          type="button"
-        >
-          <span class="sr-only">Toggle sound</span>
-          <span aria-hidden="true" class="hero-sound-glyph hero-sound-muted"
-            >🔇</span
+    <mpr-band class="band band-hero">
+      <section id="top-content-section">
+        <div class="hero-media">
+          <video
+            aria-hidden="true"
+            autoplay
+            class="hero-video"
+            id="hero-video"
+            muted
+            playsinline
+            preload="auto"
           >
-          <span aria-hidden="true" class="hero-sound-glyph hero-sound-on"
-            >🔊</span
+            <source src="assets/hero-loop.webm" type="video/webm" />
+            <source src="assets/hero-loop.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <button
+            aria-controls="hero-video"
+            aria-pressed="false"
+            class="hero-sound-toggle hero-sound-overlay"
+            id="hero-sound-toggle"
+            type="button"
           >
-        </button>
-      </div>
-
-      <div class="hero-text-block">
-        <h1 class="hero-title">Marco Polo Research Lab</h1>
-
-        <p class="tagline">The new platform you can stand on.</p>
-
-        <div class="hero-cta-group">
-          <a class="hero-cta-button" href="#projects">Discover Our Work</a>
+            <span class="sr-only">Toggle sound</span>
+            <span aria-hidden="true" class="hero-sound-glyph hero-sound-muted"
+              >🔇</span
+            >
+            <span aria-hidden="true" class="hero-sound-glyph hero-sound-on"
+              >🔊</span
+            >
+          </button>
         </div>
-      </div>
-    </section>
+
+        <div class="hero-text-block">
+          <h1 class="hero-title">Marco Polo Research Lab</h1>
+
+          <p class="tagline">The new platform you can stand on.</p>
+
+          <div class="hero-cta-group">
+            <a class="hero-cta-button" href="#projects">Discover Our Work</a>
+          </div>
+        </div>
+      </section>
+    </mpr-band>
 
     <!-- ───── Project Bands ───── -->
     <main class="bands" id="projects">
