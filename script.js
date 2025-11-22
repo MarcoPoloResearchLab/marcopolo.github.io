@@ -12,6 +12,7 @@
  * @property {ProjectCategory} category
  * @property {string | null} url
  * @property {boolean} [public]
+ * @property {string | null | undefined} [icon]
  */
 
 const SECTION_ORDER = /** @type {ProjectCategory[]} */ ([
@@ -63,7 +64,16 @@ function buildProjectCard(project) {
 
     const visual = document.createElement("div");
     visual.className = "project-card-visual";
-    visual.textContent = deriveMonogram(project.name);
+
+    if (project.icon) {
+        const img = document.createElement("img");
+        img.src = project.icon;
+        img.alt = `${project.name} favicon`;
+        img.loading = "lazy";
+        visual.append(img);
+    } else {
+        visual.textContent = deriveMonogram(project.name);
+    }
 
     const title = document.createElement("h3");
     title.textContent = project.name;

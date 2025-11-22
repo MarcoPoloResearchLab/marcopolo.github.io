@@ -100,6 +100,10 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
             - Final status (WIP, Beta, Production).
             - Short, approved description text (one to two sentences, consistent tone).
       - Populate @projects.yml to the best of your abilities
+- [x] [MP-404] Extract favicons from the projects listed in data/projects.yml . Oftentimes they are embedded in the index.html. save them under projects and use them in the cards
+
+  Outcome
+  - Extended the catalog with optional per-project icon paths, updated card rendering to prefer those icons over generated monograms, and added a local helper (`tools/fetch_favicons.js`) that downloads favicons into `assets/projects/` for the known GitHub-backed projects.
 
 ## Planning 
 **Do not work on these, not ready**
