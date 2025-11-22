@@ -58,7 +58,7 @@
       "category": "Platform",
       "url": "https://loopaware.mprlab.com",
       "public": true,
-      "icon": "assets/projects/loopaware.png"
+      "icon": "assets/projects/loopaware.svg"
     },
     {
       "id": "pinguin",
@@ -78,7 +78,7 @@
       "category": "Platform",
       "url": "https://ets.mprlab.com",
       "public": true,
-      "icon": "assets/projects/ets.png"
+      "icon": null
     },
     {
       "id": "tauth",
@@ -88,7 +88,7 @@
       "category": "Platform",
       "url": "https://tauth.mprlab.com",
       "public": true,
-      "icon": "assets/projects/tauth.png"
+      "icon": null
     },
     {
       "id": "ledger",
@@ -108,7 +108,7 @@
       "category": "Products",
       "url": "https://ps.mprlab.com",
       "public": true,
-      "icon": "assets/projects/product-scanner.png"
+      "icon": null
     },
     {
       "id": "sheet2tube",
@@ -118,7 +118,7 @@
       "category": "Products",
       "url": "https://sheet2tube.mprlab.com",
       "public": true,
-      "icon": "assets/projects/sheet2tube.png"
+      "icon": null
     },
     {
       "id": "gravity-notes",
@@ -128,7 +128,7 @@
       "category": "Products",
       "url": "https://gravity.mprlab.com",
       "public": true,
-      "icon": "assets/projects/gravity-notes.png"
+      "icon": null
     },
     {
       "id": "rsvp",
@@ -138,7 +138,7 @@
       "category": "Products",
       "url": "https://rsvp.mprlab.com",
       "public": true,
-      "icon": "assets/projects/rsvp.png"
+      "icon": null
     }
   ]
 }
