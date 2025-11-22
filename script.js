@@ -176,6 +176,7 @@ async function hydrateProjectCatalog() {
 const CARD_WIDTH_PX = 520;
 const CARD_GAP_PX = 28;
 const MOBILE_BREAKPOINT = 600;
+const BAND_ROW_PADDING_PX = 10;
 
 /**
  * Arrange project cards into rows with fixed-width cards:
@@ -199,7 +200,8 @@ function layoutBandRows(grid) {
 
     const containerWidth = grid.getBoundingClientRect().width || window.innerWidth;
     const step = CARD_WIDTH_PX + CARD_GAP_PX;
-    const maxPerRow = Math.max(1, Math.floor((containerWidth + CARD_GAP_PX) / step));
+    const usableWidth = Math.max(0, containerWidth - BAND_ROW_PADDING_PX * 2);
+    const maxPerRow = Math.max(1, Math.floor((usableWidth + CARD_GAP_PX) / step));
     const total = allCards.length;
 
     if (total <= maxPerRow) {
