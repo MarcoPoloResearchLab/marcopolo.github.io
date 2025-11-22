@@ -267,10 +267,23 @@ a:focus {
     position: relative;
     z-index: 1;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
     gap: 28px;
     padding: 0;
+}
+
+.band-row {
+    display: flex;
+    gap: 28px;
+    width: 100%;
+}
+
+.band-row-center {
+    justify-content: center;
+}
+
+.band-row-left {
+    justify-content: flex-start;
 }
 
 .project-card {
@@ -619,7 +632,8 @@ mpr-footer {
         font-size: 2rem;
     }
 
-    .band-grid {
+    .band-row {
+        flex-wrap: wrap;
         justify-content: center;
     }
 

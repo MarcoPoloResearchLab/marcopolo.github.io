@@ -144,6 +144,8 @@ function renderProjectBands(projects) {
         scopedProjects.forEach(project => {
             grid.append(buildProjectCard(project));
         });
+
+        layoutBandRows(/** @type {HTMLElement} */ (grid));
     });
 }
 
@@ -168,6 +170,58 @@ async function hydrateProjectCatalog() {
         renderProjectBands(projects);
     } catch (error) {
         console.error("Failed to render project catalog:", error);
+    }
+}
+
+const CARD_WIDTH_PX = 520;
+const CARD_GAP_PX = 28;
+const MOBILE_BREAKPOINT = 600;
+
+/**
+ * Arrange project cards into centered full rows and a left-aligned last row.
+ * @param {HTMLElement} grid
+ */
+function layoutBandRows(grid) {
+    const allCards = /** @type {HTMLElement[]} */ (Array.from(
+        grid.querySelectorAll(".project-card"),
+    ));
+    if (!allCards.length) return;
+
+    if (window.innerWidth <= MOBILE_BREAKPOINT) {
+        grid.innerHTML = "";
+        allCards.forEach(card => grid.append(card));
+        return;
+    }
+
+    grid.innerHTML = "";
+
+    const containerWidth = grid.getBoundingClientRect().width || window.innerWidth;
+    const step = CARD_WIDTH_PX + CARD_GAP_PX;
+    const maxPerRow = Math.max(1, Math.floor((containerWidth + CARD_GAP_PX) / step));
+    const total = allCards.length;
+
+    if (total <= maxPerRow) {
+        const singleRow = document.createElement("div");
+        singleRow.className = "band-row band-row-center";
+        allCards.forEach(card => singleRow.append(card));
+        grid.append(singleRow);
+        return;
+    }
+
+    let index = 0;
+    while (index < total) {
+        const rowCards = allCards.slice(index, index + maxPerRow);
+        const row = document.createElement("div");
+        row.className = "band-row";
+        const isLastRow = index + maxPerRow >= total;
+        if (!isLastRow || rowCards.length === maxPerRow) {
+            row.classList.add("band-row-center");
+        } else {
+            row.classList.add("band-row-left");
+        }
+        rowCards.forEach(card => row.append(card));
+        grid.append(row);
+        index += maxPerRow;
     }
 }
 
@@ -206,5 +260,10 @@ document.addEventListener("DOMContentLoaded", () => {
     setupHeroAudioToggle();
     hydrateProjectCatalog().catch(error => {
         console.error("Initialization error:", error);
+    });
+
+    window.addEventListener("resize", () => {
+        const grids = document.querySelectorAll("[data-band-cards]");
+        grids.forEach(grid => layoutBandRows(/** @type {HTMLElement} */ (grid)));
     });
 });
