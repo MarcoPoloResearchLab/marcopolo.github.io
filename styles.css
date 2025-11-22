@@ -227,7 +227,7 @@ a:focus {
 .band-inner {
     width: 100%;
     margin: 0;
-    padding: clamp(64px, 8vw, 110px) 0;
+    padding: clamp(40px, 6vw, 80px) 0;
 }
 
 .band-research {
@@ -249,7 +249,7 @@ a:focus {
 .band-heading {
     position: relative;
     z-index: 1;
-    margin-bottom: 32px;
+    margin-bottom: 44px;
     padding: 0;
 }
 
