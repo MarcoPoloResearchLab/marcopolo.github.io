@@ -266,8 +266,8 @@ a:focus {
 .band-grid {
     position: relative;
     z-index: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 28px;
     padding: 0;
 }
@@ -285,6 +285,7 @@ a:focus {
     overflow: hidden;
     min-height: 260px;
     transition: transform 0.3s ease, border-color 0.3s ease;
+    flex: 0 0 calc(50% - 14px);
 }
 
 .project-card:hover {
@@ -566,10 +567,6 @@ mpr-footer {
         padding: 40px 20px 60px;
     }
 
-    .band-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    }
-
     .mpr-footer {
         padding: 40px 0 32px;
     }
@@ -623,12 +620,9 @@ mpr-footer {
         font-size: 2rem;
     }
 
-    .band-grid {
-        grid-template-columns: 1fr;
-    }
-
     .project-card {
         padding: 20px;
+        flex: 0 0 100%;
     }
 
     .mpr-footer {
