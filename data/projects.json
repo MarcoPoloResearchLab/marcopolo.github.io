@@ -18,7 +18,7 @@
       "category": "Research",
       "url": null,
       "public": false,
-      "icon": null
+      "icon": "assets/projects/photolab.png"
     },
     {
       "id": "ctx",
@@ -78,7 +78,7 @@
       "category": "Platform",
       "url": "https://ets.mprlab.com",
       "public": true,
-      "icon": null
+      "icon": "assets/projects/ets.png"
     },
     {
       "id": "tauth",
@@ -88,7 +88,7 @@
       "category": "Platform",
       "url": "https://tauth.mprlab.com",
       "public": true,
-      "icon": null
+      "icon": "assets/projects/tauth.png"
     },
     {
       "id": "ledger",
@@ -108,7 +108,7 @@
       "category": "Products",
       "url": "https://ps.mprlab.com",
       "public": true,
-      "icon": null
+      "icon": "assets/projects/product-scanner.png"
     },
     {
       "id": "sheet2tube",
@@ -118,7 +118,7 @@
       "category": "Products",
       "url": "https://sheet2tube.mprlab.com",
       "public": true,
-      "icon": null
+      "icon": "assets/projects/sheet2tube.png"
     },
     {
       "id": "gravity-notes",
