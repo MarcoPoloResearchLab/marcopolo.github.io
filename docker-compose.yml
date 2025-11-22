@@ -1,6 +1,6 @@
 services:
   site:
-    image: ghcr.io/temirov/ghttp:latest
+    image: ghcr.io/tyemirov/ghttp:latest
     container_name: mprlab-site
     restart: unless-stopped
     env_file:
