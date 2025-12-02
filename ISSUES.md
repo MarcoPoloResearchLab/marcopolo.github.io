@@ -103,6 +103,11 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
             - Final status (WIP, Beta, Production).
             - Short, approved description text (one to two sentences, consistent tone).
       - Populate @projects.yml to the best of your abilities
+- [ ] [MP-404] I am using bands in the design of @index.html. I want to add bands web components to mpr-ui (symlinked under @tools/mpr-ui) and use these components from mpr-ui CDN.
+Deliverables:
+1. <mpr-band> web component added to mpr-ui. A PR is open in mpr-ui repo
+2. <mpr-band> web component provides sufficient cuastimization options using declarative syntax
+3. mpr-ui is loaded from the CDN in @index.html
 
 ## Planning 
 **Do not work on these, not ready**
