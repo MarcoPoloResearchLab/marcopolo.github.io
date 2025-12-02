@@ -131,7 +131,7 @@ projects:
 
   - id: product-scanner
     repo: github.com/MarcoPoloResearchLab/ProductScanner
-    display_name: "Product Scanner"
+    display_name: "Poodle Scanner"
     urls:
       app: https://ps.mprlab.com
       docs: https://github.com/MarcoPoloResearchLab/ProductScanner#readme
@@ -140,7 +140,7 @@ projects:
     category: Products
     status: Beta
     description: >
-      Product detail page auditor that crawls listings, evaluates them against configurable rule packs, and reports gaps through a CLI and authenticated web dashboard.
+      AI-assisted storefront auditor nicknamed "Poodle" that sniffs out PDP gaps, evaluates results against configurable rule packs, and reports issues through a CLI and authenticated web dashboard.
 
   - id: sheet2tube
     repo: github.com/MarcoPoloResearchLab/Sheet2Tube

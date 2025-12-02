@@ -108,6 +108,9 @@ Deliverables:
 1. <mpr-band> web component added to mpr-ui. A PR is open in mpr-ui repo
 2. <mpr-band> web component provides sufficient cuastimization options using declarative syntax
 3. mpr-ui is loaded from the CDN in @index.html
+- [x] [MP-405] Consolidated all imagery, videos, and favicons under a canonical `assets/` tree: created `assets/site/` for hero media, fonts, favicons, and brand imagery, standardized project icons as `assets/projects/<project-id>/icon.(svg|png)` while keeping raw files in per-project `brand/` subfolders, and refreshed `index.html`/README references accordingly.
+- [x] [MP-406] Rebranded Product Scanner to **Poodle Scanner**, refreshed its description in `data/projects.(json|yml)`, and shipped the ProductScanner repo’s Poodle mark at `assets/projects/product-scanner/icon.png`.
+- [x] [MP-407] Normalized every raster project logo to 64×64 (storing the original favicons inside each `brand/` folder), resized the new Poodle icon from the 2048px source, and published `docs/assets-report.md` to document sizes + sources.
 
 ## Planning 
 **Do not work on these, not ready**
