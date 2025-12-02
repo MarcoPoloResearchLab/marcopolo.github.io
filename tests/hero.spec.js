@@ -116,4 +116,60 @@ test.describe("Marco Polo Research Lab landing page", () => {
         expect(topAtTop).toBeGreaterThan(viewportHeight);
         expect(topAtBottom).toBeLessThanOrEqual(viewportHeight);
     });
+
+    test("footer adheres to the site color palette", async ({page}) => {
+        await page.goto("/index.html");
+
+        const footerRoot = page.locator('mpr-footer footer[data-mpr-footer="root"]');
+        await expect(footerRoot).toBeVisible();
+
+        const palette = await page.evaluate(() => {
+            const footer = document.querySelector("mpr-footer footer[data-mpr-footer='root']");
+            const host = document.querySelector("mpr-footer");
+            if (!footer) {
+                throw new Error("Footer root not found");
+            }
+            if (!host) {
+                throw new Error("Footer host not found");
+            }
+
+            const hexToRgb = value => {
+                const trimmed = value.trim();
+                if (!trimmed) return "";
+                if (trimmed.startsWith("rgb")) return trimmed;
+                const hex = trimmed.replace("#", "");
+                const normalized = hex.length === 3 ? hex.split("").map(char => char + char).join("") : hex;
+                const num = parseInt(normalized, 16);
+                const r = (num >> 16) & 255;
+                const g = (num >> 8) & 255;
+                const b = num & 255;
+                return `rgb(${r}, ${g}, ${b})`;
+            };
+
+            const documentStyles = window.getComputedStyle(document.documentElement);
+            const footerStyles = window.getComputedStyle(footer);
+            const hostStyles = window.getComputedStyle(host);
+
+            const expectedBackground = hexToRgb(documentStyles.getPropertyValue("--bg-panel"));
+            const expectedText = hexToRgb(documentStyles.getPropertyValue("--text-gold-strong"));
+            const expectedAccent = documentStyles.getPropertyValue("--accent-gold").trim();
+            const expectedBorder = documentStyles.getPropertyValue("--accent-outline").trim();
+
+            return {
+                expectedBackground,
+                actualBackground: footerStyles.backgroundColor,
+                expectedText,
+                actualText: footerStyles.color,
+                expectedAccent,
+                hostAccent: hostStyles.getPropertyValue("--mpr-color-accent").trim(),
+                expectedBorder,
+                hostBorder: hostStyles.getPropertyValue("--mpr-color-border").trim()
+            };
+        });
+
+        expect(palette.actualBackground).toBe(palette.expectedBackground);
+        expect(palette.actualText).toBe(palette.expectedText);
+        expect(palette.hostAccent).toBe(palette.expectedAccent);
+        expect(palette.hostBorder).toBe(palette.expectedBorder);
+    });
 });
