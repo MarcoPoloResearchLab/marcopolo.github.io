@@ -133,12 +133,7 @@
       "category": "Products",
       "url": "https://gravity.mprlab.com",
       "public": true,
-      "icon": "assets/projects/gravity-notes/icon.png",
-      "subscribe": {
-        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=d8c3d1c8-7968-43d0-8026-ee827ada7666&mode=inline&accent=%23ffd369&cta=Notify%20me&success=Thanks%20for%20subscribing&name_field=false",
-        "title": "Get Gravity Notes release updates",
-        "copy": "Drop your email to hear when Gravity Notes ships fresh features, AI integrations, and new plugins."
-      }
+      "icon": "assets/projects/gravity-notes/icon.png"
     },
     {
       "id": "rsvp",
