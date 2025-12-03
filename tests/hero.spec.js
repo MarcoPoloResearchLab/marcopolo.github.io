@@ -73,7 +73,7 @@ test.describe("Marco Polo Research Lab landing page", () => {
             const shouldFlip =
                 project.status === "Beta" ||
                 project.status === "WIP" ||
-                project.id === "loopaware";
+                Boolean(project.subscribe);
 
             if (shouldFlip) {
                 expect(classesAfterClick || "").toMatch(/is-flipped/);

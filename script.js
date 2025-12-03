@@ -179,7 +179,8 @@ function buildProjectCard(project) {
             const subscribePlaceholder = document.createElement("div");
             subscribePlaceholder.className = "subscribe-widget-placeholder subscribe-widget-mount";
             subscribePlaceholder.setAttribute("aria-live", "polite");
-            subscribePlaceholder.textContent = "Loading subscribe form…";
+            subscribePlaceholder.textContent =
+                "Loading subscribe form\u2026 If nothing appears, check the LoopAware status below.";
 
             subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribePlaceholder);
             backBody.append(subscribeWidget);
@@ -409,6 +410,7 @@ function attachSubscribeForm(mount) {
         mount.textContent = "";
         mount.append(form);
         form.classList.add("subscribe-widget-form");
+        form.style.display = "";
         return true;
     };
 

@@ -480,6 +480,11 @@ a:focus {
     margin: 0;
     font-size: 0.9rem;
     color: var(--text-gold-muted);
+    min-height: 1.25rem;
+}
+
+body > #mp-subscribe-form {
+    display: none;
 }
 
 .subscribe-widget-form {
