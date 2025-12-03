@@ -453,13 +453,16 @@ a:focus {
 }
 
 .subscribe-widget {
-    margin-top: 1.5rem;
-    padding: 1.25rem;
+    padding: 1rem;
     border-radius: 18px;
     border: 1px solid var(--accent-outline);
     background: rgba(0, 40, 46, 0.6);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
     overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .subscribe-widget-title {
@@ -479,8 +482,8 @@ a:focus {
     border: 0;
     border-radius: 14px;
     background: transparent;
-    min-height: 240px;
-    height: 240px;
+    min-height: 200px;
+    height: 200px;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
 
@@ -496,6 +499,7 @@ a:focus {
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 2;
     backface-visibility: hidden;
+    overflow: hidden;
 }
 
 .project-card-flippable.is-flipped .project-card-subscribe-overlay {

@@ -80,7 +80,6 @@ function buildProjectCard(project) {
     const subscribeConfig = project.subscribe && project.subscribe.script ? project.subscribe : null;
     const hasSubscribeWidget = Boolean(subscribeConfig);
     const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
-    let subscribeOverlay = null;
     if (isFlippable) {
         card.classList.add("project-card-flippable");
         card.setAttribute("role", "button");
@@ -160,6 +159,7 @@ function buildProjectCard(project) {
 
         backBody.append(backCopy);
 
+        let subscribeOverlay = null;
         if (hasSubscribeWidget && subscribeConfig) {
             const subscribeWidget = document.createElement("div");
             subscribeWidget.className = "subscribe-widget";
@@ -206,6 +206,9 @@ function buildProjectCard(project) {
             subscribeOverlay.append(subscribeWidget);
         }
         back.append(backHeader, backBody);
+        if (subscribeOverlay) {
+            back.append(subscribeOverlay);
+        }
         inner.append(back);
 
         /**
@@ -236,9 +239,6 @@ function buildProjectCard(project) {
     }
 
     card.append(inner);
-    if (subscribeOverlay) {
-        inner.append(subscribeOverlay);
-    }
     return card;
 }
 
