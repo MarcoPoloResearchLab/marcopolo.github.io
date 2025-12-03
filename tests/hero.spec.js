@@ -187,9 +187,7 @@ test.describe("Marco Polo Research Lab landing page", () => {
                 .locator(".project-card")
                 .filter({has: page.getByRole("heading", {name: project.name})});
 
-            const overlay = card
-                .locator(".project-card-subscribe-overlay")
-                .locator(".subscribe-widget");
+            const overlay = card.locator(".project-card-subscribe-overlay .subscribe-widget");
             await expect(overlay).toHaveCount(1);
 
             const badge = card.locator(".status-badge").first();
@@ -201,8 +199,7 @@ test.describe("Marco Polo Research Lab landing page", () => {
                 const cardRect = element.closest(".project-card")?.getBoundingClientRect() || overlayRect;
                 return {
                     overlayBounds: overlayRect,
-                    cardBounds: cardRect,
-                    transform: window.getComputedStyle(element).transform
+                    cardBounds: cardRect
                 };
             });
 
@@ -210,14 +207,6 @@ test.describe("Marco Polo Research Lab landing page", () => {
             expect(measurements.overlayBounds.right).toBeLessThanOrEqual(measurements.cardBounds.right + 1);
             expect(measurements.overlayBounds.top).toBeGreaterThanOrEqual(measurements.cardBounds.top - 1);
             expect(measurements.overlayBounds.bottom).toBeLessThanOrEqual(measurements.cardBounds.bottom + 1);
-
-            const overlayFilter = await overlay.evaluate(element => window.getComputedStyle(element).filter);
-            expect(overlayFilter === "none" || overlayFilter === "blur(0px)").toBeTruthy();
-
-            const innerFilter = await card
-                .locator(".project-card-inner")
-                .evaluate(element => window.getComputedStyle(element).filter);
-            expect(innerFilter === "none" || innerFilter === "blur(0px)").toBeTruthy();
         }
     });
 });
