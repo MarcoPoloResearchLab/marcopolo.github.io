@@ -166,6 +166,11 @@ function buildProjectCard(project) {
         card.addEventListener("click", toggleFlip);
         card.addEventListener("keydown", event => {
             if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+                const target = /** @type {HTMLElement} */ (event.target);
+                if (target.closest("a")) {
+                    return;
+                }
+
                 event.preventDefault();
                 toggleFlip(event);
             }
