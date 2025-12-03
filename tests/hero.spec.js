@@ -178,15 +178,27 @@ test.describe("Marco Polo Research Lab landing page", () => {
         expect(palette.hostBorder).toBe(palette.expectedBorder);
     });
 
-    test("LoopAware card exposes a subscribe widget mount", async ({page}) => {
+    test("subscribe-enabled cards expose widget iframes", async ({page}) => {
+        const subscribeProjects = catalog.projects.filter(project => project.subscribe && project.subscribe.script);
         await page.goto("/index.html");
 
-        const loopawareCard = page
-            .locator(".project-card")
-            .filter({has: page.getByRole("heading", {name: "LoopAware"})});
+        for (const project of subscribeProjects) {
+            const card = page
+                .locator(".project-card")
+                .filter({has: page.getByRole("heading", {name: project.name})});
 
-        const widgetMount = loopawareCard.locator('[data-subscribe-target="loopaware"]');
-        await expect(widgetMount).toHaveCount(1);
-        await expect(widgetMount).toContainText(/LoopAware release updates/);
+            const iframe = card.locator(".subscribe-widget-frame");
+            await expect(iframe).toHaveCount(1);
+            const srcdoc = await iframe.getAttribute("srcdoc");
+            expect(srcdoc || "").toContain(project.subscribe.script);
+        }
+
+        const nonSubscribeProjects = catalog.projects.filter(project => !project.subscribe);
+        for (const project of nonSubscribeProjects) {
+            const card = page
+                .locator(".project-card")
+                .filter({has: page.getByRole("heading", {name: project.name})});
+            await expect(card.locator(".subscribe-widget-frame")).toHaveCount(0);
+        }
     });
 });
