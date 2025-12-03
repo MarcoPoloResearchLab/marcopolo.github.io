@@ -492,7 +492,7 @@ a:focus {
     gap: 0.75rem;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(12px);
+    transform: rotateY(180deg) translateY(12px);
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 2;
     backface-visibility: hidden;
@@ -501,8 +501,7 @@ a:focus {
 .project-card-flippable.is-flipped .project-card-subscribe-overlay {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0);
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) translateY(0);
 }
 
 /* ---------- Footer ---------- */

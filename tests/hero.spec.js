@@ -191,6 +191,11 @@ test.describe("Marco Polo Research Lab landing page", () => {
             await expect(iframe).toHaveCount(1);
             const srcdoc = await iframe.getAttribute("srcdoc");
             expect(srcdoc || "").toContain(project.subscribe.script);
+
+            const statusBadge = card.locator(".status-badge").first();
+            await statusBadge.click();
+            await expect(iframe).toBeVisible();
+            await statusBadge.click();
         }
 
         const nonSubscribeProjects = catalog.projects.filter(project => !project.subscribe);
