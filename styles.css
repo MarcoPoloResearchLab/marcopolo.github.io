@@ -344,7 +344,7 @@ a:focus {
     transform: translateY(-6px);
 }
 
-.project-card-flippable.is-flipped .project-card-inner {
+.project-card-flippable.is-flipped:not(.project-card-has-subscribe) .project-card-inner {
     filter: blur(6px);
 }
 

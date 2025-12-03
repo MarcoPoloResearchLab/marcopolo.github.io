@@ -86,6 +86,9 @@ function buildProjectCard(project) {
         card.setAttribute("role", "button");
         card.tabIndex = 0;
         card.setAttribute("aria-pressed", "false");
+        if (hasSubscribeWidget) {
+            card.classList.add("project-card-has-subscribe");
+        }
     }
 
     const visual = document.createElement("div");
