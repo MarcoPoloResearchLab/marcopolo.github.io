@@ -347,7 +347,15 @@ a:focus {
 
 .project-card-flippable.is-flipped .project-card-inner {
     transform: rotateY(180deg);
-    filter: blur(8px);
+}
+
+.project-card-front {
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.project-card-flippable.is-flipped .project-card-front {
+    filter: blur(6px);
+    opacity: 0.2;
 }
 
 .project-card-header {
