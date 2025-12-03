@@ -80,14 +80,14 @@ function buildProjectCard(project) {
     const subscribeConfig = project.subscribe && project.subscribe.script ? project.subscribe : null;
     const hasSubscribeWidget = Boolean(subscribeConfig);
     const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
-    let subscribeOverlay = null;
     if (isFlippable) {
         card.classList.add("project-card-flippable");
         card.setAttribute("role", "button");
         card.tabIndex = 0;
         card.setAttribute("aria-pressed", "false");
-        if (hasSubscribeWidget) {
-            card.classList.add("project-card-has-subscribe");
+        if (hasSubscribeWidget && subscribeConfig) {
+            const minHeight = Math.max((subscribeConfig.height || 280) + 350, 620);
+            card.style.minHeight = `${minHeight}px`;
         }
     }
 
@@ -202,10 +202,7 @@ function buildProjectCard(project) {
 </html>`;
 
             subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFrame);
-
-            subscribeOverlay = document.createElement("div");
-            subscribeOverlay.className = "project-card-subscribe-overlay";
-            subscribeOverlay.append(subscribeWidget);
+            backBody.append(subscribeWidget);
         }
         back.append(backHeader, backBody);
         inner.append(back);
@@ -238,9 +235,6 @@ function buildProjectCard(project) {
     }
 
     card.append(inner);
-    if (subscribeOverlay) {
-        card.append(subscribeOverlay);
-    }
     return card;
 }
 

@@ -196,6 +196,25 @@ test.describe("Marco Polo Research Lab landing page", () => {
                 inlineWidget,
                 `${project.name} card back should contain the subscribe widget`,
             ).toHaveCount(1);
+
+            const measurements = await inlineWidget.evaluate(element => {
+                const widgetRect = element.getBoundingClientRect();
+                const cardRect = element.closest(".project-card")?.getBoundingClientRect() || widgetRect;
+                return {
+                    widgetBounds: widgetRect,
+                    cardBounds: cardRect,
+                    transform: window.getComputedStyle(element).transform
+                };
+            });
+
+            expect(measurements.widgetBounds.left).toBeGreaterThanOrEqual(measurements.cardBounds.left - 1);
+            expect(measurements.widgetBounds.right).toBeLessThanOrEqual(measurements.cardBounds.right + 1);
+            expect(measurements.widgetBounds.top).toBeGreaterThanOrEqual(measurements.cardBounds.top - 1);
+            expect(measurements.widgetBounds.bottom).toBeLessThanOrEqual(measurements.cardBounds.bottom + 1);
+
+            expect(
+                measurements.transform === "none" || measurements.transform === "matrix(1, 0, 0, 1, 0, 0)",
+            ).toBeTruthy();
         }
     });
 });
