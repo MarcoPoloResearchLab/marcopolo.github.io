@@ -70,7 +70,12 @@ test.describe("Marco Polo Research Lab landing page", () => {
 
             const classesAfterClick = await card.getAttribute("class");
 
-            if (project.status === "Beta" || project.status === "WIP") {
+            const shouldFlip =
+                project.status === "Beta" ||
+                project.status === "WIP" ||
+                project.id === "loopaware";
+
+            if (shouldFlip) {
                 expect(classesAfterClick || "").toMatch(/is-flipped/);
 
                 await badge.click();
@@ -171,5 +176,17 @@ test.describe("Marco Polo Research Lab landing page", () => {
         expect(palette.actualText).toBe(palette.expectedText);
         expect(palette.hostAccent).toBe(palette.expectedAccent);
         expect(palette.hostBorder).toBe(palette.expectedBorder);
+    });
+
+    test("LoopAware card exposes a subscribe widget mount", async ({page}) => {
+        await page.goto("/index.html");
+
+        const loopawareCard = page
+            .locator(".project-card")
+            .filter({has: page.getByRole("heading", {name: "LoopAware"})});
+
+        const widgetMount = loopawareCard.locator('[data-subscribe-target="loopaware"]');
+        await expect(widgetMount).toHaveCount(1);
+        await expect(widgetMount).toContainText(/LoopAware release updates/);
     });
 });

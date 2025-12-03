@@ -111,6 +111,7 @@ Deliverables:
 - [x] [MP-405] Consolidated all imagery, videos, and favicons under a canonical `assets/` tree: created `assets/site/` for hero media, fonts, favicons, and brand imagery, standardized project icons as `assets/projects/<project-id>/icon.(svg|png)` while keeping raw files in per-project `brand/` subfolders, and refreshed `index.html`/README references accordingly.
 - [x] [MP-406] Rebranded Product Scanner to **Poodle Scanner**, refreshed its description in `data/projects.(json|yml)`, and shipped the ProductScanner repo’s Poodle mark at `assets/projects/product-scanner/icon.png`.
 - [x] [MP-407] Normalized every raster project logo to 64×64 (storing the original favicons inside each `brand/` folder), resized the new Poodle icon from the 2048px source, and published `docs/assets-report.md` to document sizes + sources.
+- [x] [MP-408] Embedded the LoopAware subscribe widget on the LoopAware project card back face, restyled it to match the lab palette, and wired the flipping logic/tests so beta-style cards can host future LoopAware subscribe mounts.
 
 ## Planning 
 **Do not work on these, not ready**

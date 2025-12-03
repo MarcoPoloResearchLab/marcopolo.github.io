@@ -36,6 +36,8 @@ const STATUS_CLASS = Object.freeze({
 
 /** @type {ProjectStatus[]} */
 const FLIPPABLE_STATUSES = ["Beta", "WIP"];
+const SUBSCRIBE_PROJECT_IDS = new Set(["loopaware"]);
+const SUBSCRIBE_MOUNT_SELECTOR = "[data-subscribe-target]";
 
 /**
  * Fetches the JSON catalog for the landing page.
@@ -68,7 +70,8 @@ function buildProjectCard(project) {
     const inner = document.createElement("div");
     inner.className = "project-card-inner";
 
-    const isFlippable = FLIPPABLE_STATUSES.includes(project.status);
+    const hasSubscribeWidget = SUBSCRIBE_PROJECT_IDS.has(project.id);
+    const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
     if (isFlippable) {
         card.classList.add("project-card-flippable");
         card.setAttribute("role", "button");
@@ -147,6 +150,29 @@ function buildProjectCard(project) {
                 : "Flip this card to preview the back surface where a LoopAware subscription form will live for beta updates.";
 
         backBody.append(backCopy);
+
+        if (hasSubscribeWidget) {
+            const subscribeWidget = document.createElement("div");
+            subscribeWidget.className = "subscribe-widget";
+            subscribeWidget.dataset.subscribeTarget = project.id;
+
+            const subscribeHeading = document.createElement("p");
+            subscribeHeading.className = "subscribe-widget-title";
+            subscribeHeading.textContent = "Get LoopAware release updates";
+
+            const subscribeBlurb = document.createElement("p");
+            subscribeBlurb.className = "subscribe-widget-copy";
+            subscribeBlurb.textContent =
+                "Drop your email to hear when LoopAware ships fresh drops, integrations, and subscriber tooling.";
+
+            const subscribePlaceholder = document.createElement("div");
+            subscribePlaceholder.className = "subscribe-widget-placeholder";
+            subscribePlaceholder.setAttribute("aria-live", "polite");
+            subscribePlaceholder.textContent = "Loading LoopAware subscribe form…";
+
+            subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribePlaceholder);
+            backBody.append(subscribeWidget);
+        }
         back.append(backHeader, backBody);
         inner.append(back);
 
@@ -221,6 +247,8 @@ function renderProjectBands(projects) {
 
         layoutBandRows(/** @type {HTMLElement} */ (grid));
     });
+
+    mountSubscribeWidget();
 }
 
 /**
@@ -335,6 +363,36 @@ function setupHeroAudioToggle() {
     });
 
     updateToggle();
+}
+
+function mountSubscribeWidget() {
+    const mount = document.querySelector(SUBSCRIBE_MOUNT_SELECTOR);
+    if (!mount) return;
+
+    /**
+     * Moves the generated LoopAware form into the project card.
+     * @returns {boolean}
+     */
+    const hydrate = () => {
+        const form = document.getElementById("mp-subscribe-form");
+        if (!form) return false;
+        if (mount.contains(form)) return true;
+
+        const placeholder = mount.querySelector(".subscribe-widget-placeholder");
+        if (placeholder) placeholder.remove();
+
+        mount.append(form);
+        form.classList.add("subscribe-widget-form");
+        return true;
+    };
+
+    if (hydrate()) return;
+
+    const observer = new MutationObserver(() => {
+        if (hydrate()) observer.disconnect();
+    });
+    observer.observe(document.body, {childList: true});
+    window.setTimeout(() => observer.disconnect(), 10000);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
