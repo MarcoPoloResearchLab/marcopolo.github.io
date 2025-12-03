@@ -458,7 +458,7 @@ a:focus {
 mpr-footer {
     display: block;
     margin-top: 0;
-    padding-top: 70px;
+    padding-top: 0;
     background: var(--bg-panel);
 }
 
