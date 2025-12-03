@@ -495,12 +495,14 @@ a:focus {
     transform: translateY(12px);
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 2;
+    backface-visibility: hidden;
 }
 
 .project-card-flippable.is-flipped .project-card-subscribe-overlay {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0);
+    transform: rotateY(180deg);
 }
 
 /* ---------- Footer ---------- */
