@@ -80,6 +80,7 @@ function buildProjectCard(project) {
     const subscribeConfig = project.subscribe && project.subscribe.script ? project.subscribe : null;
     const hasSubscribeWidget = Boolean(subscribeConfig);
     const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
+    let subscribeOverlay = null;
     if (isFlippable) {
         card.classList.add("project-card-flippable");
         card.setAttribute("role", "button");
@@ -185,8 +186,6 @@ function buildProjectCard(project) {
             subscribeFrame.setAttribute("aria-label", `Subscribe for ${project.name} updates`);
             subscribeFrame.setAttribute("tabindex", "-1");
             subscribeFrame.style.minHeight = `${subscribeConfig.height || 280}px`;
-            subscribeFrame.style.width = "100%";
-            subscribeFrame.style.border = "0";
 
             subscribeFrame.srcdoc = `
 <!DOCTYPE html>
@@ -203,7 +202,10 @@ function buildProjectCard(project) {
 </html>`;
 
             subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFrame);
-            backBody.append(subscribeWidget);
+
+            subscribeOverlay = document.createElement("div");
+            subscribeOverlay.className = "project-card-subscribe-overlay";
+            subscribeOverlay.append(subscribeWidget);
         }
         back.append(backHeader, backBody);
         inner.append(back);
@@ -236,6 +238,9 @@ function buildProjectCard(project) {
     }
 
     card.append(inner);
+    if (subscribeOverlay) {
+        card.append(subscribeOverlay);
+    }
     return card;
 }
 

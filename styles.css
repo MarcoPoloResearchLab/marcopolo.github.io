@@ -344,7 +344,7 @@ a:focus {
     transform: translateY(-6px);
 }
 
-.project-card-flippable.is-flipped:not(.project-card-has-subscribe) .project-card-inner {
+.project-card-flippable.is-flipped .project-card-inner {
     filter: blur(6px);
 }
 
@@ -482,6 +482,25 @@ a:focus {
     background: transparent;
     min-height: 280px;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.project-card-subscribe-overlay {
+    position: absolute;
+    inset: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2;
+}
+
+.project-card-flippable.is-flipped .project-card-subscribe-overlay {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
 }
 
 /* ---------- Footer ---------- */
