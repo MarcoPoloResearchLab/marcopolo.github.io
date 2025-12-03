@@ -19,6 +19,7 @@
 /**
  * @typedef {Object} ProjectSubscribeConfig
  * @property {string} script
+ * @property {number | undefined} [height]
  * @property {string | undefined} [title]
  * @property {string | undefined} [copy]
  */
@@ -44,8 +45,6 @@ const STATUS_CLASS = Object.freeze({
 
 /** @type {ProjectStatus[]} */
 const FLIPPABLE_STATUSES = ["Beta", "WIP"];
-const subscribeMountQueue = /** @type {Array<{script: string, mount: HTMLElement}>} */ ([]);
-const subscribeScriptPromises = new Map();
 
 /**
  * Fetches the JSON catalog for the landing page.
@@ -179,19 +178,32 @@ function buildProjectCard(project) {
                 subscribeConfig.copy ||
                 "Leave your email to hear when this project ships new features and announcements.";
 
-            const subscribePlaceholder = document.createElement("div");
-            subscribePlaceholder.className = "subscribe-widget-placeholder subscribe-widget-mount";
-            subscribePlaceholder.setAttribute("aria-live", "polite");
-            subscribePlaceholder.textContent =
-                "Loading subscribe form\u2026 If nothing appears, check the LoopAware status below.";
+            const subscribeFrame = document.createElement("iframe");
+            subscribeFrame.className = "subscribe-widget-frame";
+            subscribeFrame.loading = "lazy";
+            subscribeFrame.title = `${project.name} subscribe form`;
+            subscribeFrame.setAttribute("aria-label", `Subscribe for ${project.name} updates`);
+            subscribeFrame.setAttribute("tabindex", "-1");
+            subscribeFrame.style.minHeight = `${subscribeConfig.height || 280}px`;
+            subscribeFrame.style.width = "100%";
+            subscribeFrame.style.border = "0";
 
-            subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribePlaceholder);
+            subscribeFrame.srcdoc = `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { margin: 0; background: transparent; }
+    </style>
+  </head>
+  <body>
+    <script defer src="${subscribeConfig.script}"></script>
+  </body>
+</html>`;
+
+            subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFrame);
             backBody.append(subscribeWidget);
-
-            subscribeMountQueue.push({
-                script: subscribeConfig.script,
-                mount: subscribePlaceholder
-            });
         }
         back.append(backHeader, backBody);
         inner.append(back);
@@ -267,8 +279,6 @@ function renderProjectBands(projects) {
 
         layoutBandRows(/** @type {HTMLElement} */ (grid));
     });
-
-    hydrateSubscribeWidgets();
 }
 
 /**
@@ -385,88 +395,6 @@ function setupHeroAudioToggle() {
     updateToggle();
 }
 
-function hydrateSubscribeWidgets() {
-    if (!subscribeMountQueue.length) return;
-
-    const mounts = [...subscribeMountQueue];
-    subscribeMountQueue.length = 0;
-
-    mounts.forEach(entry => {
-        ensureSubscribeScript(entry.script)
-            .then(() => attachSubscribeForm(entry.mount))
-            .catch(error => {
-                console.error("Subscribe widget failed to load:", error);
-                entry.mount.textContent = "Unable to load subscribe form.";
-            });
-    });
-}
-
-/**
- * @param {HTMLElement} mount
- */
-function attachSubscribeForm(mount) {
-    const hydrate = () => {
-        const form = document.getElementById("mp-subscribe-form");
-        if (!form) return false;
-        if (mount.contains(form)) return true;
-
-        mount.textContent = "";
-        mount.append(form);
-        form.classList.add("subscribe-widget-form");
-        form.style.display = "";
-        return true;
-    };
-
-    if (hydrate()) return;
-
-    const observer = new MutationObserver(() => {
-        if (hydrate()) observer.disconnect();
-    });
-    observer.observe(document.body, {childList: true});
-    window.setTimeout(() => observer.disconnect(), 10000);
-}
-
-/**
- * @param {string} url
- * @returns {Promise<void>}
- */
-function ensureSubscribeScript(url) {
-    if (!url) return Promise.reject(new Error("Missing subscribe widget URL"));
-    if (subscribeScriptPromises.has(url)) return subscribeScriptPromises.get(url);
-
-    const promise = new Promise((resolve, reject) => {
-        const existing = Array.from(document.querySelectorAll("script[data-subscribe-script]")).find(
-            script => script.dataset.subscribeScript === url,
-        );
-
-        if (existing) {
-            if (existing.dataset.ready === "true") {
-                resolve();
-                return;
-            }
-            existing.addEventListener("load", () => {
-                existing.dataset.ready = "true";
-                resolve();
-            });
-            existing.addEventListener("error", reject);
-            return;
-        }
-
-        const script = document.createElement("script");
-        script.defer = true;
-        script.src = url;
-        script.dataset.subscribeScript = url;
-        script.addEventListener("load", () => {
-            script.dataset.ready = "true";
-            resolve();
-        });
-        script.addEventListener("error", reject);
-        document.head.append(script);
-    });
-
-    subscribeScriptPromises.set(url, promise);
-    return promise;
-}
 
 document.addEventListener("DOMContentLoaded", () => {
     setupHeroAudioToggle();
