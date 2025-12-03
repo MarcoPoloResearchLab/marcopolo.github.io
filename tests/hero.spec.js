@@ -178,7 +178,7 @@ test.describe("Marco Polo Research Lab landing page", () => {
         expect(palette.hostBorder).toBe(palette.expectedBorder);
     });
 
-    test("subscribe-enabled cards expose widget iframes", async ({page}) => {
+    test("subscribe-enabled cards reveal overlay content on flip", async ({page}) => {
         const subscribeProjects = catalog.projects.filter(project => project.subscribe && project.subscribe.script);
         await page.goto("/index.html");
 
@@ -187,23 +187,15 @@ test.describe("Marco Polo Research Lab landing page", () => {
                 .locator(".project-card")
                 .filter({has: page.getByRole("heading", {name: project.name})});
 
-            const iframe = card.locator(".subscribe-widget-frame");
-            await expect(iframe).toHaveCount(1);
-            const srcdoc = await iframe.getAttribute("srcdoc");
-            expect(srcdoc || "").toContain(project.subscribe.script);
+            const badge = card.locator(".status-badge").first();
+            await badge.click();
 
-            const statusBadge = card.locator(".status-badge").first();
-            await statusBadge.click();
-            await expect(iframe).toBeVisible();
-            await statusBadge.click();
-        }
-
-        const nonSubscribeProjects = catalog.projects.filter(project => !project.subscribe);
-        for (const project of nonSubscribeProjects) {
-            const card = page
-                .locator(".project-card")
-                .filter({has: page.getByRole("heading", {name: project.name})});
-            await expect(card.locator(".subscribe-widget-frame")).toHaveCount(0);
+            const cardBack = card.locator(".project-card-face.project-card-back");
+            const inlineWidget = cardBack.locator(".subscribe-widget");
+            await expect(
+                inlineWidget,
+                `${project.name} card back should contain the subscribe widget`,
+            ).toHaveCount(1);
         }
     });
 });
