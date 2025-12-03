@@ -80,15 +80,12 @@ function buildProjectCard(project) {
     const subscribeConfig = project.subscribe && project.subscribe.script ? project.subscribe : null;
     const hasSubscribeWidget = Boolean(subscribeConfig);
     const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
+    let subscribeOverlay = null;
     if (isFlippable) {
         card.classList.add("project-card-flippable");
         card.setAttribute("role", "button");
         card.tabIndex = 0;
         card.setAttribute("aria-pressed", "false");
-        if (hasSubscribeWidget && subscribeConfig) {
-            const minHeight = Math.max((subscribeConfig.height || 280) + 350, 620);
-            card.style.minHeight = `${minHeight}px`;
-        }
     }
 
     const visual = document.createElement("div");
@@ -185,7 +182,9 @@ function buildProjectCard(project) {
             subscribeFrame.title = `${project.name} subscribe form`;
             subscribeFrame.setAttribute("aria-label", `Subscribe for ${project.name} updates`);
             subscribeFrame.setAttribute("tabindex", "-1");
-            subscribeFrame.style.minHeight = `${subscribeConfig.height || 280}px`;
+            const frameHeight = Math.min(subscribeConfig.height || 280, 280);
+            subscribeFrame.style.minHeight = `${frameHeight}px`;
+            subscribeFrame.style.height = `${frameHeight}px`;
 
             subscribeFrame.srcdoc = `
 <!DOCTYPE html>
@@ -202,7 +201,9 @@ function buildProjectCard(project) {
 </html>`;
 
             subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFrame);
-            backBody.append(subscribeWidget);
+            subscribeOverlay = document.createElement("div");
+            subscribeOverlay.className = "project-card-subscribe-overlay";
+            subscribeOverlay.append(subscribeWidget);
         }
         back.append(backHeader, backBody);
         inner.append(back);
@@ -235,6 +236,9 @@ function buildProjectCard(project) {
     }
 
     card.append(inner);
+    if (subscribeOverlay) {
+        inner.append(subscribeOverlay);
+    }
     return card;
 }
 

@@ -347,15 +347,7 @@ a:focus {
 
 .project-card-flippable.is-flipped .project-card-inner {
     transform: rotateY(180deg);
-}
-
-.project-card-front {
-    transition: filter 0.3s ease, opacity 0.3s ease;
-}
-
-.project-card-flippable.is-flipped .project-card-front {
-    filter: blur(6px);
-    opacity: 0.2;
+    filter: blur(8px);
 }
 
 .project-card-header {
@@ -467,6 +459,7 @@ a:focus {
     border: 1px solid var(--accent-outline);
     background: rgba(0, 40, 46, 0.6);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+    overflow: hidden;
 }
 
 .subscribe-widget-title {
@@ -486,8 +479,29 @@ a:focus {
     border: 0;
     border-radius: 14px;
     background: transparent;
-    min-height: 280px;
+    min-height: 240px;
+    height: 240px;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.project-card-subscribe-overlay {
+    position: absolute;
+    inset: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: rotateY(180deg) translateY(12px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 2;
+    backface-visibility: hidden;
+}
+
+.project-card-flippable.is-flipped .project-card-subscribe-overlay {
+    opacity: 1;
+    pointer-events: auto;
+    transform: rotateY(180deg) translateY(0);
 }
 
 /* ---------- Footer ---------- */

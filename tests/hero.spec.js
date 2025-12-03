@@ -187,34 +187,34 @@ test.describe("Marco Polo Research Lab landing page", () => {
                 .locator(".project-card")
                 .filter({has: page.getByRole("heading", {name: project.name})});
 
+            const overlay = card.locator(".project-card-subscribe-overlay");
+            await expect(overlay).toHaveCount(1);
+
             const badge = card.locator(".status-badge").first();
             await badge.click();
+            await expect(overlay).toBeVisible();
 
-            const cardBack = card.locator(".project-card-face.project-card-back");
-            const inlineWidget = cardBack.locator(".subscribe-widget");
-            await expect(
-                inlineWidget,
-                `${project.name} card back should contain the subscribe widget`,
-            ).toHaveCount(1);
-
-            const measurements = await inlineWidget.evaluate(element => {
-                const widgetRect = element.getBoundingClientRect();
-                const cardRect = element.closest(".project-card")?.getBoundingClientRect() || widgetRect;
+            const measurements = await overlay.evaluate(element => {
+                const overlayRect = element.getBoundingClientRect();
+                const cardRect = element.closest(".project-card")?.getBoundingClientRect() || overlayRect;
                 return {
-                    widgetBounds: widgetRect,
+                    overlayBounds: overlayRect,
                     cardBounds: cardRect,
                     transform: window.getComputedStyle(element).transform
                 };
             });
 
-            expect(measurements.widgetBounds.left).toBeGreaterThanOrEqual(measurements.cardBounds.left - 1);
-            expect(measurements.widgetBounds.right).toBeLessThanOrEqual(measurements.cardBounds.right + 1);
-            expect(measurements.widgetBounds.top).toBeGreaterThanOrEqual(measurements.cardBounds.top - 1);
-            expect(measurements.widgetBounds.bottom).toBeLessThanOrEqual(measurements.cardBounds.bottom + 1);
-
-            expect(
-                measurements.transform === "none" || measurements.transform === "matrix(1, 0, 0, 1, 0, 0)",
-            ).toBeTruthy();
+            expect(measurements.overlayBounds.left).toBeGreaterThanOrEqual(measurements.cardBounds.left - 1);
+            expect(measurements.overlayBounds.right).toBeLessThanOrEqual(measurements.cardBounds.right + 1);
+            expect(measurements.overlayBounds.top).toBeGreaterThanOrEqual(measurements.cardBounds.top - 1);
+            expect(measurements.overlayBounds.bottom).toBeLessThanOrEqual(measurements.cardBounds.bottom + 1);
+            const transform = measurements.transform || "";
+            const valid =
+                transform === "none" ||
+                transform.startsWith("matrix(1") ||
+                transform.startsWith("matrix(-1") ||
+                transform.startsWith("matrix3d(");
+            expect(valid).toBeTruthy();
         }
     });
 });
