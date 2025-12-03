@@ -13,6 +13,14 @@
  * @property {string | null} url
  * @property {boolean} [public]
  * @property {string | null | undefined} [icon]
+ * @property {ProjectSubscribeConfig | null | undefined} [subscribe]
+ */
+
+/**
+ * @typedef {Object} ProjectSubscribeConfig
+ * @property {string} script
+ * @property {string | undefined} [title]
+ * @property {string | undefined} [copy]
  */
 
 const SECTION_ORDER = /** @type {ProjectCategory[]} */ ([
@@ -36,8 +44,8 @@ const STATUS_CLASS = Object.freeze({
 
 /** @type {ProjectStatus[]} */
 const FLIPPABLE_STATUSES = ["Beta", "WIP"];
-const SUBSCRIBE_PROJECT_IDS = new Set(["loopaware"]);
-const SUBSCRIBE_MOUNT_SELECTOR = "[data-subscribe-target]";
+const subscribeMountQueue = /** @type {Array<{script: string, mount: HTMLElement}>} */ ([]);
+const subscribeScriptPromises = new Map();
 
 /**
  * Fetches the JSON catalog for the landing page.
@@ -70,7 +78,8 @@ function buildProjectCard(project) {
     const inner = document.createElement("div");
     inner.className = "project-card-inner";
 
-    const hasSubscribeWidget = SUBSCRIBE_PROJECT_IDS.has(project.id);
+    const subscribeConfig = project.subscribe && project.subscribe.script ? project.subscribe : null;
+    const hasSubscribeWidget = Boolean(subscribeConfig);
     const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
     if (isFlippable) {
         card.classList.add("project-card-flippable");
@@ -151,27 +160,34 @@ function buildProjectCard(project) {
 
         backBody.append(backCopy);
 
-        if (hasSubscribeWidget) {
+        if (hasSubscribeWidget && subscribeConfig) {
             const subscribeWidget = document.createElement("div");
             subscribeWidget.className = "subscribe-widget";
             subscribeWidget.dataset.subscribeTarget = project.id;
 
             const subscribeHeading = document.createElement("p");
             subscribeHeading.className = "subscribe-widget-title";
-            subscribeHeading.textContent = "Get LoopAware release updates";
+            subscribeHeading.textContent =
+                subscribeConfig.title || `Get ${project.name} updates`;
 
             const subscribeBlurb = document.createElement("p");
             subscribeBlurb.className = "subscribe-widget-copy";
             subscribeBlurb.textContent =
-                "Drop your email to hear when LoopAware ships fresh drops, integrations, and subscriber tooling.";
+                subscribeConfig.copy ||
+                "Leave your email to hear when this project ships new features and announcements.";
 
             const subscribePlaceholder = document.createElement("div");
-            subscribePlaceholder.className = "subscribe-widget-placeholder";
+            subscribePlaceholder.className = "subscribe-widget-placeholder subscribe-widget-mount";
             subscribePlaceholder.setAttribute("aria-live", "polite");
-            subscribePlaceholder.textContent = "Loading LoopAware subscribe form…";
+            subscribePlaceholder.textContent = "Loading subscribe form…";
 
             subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribePlaceholder);
             backBody.append(subscribeWidget);
+
+            subscribeMountQueue.push({
+                script: subscribeConfig.script,
+                mount: subscribePlaceholder
+            });
         }
         back.append(backHeader, backBody);
         inner.append(back);
@@ -248,7 +264,7 @@ function renderProjectBands(projects) {
         layoutBandRows(/** @type {HTMLElement} */ (grid));
     });
 
-    mountSubscribeWidget();
+    hydrateSubscribeWidgets();
 }
 
 /**
@@ -365,22 +381,32 @@ function setupHeroAudioToggle() {
     updateToggle();
 }
 
-function mountSubscribeWidget() {
-    const mount = document.querySelector(SUBSCRIBE_MOUNT_SELECTOR);
-    if (!mount) return;
+function hydrateSubscribeWidgets() {
+    if (!subscribeMountQueue.length) return;
 
-    /**
-     * Moves the generated LoopAware form into the project card.
-     * @returns {boolean}
-     */
+    const mounts = [...subscribeMountQueue];
+    subscribeMountQueue.length = 0;
+
+    mounts.forEach(entry => {
+        ensureSubscribeScript(entry.script)
+            .then(() => attachSubscribeForm(entry.mount))
+            .catch(error => {
+                console.error("Subscribe widget failed to load:", error);
+                entry.mount.textContent = "Unable to load subscribe form.";
+            });
+    });
+}
+
+/**
+ * @param {HTMLElement} mount
+ */
+function attachSubscribeForm(mount) {
     const hydrate = () => {
         const form = document.getElementById("mp-subscribe-form");
         if (!form) return false;
         if (mount.contains(form)) return true;
 
-        const placeholder = mount.querySelector(".subscribe-widget-placeholder");
-        if (placeholder) placeholder.remove();
-
+        mount.textContent = "";
         mount.append(form);
         form.classList.add("subscribe-widget-form");
         return true;
@@ -393,6 +419,48 @@ function mountSubscribeWidget() {
     });
     observer.observe(document.body, {childList: true});
     window.setTimeout(() => observer.disconnect(), 10000);
+}
+
+/**
+ * @param {string} url
+ * @returns {Promise<void>}
+ */
+function ensureSubscribeScript(url) {
+    if (!url) return Promise.reject(new Error("Missing subscribe widget URL"));
+    if (subscribeScriptPromises.has(url)) return subscribeScriptPromises.get(url);
+
+    const promise = new Promise((resolve, reject) => {
+        const existing = Array.from(document.querySelectorAll("script[data-subscribe-script]")).find(
+            script => script.dataset.subscribeScript === url,
+        );
+
+        if (existing) {
+            if (existing.dataset.ready === "true") {
+                resolve();
+                return;
+            }
+            existing.addEventListener("load", () => {
+                existing.dataset.ready = "true";
+                resolve();
+            });
+            existing.addEventListener("error", reject);
+            return;
+        }
+
+        const script = document.createElement("script");
+        script.defer = true;
+        script.src = url;
+        script.dataset.subscribeScript = url;
+        script.addEventListener("load", () => {
+            script.dataset.ready = "true";
+            resolve();
+        });
+        script.addEventListener("error", reject);
+        document.head.append(script);
+    });
+
+    subscribeScriptPromises.set(url, promise);
+    return promise;
 }
 
 document.addEventListener("DOMContentLoaded", () => {

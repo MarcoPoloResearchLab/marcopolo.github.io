@@ -475,7 +475,8 @@ a:focus {
     font-size: 0.95rem;
 }
 
-.subscribe-widget-placeholder {
+.subscribe-widget-placeholder,
+.subscribe-widget-mount {
     margin: 0;
     font-size: 0.9rem;
     color: var(--text-gold-muted);

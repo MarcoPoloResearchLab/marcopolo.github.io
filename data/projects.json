@@ -58,7 +58,12 @@
       "category": "Platform",
       "url": "https://loopaware.mprlab.com",
       "public": true,
-      "icon": "assets/projects/loopaware/icon.svg"
+      "icon": "assets/projects/loopaware/icon.svg",
+      "subscribe": {
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=a3222433-92ec-473a-9255-0797226c2273&mode=inline&accent=%23ffd369&cta=Notify%20me&success=Thanks%20for%20subscribing&name_field=false",
+        "title": "Get LoopAware release updates",
+        "copy": "Drop your email to hear when LoopAware ships fresh drops, integrations, and subscriber tooling."
+      }
     },
     {
       "id": "pinguin",
