@@ -432,6 +432,18 @@ a:focus {
     flex-grow: 1;
 }
 
+.project-card-has-subscribe .project-card-back .project-card-header,
+.project-card-has-subscribe .project-card-back .card-body {
+    transition: filter 0.35s ease, opacity 0.35s ease;
+}
+
+.project-card-has-subscribe.is-flipped .project-card-back .project-card-header,
+.project-card-has-subscribe.is-flipped .project-card-back .card-body {
+    filter: blur(8px);
+    opacity: 0.1;
+    pointer-events: none;
+}
+
 .card-action {
     align-self: flex-start;
     border-radius: 999px;
@@ -461,6 +473,7 @@ a:focus {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    box-sizing: border-box;
 }
 
 .subscribe-widget-title {
@@ -478,11 +491,12 @@ a:focus {
 .subscribe-widget-frame {
     width: 100%;
     border: 0;
-    border-radius: 14px;
+    border-radius: 16px;
     background: transparent;
-    min-height: 200px;
-    height: 200px;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    min-height: 240px;
+    height: 240px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+    overflow: hidden;
 }
 
 .project-card-subscribe-overlay {
@@ -498,6 +512,12 @@ a:focus {
     z-index: 2;
     backface-visibility: hidden;
     overflow: hidden;
+    padding: 0;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 211, 105, 0.15);
+    background: radial-gradient(circle at top, rgba(3, 38, 46, 0.9), rgba(2, 20, 25, 0.85));
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(18px);
 }
 
 .project-card-flippable.is-flipped .project-card-subscribe-overlay {

@@ -64,6 +64,9 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 
 - [x] [MP-104] add an ability to visually flip the card and show the back of the card. we will embed a form from LoppAware to subscribe tio the news there later, but I want the cards with BETA and WIP status to flip when clicked on
       - Implemented flippable card markup/CSS and JS so Beta and WIP cards toggle an `is-flipped` state on click/keyboard while Production cards remain static, and extended Playwright coverage to assert the behavior.
+- [ ] [MP-105] LoopAware-powered feedback widget
+      - Integrate a LoopAware widget that lets visitors send structured feedback (text + contact details) straight from the landing page footer without jumping to another product surface.
+      - Current difficulties: the LoopAware embed we ship today is hard-coded for “subscribe” flows (email-only, no free-form message fields), and the script instance assumes each card maps to a LoopAware property, so there is no single endpoint or schema for a global “site feedback” inbox. We need a LoopAware template that supports multi-field submissions plus a consolidated destination before wiring it into the footer drop-up.
 
 ## Improvements (200–299)
 

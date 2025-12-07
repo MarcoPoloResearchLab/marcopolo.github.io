@@ -47,6 +47,37 @@ const STATUS_CLASS = Object.freeze({
 const FLIPPABLE_STATUSES = ["Beta", "WIP"];
 
 /**
+ * Generates inline HTML used inside the subscribe iframe so the LoopAware script
+ * can render its real widget without leaking global styles into the page.
+ * @param {string} scriptUrl
+ * @returns {string}
+ */
+function buildSubscribeFrameDocument(scriptUrl) {
+    const safeUrl = String(scriptUrl).replace(/"/g, "&quot;");
+    return `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+
+      body {
+        margin: 0;
+        background: transparent;
+        font-family: "Space Grotesk", "Roboto", sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <script defer src="${safeUrl}"></script>
+  </body>
+</html>`;
+}
+
+/**
  * Fetches the JSON catalog for the landing page.
  * @returns {Promise<Project[]>}
  */
@@ -134,6 +165,9 @@ function buildProjectCard(project) {
 
     inner.append(front);
 
+    /** @type {null | (() => void)} */
+    let loadSubscribeWidget = null;
+
     if (isFlippable) {
         const back = document.createElement("div");
         back.className = "project-card-face project-card-back";
@@ -161,6 +195,8 @@ function buildProjectCard(project) {
 
         let subscribeOverlay = null;
         if (hasSubscribeWidget && subscribeConfig) {
+            card.classList.add("project-card-has-subscribe");
+
             const subscribeWidget = document.createElement("div");
             subscribeWidget.className = "subscribe-widget";
             subscribeWidget.dataset.subscribeTarget = project.id;
@@ -182,28 +218,25 @@ function buildProjectCard(project) {
             subscribeFrame.title = `${project.name} subscribe form`;
             subscribeFrame.setAttribute("aria-label", `Subscribe for ${project.name} updates`);
             subscribeFrame.setAttribute("tabindex", "-1");
-            const frameHeight = Math.min(subscribeConfig.height || 280, 280);
+            const frameHeight = Math.max(240, Math.min(subscribeConfig.height || 320, 420));
             subscribeFrame.style.minHeight = `${frameHeight}px`;
             subscribeFrame.style.height = `${frameHeight}px`;
-
-            subscribeFrame.srcdoc = `
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      body { margin: 0; background: transparent; }
-    </style>
-  </head>
-  <body>
-    <script defer src="${subscribeConfig.script}"></script>
-  </body>
-</html>`;
-
             subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFrame);
             subscribeOverlay = document.createElement("div");
             subscribeOverlay.className = "project-card-subscribe-overlay";
+            subscribeOverlay.dataset.subscribeLoaded = "false";
             subscribeOverlay.append(subscribeWidget);
+
+            let subscribeFrameLoaded = false;
+
+            loadSubscribeWidget = () => {
+                if (subscribeFrameLoaded) return;
+                subscribeFrameLoaded = true;
+                subscribeFrame.addEventListener("load", () => {
+                    subscribeOverlay.dataset.subscribeLoaded = "true";
+                }, {once: true});
+                subscribeFrame.srcdoc = buildSubscribeFrameDocument(subscribeConfig.script);
+            };
         }
         back.append(backHeader, backBody);
         if (subscribeOverlay) {
@@ -222,6 +255,9 @@ function buildProjectCard(project) {
 
             const nowFlipped = card.classList.toggle("is-flipped");
             card.setAttribute("aria-pressed", nowFlipped ? "true" : "false");
+            if (nowFlipped && loadSubscribeWidget) {
+                loadSubscribeWidget();
+            }
         };
 
         card.addEventListener("click", toggleFlip);

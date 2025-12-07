@@ -178,7 +178,7 @@ test.describe("Marco Polo Research Lab landing page", () => {
         expect(palette.hostBorder).toBe(palette.expectedBorder);
     });
 
-    test("subscribe-enabled cards reveal readable subscribe content", async ({page}) => {
+    test("subscribe-enabled cards render LoopAware forms after flipping", async ({page}) => {
         const subscribeProjects = catalog.projects.filter(project => project.subscribe && project.subscribe.script);
         await page.goto("/index.html");
 
@@ -187,26 +187,23 @@ test.describe("Marco Polo Research Lab landing page", () => {
                 .locator(".project-card")
                 .filter({has: page.getByRole("heading", {name: project.name})});
 
-            const overlay = card.locator(".project-card-subscribe-overlay .subscribe-widget");
-            await expect(overlay).toHaveCount(1);
-
             const badge = card.locator(".status-badge").first();
+            const overlay = card.locator(".project-card-subscribe-overlay");
+            await expect(overlay).toHaveAttribute("data-subscribe-loaded", "false");
+
             await badge.click();
-            await expect(overlay).toBeVisible();
 
-            const measurements = await overlay.evaluate(element => {
-                const overlayRect = element.getBoundingClientRect();
-                const cardRect = element.closest(".project-card")?.getBoundingClientRect() || overlayRect;
-                return {
-                    overlayBounds: overlayRect,
-                    cardBounds: cardRect
-                };
-            });
+            const cardBack = card.locator(".project-card-face.project-card-back");
+            const frame = cardBack.frameLocator(".subscribe-widget-frame");
+            const loopAwareForm = frame.locator("#mp-subscribe-form");
+            await expect(loopAwareForm, `${project.name} LoopAware form should render inside iframe`).toBeVisible();
+            await expect(frame.locator("input[type='email']")).toBeVisible();
+            await expect(
+                frame.locator("button"),
+                `${project.name} LoopAware widget should expose a CTA button`,
+            ).toContainText(/subscribe|notify/i);
 
-            expect(measurements.overlayBounds.left).toBeGreaterThanOrEqual(measurements.cardBounds.left - 1);
-            expect(measurements.overlayBounds.right).toBeLessThanOrEqual(measurements.cardBounds.right + 1);
-            expect(measurements.overlayBounds.top).toBeGreaterThanOrEqual(measurements.cardBounds.top - 1);
-            expect(measurements.overlayBounds.bottom).toBeLessThanOrEqual(measurements.cardBounds.bottom + 1);
+            await expect(overlay).toHaveAttribute("data-subscribe-loaded", "true");
         }
     });
 });
