@@ -16,7 +16,6 @@
  * @property {boolean | undefined} [launchEnabled]
  * @property {boolean | undefined} [docsEnabled]
  * @property {boolean | undefined} [subscribeEnabled]
- * @property {boolean} [public]
  * @property {string | null | undefined} [icon]
  * @property {ProjectSubscribeConfig | null | undefined} [subscribe]
  */
