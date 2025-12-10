@@ -220,6 +220,21 @@
       "subscribeEnabled": false,
       "public": true,
       "icon": "assets/projects/rsvp/icon.png"
+    },
+    {
+      "id": "prompt-bubbles",
+      "name": "Prompt Bubbles",
+      "description": "Browser-first prompt library with inline editing, deep-linkable cards, local likes, and a Bootstrap/Alpine interface tuned for fast search and keyboard-friendly navigation.",
+      "status": "Production",
+      "category": "Products",
+      "repo": "github.com/MarcoPoloResearchLab/prompts",
+      "app": "https://prompts.mprlab.com",
+      "docs": "https://github.com/MarcoPoloResearchLab/prompts#readme",
+      "launchEnabled": true,
+      "docsEnabled": true,
+      "subscribeEnabled": false,
+      "public": true,
+      "icon": "assets/projects/prompt-bubbles/icon.svg"
     }
   ]
 }
