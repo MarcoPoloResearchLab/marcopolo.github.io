@@ -305,6 +305,10 @@ a:focus {
     flex: 0 0 520px;
 }
 
+.project-card-has-subscribe {
+    min-height: 420px;
+}
+
 .project-card-inner {
     position: relative;
     width: 100%;
