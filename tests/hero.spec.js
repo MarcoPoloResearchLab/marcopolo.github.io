@@ -2,7 +2,7 @@
 
 const {test, expect} = require("@playwright/test");
 
-/** @type {{projects: Array<{name: string, status: string, category: string, description: string, url?: string|null}>}} */
+/** @type {{projects: Array<{name: string, status: string, category: string, description: string, app?: string|null}>}} */
 const catalog = require("../data/projects.json");
 
 test.describe("Marco Polo Research Lab landing page", () => {
@@ -43,11 +43,11 @@ test.describe("Marco Polo Research Lab landing page", () => {
             await expect(card.locator(".status-badge").first()).toHaveText(project.status);
 
             const action = card.locator("a.card-action");
-            if (project.status === "WIP" || !project.url) {
+            if (project.status === "WIP" || !project.app) {
                 await expect(action).toHaveCount(0);
             } else {
                 await expect(action).toHaveCount(1);
-                await expect(action).toHaveAttribute("href", project.url);
+                await expect(action).toHaveAttribute("href", project.app);
             }
         }
     });

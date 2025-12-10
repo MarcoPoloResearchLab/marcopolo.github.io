@@ -10,7 +10,9 @@
  * @property {string} description
  * @property {ProjectStatus} status
  * @property {ProjectCategory} category
- * @property {string | null} url
+ * @property {string | null} app
+ * @property {string | null | undefined} [docs]
+ * @property {string | null | undefined} [repo]
  * @property {boolean} [public]
  * @property {string | null | undefined} [icon]
  * @property {ProjectSubscribeConfig | null | undefined} [subscribe]
@@ -149,9 +151,9 @@ function buildProjectCard(project) {
     description.textContent = project.description;
     body.append(description);
 
-    if (project.url && project.status !== "WIP") {
+    if (project.app && project.status !== "WIP") {
         const link = document.createElement("a");
-        link.href = project.url;
+        link.href = project.app;
         link.className = "card-action";
         link.target = "_blank";
         link.rel = "noreferrer noopener";
