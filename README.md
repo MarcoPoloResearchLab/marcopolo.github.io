@@ -18,7 +18,7 @@ You can open `index.html` directly in your browser or serve the site through Git
 
 ## Local Development with Docker Compose
 
-Run the static site behind the [gHTTP](https://github.com/temirov/ghttp) server via Docker Compose:
+Run the static site behind the [gHTTP](https://github.com/tyemirov/ghttp) server via Docker Compose:
 
 1. Ensure Docker (with the Compose plugin) is installed locally.
 2. Update `.env.ghttp` if you need to change the bind address, exposed port, or container serve path.
@@ -32,7 +32,7 @@ Run the static site behind the [gHTTP](https://github.com/temirov/ghttp) server 
 
 4. Press `Ctrl+C` or run `docker compose --env-file .env.ghttp down` to stop the server.
 
-The Compose stack mounts the repository into the container (`ghcr.io/temirov/ghttp:latest`) read-only, so changes to local files are reflected immediately without rebuilding the image.
+The Compose stack mounts the repository into the container (`ghcr.io/tyemirov/ghttp:latest`) read-only, so changes to local files are reflected immediately without rebuilding the image.
 
 ## Tooling & Tests
 
@@ -57,6 +57,8 @@ Each entry in the project gallery is powered by `data/projects.json`:
 1. create a new `assets/projects/<project-id>/icon.(png|svg)` and keep any supporting references in `assets/projects/<project-id>/brand/`
 2. add the project metadata to `data/projects.json`
 3. open `index.html` locally or run `npm test` to ensure the Playwright suite exercises the new entry cleanly
+
+Vectorizing images or text to SVG can be done using the tools available in the [svg_tools](https://github.com/tyemirov/svg_tools) repository.
 
 ## License
 
