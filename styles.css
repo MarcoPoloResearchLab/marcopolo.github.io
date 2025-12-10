@@ -432,6 +432,13 @@ a:focus {
     flex-grow: 1;
 }
 
+.card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.25rem;
+}
+
 .project-card-has-subscribe .project-card-back .project-card-header,
 .project-card-has-subscribe .project-card-back .card-body {
     transition: filter 0.35s ease, opacity 0.35s ease;
@@ -445,7 +452,6 @@ a:focus {
 }
 
 .card-action {
-    align-self: flex-start;
     border-radius: 999px;
     padding: 0.55rem 1.6rem;
     border: 1px solid rgba(255, 211, 105, 0.4);

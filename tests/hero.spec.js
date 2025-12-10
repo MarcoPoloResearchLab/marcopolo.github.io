@@ -2,7 +2,7 @@
 
 const {test, expect} = require("@playwright/test");
 
-/** @type {{projects: Array<{name: string, status: string, category: string, description: string, app?: string|null}>}} */
+/** @type {{projects: Array<{name: string, status: string, category: string, description: string, app?: string|null, launchEnabled?: boolean}>}} */
 const catalog = require("../data/projects.json");
 
 test.describe("Marco Polo Research Lab landing page", () => {
@@ -42,11 +42,14 @@ test.describe("Marco Polo Research Lab landing page", () => {
             await expect(card).toContainText(project.description);
             await expect(card.locator(".status-badge").first()).toHaveText(project.status);
 
-            const action = card.locator("a.card-action");
-            if (project.status === "WIP" || !project.app) {
-                await expect(action).toHaveCount(0);
-            } else {
-                await expect(action).toHaveCount(1);
+            const action = card.locator("a.card-action").first();
+            const expectLaunchVisible =
+                project.status !== "WIP" &&
+                Boolean(project.app) &&
+                (project.launchEnabled !== false);
+
+            await expect(action).toHaveCount(expectLaunchVisible ? 1 : 0);
+            if (expectLaunchVisible) {
                 await expect(action).toHaveAttribute("href", project.app);
             }
         }
@@ -179,7 +182,12 @@ test.describe("Marco Polo Research Lab landing page", () => {
     });
 
     test("subscribe-enabled cards render LoopAware forms after flipping", async ({page}) => {
-        const subscribeProjects = catalog.projects.filter(project => project.subscribe && project.subscribe.script);
+        const subscribeProjects = catalog.projects.filter(
+            project =>
+                project.subscribe &&
+                project.subscribe.script &&
+                project.subscribeEnabled !== false,
+        );
         await page.goto("/index.html");
 
         for (const project of subscribeProjects) {

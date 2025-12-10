@@ -13,6 +13,9 @@
  * @property {string | null} app
  * @property {string | null | undefined} [docs]
  * @property {string | null | undefined} [repo]
+ * @property {boolean | undefined} [launchEnabled]
+ * @property {boolean | undefined} [docsEnabled]
+ * @property {boolean | undefined} [subscribeEnabled]
  * @property {boolean} [public]
  * @property {string | null | undefined} [icon]
  * @property {ProjectSubscribeConfig | null | undefined} [subscribe]
@@ -111,7 +114,9 @@ function buildProjectCard(project) {
     inner.className = "project-card-inner";
 
     const subscribeConfig = project.subscribe && project.subscribe.script ? project.subscribe : null;
-    const hasSubscribeWidget = Boolean(subscribeConfig);
+    const subscribeEnabled =
+        Boolean(subscribeConfig) && (project.subscribeEnabled !== false);
+    const hasSubscribeWidget = subscribeEnabled;
     const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
     if (isFlippable) {
         card.classList.add("project-card-flippable");
@@ -151,14 +156,38 @@ function buildProjectCard(project) {
     description.textContent = project.description;
     body.append(description);
 
-    if (project.app && project.status !== "WIP") {
+    const shouldShowLaunch =
+        project.status !== "WIP" &&
+        Boolean(project.app) &&
+        (project.launchEnabled !== false);
+
+    const shouldShowDocs = Boolean(project.docs) && (project.docsEnabled !== false);
+
+    const actionsRow = document.createElement("div");
+    actionsRow.className = "card-actions";
+
+    if (shouldShowLaunch && project.app) {
         const link = document.createElement("a");
         link.href = project.app;
         link.className = "card-action";
         link.target = "_blank";
         link.rel = "noreferrer noopener";
         link.textContent = project.status === "Production" ? "Launch product" : "Explore beta";
-        body.append(link);
+        actionsRow.append(link);
+    }
+
+    if (shouldShowDocs && project.docs) {
+        const docsLink = document.createElement("a");
+        docsLink.href = project.docs;
+        docsLink.className = "card-action";
+        docsLink.target = "_blank";
+        docsLink.rel = "noreferrer noopener";
+        docsLink.textContent = "Read documentation";
+        actionsRow.append(docsLink);
+    }
+
+    if (actionsRow.childElementCount > 0) {
+        body.append(actionsRow);
     }
 
     const front = document.createElement("div");
