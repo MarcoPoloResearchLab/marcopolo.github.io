@@ -51,7 +51,7 @@
       "repo": "github.com/tyemirov/gix",
       "app": "https://gix.mprlab.com",
       "docs": "https://github.com/tyemirov/gix#readme",
-      "launchEnabled": true,
+      "launchEnabled": false,
       "docsEnabled": true,
       "subscribeEnabled": false,
       "icon": "assets/projects/gix/icon.png"
@@ -65,7 +65,7 @@
       "repo": "github.com/temirov/ghttp",
       "app": "https://github.com/temirov/ghttp",
       "docs": "https://github.com/temirov/ghttp#readme",
-      "launchEnabled": true,
+      "launchEnabled": false,
       "docsEnabled": true,
       "subscribeEnabled": false,
       "icon": "assets/projects/ghttp/icon.png"
@@ -80,7 +80,7 @@
       "app": "https://loopaware.mprlab.com",
       "docs": "https://github.com/tyemirov/loopaware#readme",
       "launchEnabled": true,
-      "docsEnabled": false,
+      "docsEnabled": true,
       "subscribeEnabled": true,
       "icon": "assets/projects/loopaware/icon.svg",
       "subscribe": {
@@ -98,7 +98,7 @@
       "repo": "github.com/temirov/pinguin",
       "app": "https://github.com/temirov/pinguin",
       "docs": "https://github.com/temirov/pinguin#readme",
-      "launchEnabled": true,
+      "launchEnabled": false,
       "docsEnabled": true,
       "subscribeEnabled": false,
       "icon": "assets/projects/pinguin/icon.png"
@@ -112,7 +112,7 @@
       "repo": "github.com/tyemirov/ETS",
       "app": "https://ets.mprlab.com",
       "docs": "https://github.com/tyemirov/ETS#readme",
-      "launchEnabled": true,
+      "launchEnabled": false,
       "docsEnabled": true,
       "subscribeEnabled": false,
       "icon": "assets/projects/ets/icon.svg"
@@ -126,7 +126,7 @@
       "repo": "github.com/tyemirov/TAuth",
       "app": "https://tauth.mprlab.com",
       "docs": "https://github.com/tyemirov/TAuth#readme",
-      "launchEnabled": true,
+      "launchEnabled": false,
       "docsEnabled": true,
       "subscribeEnabled": false,
       "icon": "assets/projects/tauth/icon.svg"
@@ -140,7 +140,7 @@
       "repo": "github.com/tyemirov/ledger",
       "app": "https://github.com/tyemirov/ledger",
       "docs": "https://github.com/tyemirov/ledger#readme",
-      "launchEnabled": true,
+      "launchEnabled": false,
       "docsEnabled": true,
       "subscribeEnabled": false,
       "icon": "assets/projects/ledger/icon.png"
