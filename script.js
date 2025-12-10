@@ -248,9 +248,8 @@ function buildProjectCard(project) {
             subscribeFrame.title = `${project.name} subscribe form`;
             subscribeFrame.setAttribute("aria-label", `Subscribe for ${project.name} updates`);
             subscribeFrame.setAttribute("tabindex", "-1");
-            const frameHeight = Math.max(240, Math.min(subscribeConfig.height || 320, 420));
-            subscribeFrame.style.minHeight = `${frameHeight}px`;
-            subscribeFrame.style.height = `${frameHeight}px`;
+            const idealFrameHeight = Math.max(240, Math.min(subscribeConfig.height || 320, 420));
+            subscribeFrame.dataset.frameHeight = String(idealFrameHeight);
             subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFrame);
             subscribeOverlay = document.createElement("div");
             subscribeOverlay.className = "project-card-subscribe-overlay";
@@ -262,6 +261,12 @@ function buildProjectCard(project) {
             loadSubscribeWidget = () => {
                 if (subscribeFrameLoaded) return;
                 subscribeFrameLoaded = true;
+                const overlayRect = subscribeOverlay.getBoundingClientRect();
+                const maxFrameHeight = Math.max(160, overlayRect.height - 32);
+                const ideal = Number(subscribeFrame.dataset.frameHeight) || 320;
+                const frameHeight = Math.min(ideal, maxFrameHeight);
+                subscribeFrame.style.minHeight = `${frameHeight}px`;
+                subscribeFrame.style.height = `${frameHeight}px`;
                 subscribeFrame.addEventListener("load", () => {
                     subscribeOverlay.dataset.subscribeLoaded = "true";
                 }, {once: true});
