@@ -7,7 +7,7 @@ Read @AGENTS.md, @AGENTS.DOCKER.md, @AGENTS.FRONTEND.md, @AGENTS.GIT.md, @POLICY
 
 Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` [x] [<ID>-<number>]`
 
-## Features (100-199)
+## Features (104–199)
 
 - [x] [MP-100] Replaced the sketch-based hero with the inline hero video (muted by default with an audio toggle) and refreshed the favicon using the provided JPEG source.
 - [x] [MP-101] Changed the global theme to dark turquoise with golden typography, updating hero/sections/cards/buttons accordingly.
@@ -18,7 +18,6 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
   - Rebuild the entire landing page information architecture (below the hero) around four top-level sections: Research, Tools, Platform, Products.
   - Keep the existing hero (video + sound toggle) and footer behavior unchanged and covered by Playwright tests.
   - Present all lab projects as cards grouped under these four sections.
-
   Requirements (locked in)
   - Information architecture
     - Replace the current “About / Projects / Contact” content with four section bands: Research, Tools, Platform, Products.
@@ -68,12 +67,13 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Integrate a LoopAware widget that lets visitors send structured feedback (text + contact details) straight from the landing page footer without jumping to another product surface.
       - Current difficulties: the LoopAware embed we ship today is hard-coded for “subscribe” flows (email-only, no free-form message fields), and the script instance assumes each card maps to a LoopAware property, so there is no single endpoint or schema for a global “site feedback” inbox. We need a LoopAware template that supports multi-field submissions plus a consolidated destination before wiring it into the footer drop-up.
 
-## Improvements (200–299)
+
+## Improvements (204–299)
 
 - [x] [MP-200] Hero text/CTA now lives below the video with refreshed cyberpunk styling so the motion stays unobstructed.
 - [x] [MP-201] Swapped in the new hero video (web-optimized MP4) and refreshed fonts (Orbitron + Space Grotesk) to match the cyberpunk aesthetic.
-- [ ] [MP-202] LoopAware-powered subscriptions for WIP cards
-      - On project cards with status WIP, make the WIP badge clickable so the card visually flips as if turned over and reveals a "subscribe to updates" surface.
+- [ ] [MP-202] LoopAware-powered subscriptions for WIP cards.
+  - On project cards with status WIP, make the WIP badge clickable so the card visually flips as if turned over and reveals a "subscribe to updates" surface.
       - Embed the subscribe form from the LoopAware project (widget or inline form) so visitors can subscribe to news about that specific project without leaving the page.
       - Decide whether each project maps to its own LoopAware site identifier or whether all WIP cards share a single "lab updates" subscription list, and document that mapping.
       - Extend Playwright coverage to assert that WIP cards expose a working subscription surface and that Production/Beta cards continue to behave as in MP-103.
@@ -95,11 +95,10 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 ## BugFixes (300–399)
 
 - [x] [MP-300] Footer stickiness came from the host element carrying `class="mpr-footer"`, so CDN CSS kept the host sticky while `sticky="false"` only toggled the internal footer; dropped the host class so the data-mpr-sticky override applies and added Playwright coverage for the non-sticky flow.
-
-```<mpr-footer
+  ```<mpr-footer
       class="mpr-footer"
       sticky="false"
-```
+  ```
 
 - [x] [MP-301] Footer host element has `position: relative` instead of `position: static`, causing Playwright test `footer respects non-sticky configuration` to fail — Fixed by adding `position: static !important` to override mpr-ui CDN defaults in `styles.css:538`.
       - Test location: `tests/hero.spec.js:109`
@@ -124,8 +123,8 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 - [x] [MP-400] Added `docker-compose.yml` + `.env.ghttp` to run the site through `ghcr.io/temirov/ghttp` and documented the workflow in README.
 - [x] [MP-401] Added the full Node-based toolchain (`package.json`, ESLint, Stylelint, Playwright) plus Makefile targets so `make lint`, `make test`, and `make ci` all succeed.
 - [x] [MP-402] Re-encoded the hero video to a 1280px, fast-start MP4 (~2.7 MB) and stored it as `assets/hero-loop.mp4` so the hero loads quickly on the web without the conspicuous filename.
-- [x] [MP-403] Data gathering
-      - Scan ~/Development subfolders folder with depth 2
+- [x] [MP-403] Data gathering.
+  - Scan ~/Development subfolders folder with depth 2
       - Find 
             - Research: ISSUES.md, PhotoLab
             - Tools: ctx, gix, ghttp
