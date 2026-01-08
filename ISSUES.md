@@ -77,7 +77,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Embed the subscribe form from the LoopAware project (widget or inline form) so visitors can subscribe to news about that specific project without leaving the page.
       - Decide whether each project maps to its own LoopAware site identifier or whether all WIP cards share a single "lab updates" subscription list, and document that mapping.
       - Extend Playwright coverage to assert that WIP cards expose a working subscription surface and that Production/Beta cards continue to behave as in MP-103.
-- [ ] [MP-203] Band order in HTML does not match SECTION_ORDER constant in JavaScript
+- [x] [MP-203] Band order in HTML does not match SECTION_ORDER constant in JavaScript — Fixed by reordering `<mpr-band>` elements in `index.html` to match MP-103 canonical order: Research → Tools → Platform → Products.
       - `index.html` declares bands in visual order: Tools → Platform → Products → Research
       - `script.js:28-33` defines `SECTION_ORDER = ["Research", "Tools", "Platform", "Products"]`
       - The mismatch causes no functional bug (cards render correctly because JS iterates bands by `data-band-category` attribute), but it creates maintainability confusion when reasoning about section ordering.
