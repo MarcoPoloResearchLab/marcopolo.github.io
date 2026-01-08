@@ -474,7 +474,6 @@ function setupHeroAudioToggle() {
     updateToggle();
 }
 
-
 document.addEventListener("DOMContentLoaded", () => {
     setupHeroAudioToggle();
     hydrateProjectCatalog().catch(error => {
