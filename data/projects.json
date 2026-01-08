@@ -7,11 +7,15 @@
       "status": "WIP",
       "category": "Research",
       "repo": "github.com/MarcoPoloResearchLab/marcopolo.github.io",
-      "app": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md",
-      "docs": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md",
-      "launchEnabled": false,
-      "docsEnabled": false,
       "icon": "assets/projects/issues-md/icon.png",
+      "launch": {
+        "enabled": false,
+        "url": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md"
+      },
+      "docs": {
+        "enabled": false,
+        "url": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -21,11 +25,9 @@
       "status": "WIP",
       "category": "Research",
       "repo": null,
-      "app": null,
-      "docs": null,
-      "launchEnabled": false,
-      "docsEnabled": false,
       "icon": "assets/projects/photolab/icon.svg",
+      "launch": { "enabled": false },
+      "docs": { "enabled": false },
       "subscribe": { "enabled": false }
     },
     {
@@ -35,11 +37,15 @@
       "status": "Production",
       "category": "Tools",
       "repo": "github.com/tyemirov/ctx",
-      "app": "https://ctx.mprlab.com",
-      "docs": "https://github.com/tyemirov/ctx#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/ctx/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://ctx.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/ctx#readme"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -49,11 +55,15 @@
       "status": "Production",
       "category": "Tools",
       "repo": "github.com/tyemirov/gix",
-      "app": "https://gix.mprlab.com",
-      "docs": "https://github.com/tyemirov/gix#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/gix/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://gix.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/gix#readme"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -63,11 +73,15 @@
       "status": "Production",
       "category": "Tools",
       "repo": "github.com/temirov/ghttp",
-      "app": "https://github.com/temirov/ghttp",
-      "docs": "https://github.com/temirov/ghttp#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/ghttp/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://github.com/temirov/ghttp"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/temirov/ghttp#readme"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -77,11 +91,15 @@
       "status": "Production",
       "category": "Platform",
       "repo": "github.com/tyemirov/loopaware",
-      "app": "https://loopaware.mprlab.com",
-      "docs": "https://github.com/tyemirov/loopaware#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/loopaware/icon.svg",
+      "launch": {
+        "enabled": true,
+        "url": "https://loopaware.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/loopaware#readme"
+      },
       "subscribe": {
         "enabled": true,
         "script": "https://loopaware.mprlab.com/subscribe.js?site_id=a3222433-92ec-473a-9255-0797226c2273&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
@@ -96,11 +114,15 @@
       "status": "Production",
       "category": "Platform",
       "repo": "github.com/temirov/pinguin",
-      "app": "https://github.com/temirov/pinguin",
-      "docs": "https://github.com/temirov/pinguin#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/pinguin/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://github.com/temirov/pinguin"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/temirov/pinguin#readme"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -110,11 +132,15 @@
       "status": "Beta",
       "category": "Platform",
       "repo": "github.com/tyemirov/ETS",
-      "app": "https://ets.mprlab.com",
-      "docs": "https://github.com/tyemirov/ETS#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/ets/icon.svg",
+      "launch": {
+        "enabled": true,
+        "url": "https://ets.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/ETS#readme"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -124,11 +150,15 @@
       "status": "Production",
       "category": "Platform",
       "repo": "github.com/tyemirov/TAuth",
-      "app": "https://tauth.mprlab.com",
-      "docs": "https://github.com/tyemirov/TAuth#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/tauth/icon.svg",
+      "launch": {
+        "enabled": true,
+        "url": "https://tauth.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/TAuth#readme"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -138,11 +168,15 @@
       "status": "Beta",
       "category": "Platform",
       "repo": "github.com/tyemirov/ledger",
-      "app": "https://github.com/tyemirov/ledger",
-      "docs": "https://github.com/tyemirov/ledger#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/ledger/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/ledger"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/ledger#readme"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -152,11 +186,15 @@
       "status": "Beta",
       "category": "Products",
       "repo": "github.com/MarcoPoloResearchLab/ProductScanner",
-      "app": "https://ps.mprlab.com",
-      "docs": "https://github.com/MarcoPoloResearchLab/ProductScanner#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/product-scanner/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://ps.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/MarcoPoloResearchLab/ProductScanner#readme"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -166,11 +204,15 @@
       "status": "Beta",
       "category": "Products",
       "repo": "github.com/MarcoPoloResearchLab/Sheet2Tube",
-      "app": "https://sheet2tube.mprlab.com",
-      "docs": "https://github.com/MarcoPoloResearchLab/Sheet2Tube#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/sheet2tube/icon.svg",
+      "launch": {
+        "enabled": true,
+        "url": "https://sheet2tube.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/MarcoPoloResearchLab/Sheet2Tube#readme"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -180,11 +222,15 @@
       "status": "Production",
       "category": "Products",
       "repo": "github.com/MarcoPoloResearchLab/gravity",
-      "app": "https://gravity.mprlab.com",
-      "docs": "https://github.com/MarcoPoloResearchLab/gravity#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/gravity-notes/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://gravity.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/MarcoPoloResearchLab/gravity#readme"
+      },
       "subscribe": {
         "enabled": true,
         "script": "https://loopaware.mprlab.com/subscribe.js?site_id=d8c3d1c8-7968-43d0-8026-ee827ada7666&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
@@ -200,11 +246,15 @@
       "status": "Production",
       "category": "Products",
       "repo": "github.com/MarcoPoloResearchLab/RSVP",
-      "app": "https://rsvp.mprlab.com",
-      "docs": "https://github.com/MarcoPoloResearchLab/RSVP#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/rsvp/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://rsvp.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/MarcoPoloResearchLab/RSVP#readme"
+      },
       "subscribe": { "enabled": false }
     },
     {
@@ -214,11 +264,15 @@
       "status": "Production",
       "category": "Products",
       "repo": "github.com/MarcoPoloResearchLab/prompts",
-      "app": "https://prompts.mprlab.com",
-      "docs": "https://github.com/MarcoPoloResearchLab/prompts#readme",
-      "launchEnabled": true,
-      "docsEnabled": true,
       "icon": "assets/projects/prompt-bubbles/icon.svg",
+      "launch": {
+        "enabled": true,
+        "url": "https://prompts.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/MarcoPoloResearchLab/prompts#readme"
+      },
       "subscribe": { "enabled": false }
     }
   ]

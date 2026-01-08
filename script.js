@@ -10,19 +10,29 @@
  * @property {string} description
  * @property {ProjectStatus} status
  * @property {ProjectCategory} category
- * @property {string | null} app
- * @property {string | null | undefined} [docs]
  * @property {string | null | undefined} [repo]
- * @property {boolean | undefined} [launchEnabled]
- * @property {boolean | undefined} [docsEnabled]
  * @property {string | null | undefined} [icon]
- * @property {ProjectSubscribeConfig | null | undefined} [subscribe]
+ * @property {ProjectLaunchConfig} launch
+ * @property {ProjectDocsConfig} docs
+ * @property {ProjectSubscribeConfig} subscribe
+ */
+
+/**
+ * @typedef {Object} ProjectLaunchConfig
+ * @property {boolean} enabled
+ * @property {string | undefined} [url]
+ */
+
+/**
+ * @typedef {Object} ProjectDocsConfig
+ * @property {boolean} enabled
+ * @property {string | undefined} [url]
  */
 
 /**
  * @typedef {Object} ProjectSubscribeConfig
- * @property {boolean | undefined} [enabled]
- * @property {string} script
+ * @property {boolean} enabled
+ * @property {string | undefined} [script]
  * @property {number | undefined} [height]
  * @property {string | undefined} [title]
  * @property {string | undefined} [copy]
@@ -112,9 +122,8 @@ function buildProjectCard(project) {
     const inner = document.createElement("div");
     inner.className = "project-card-inner";
 
-    const subscribeConfig = project.subscribe && project.subscribe.script ? project.subscribe : null;
-    const subscribeEnabled =
-        Boolean(subscribeConfig) && (subscribeConfig.enabled !== false);
+    const subscribeConfig = project.subscribe;
+    const subscribeEnabled = subscribeConfig.enabled && Boolean(subscribeConfig.script);
     const hasSubscribeWidget = subscribeEnabled;
     const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
     if (isFlippable) {
@@ -157,17 +166,17 @@ function buildProjectCard(project) {
 
     const shouldShowLaunch =
         project.status !== "WIP" &&
-        Boolean(project.app) &&
-        (project.launchEnabled !== false);
+        project.launch.enabled &&
+        Boolean(project.launch.url);
 
-    const shouldShowDocs = Boolean(project.docs) && (project.docsEnabled !== false);
+    const shouldShowDocs = project.docs.enabled && Boolean(project.docs.url);
 
     const actionsRow = document.createElement("div");
     actionsRow.className = "card-actions";
 
-    if (shouldShowLaunch && project.app) {
+    if (shouldShowLaunch && project.launch.url) {
         const link = document.createElement("a");
-        link.href = project.app;
+        link.href = project.launch.url;
         link.className = "card-action";
         link.target = "_blank";
         link.rel = "noreferrer noopener";
@@ -175,9 +184,9 @@ function buildProjectCard(project) {
         actionsRow.append(link);
     }
 
-    if (shouldShowDocs && project.docs) {
+    if (shouldShowDocs && project.docs.url) {
         const docsLink = document.createElement("a");
-        docsLink.href = project.docs;
+        docsLink.href = project.docs.url;
         docsLink.className = "card-action";
         docsLink.target = "_blank";
         docsLink.rel = "noreferrer noopener";

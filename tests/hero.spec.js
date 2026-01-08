@@ -2,7 +2,7 @@
 
 const {test, expect} = require("@playwright/test");
 
-/** @type {{projects: Array<{name: string, status: string, category: string, description: string, app?: string|null, launchEnabled?: boolean, subscribe?: {enabled?: boolean, script?: string}}>}} */
+/** @type {{projects: Array<{name: string, status: string, category: string, description: string, launch: {enabled: boolean, url?: string}, docs: {enabled: boolean, url?: string}, subscribe: {enabled: boolean, script?: string}}>}} */
 const catalog = require("../data/projects.json");
 
 test.describe("Marco Polo Research Lab landing page", () => {
@@ -45,12 +45,12 @@ test.describe("Marco Polo Research Lab landing page", () => {
             const action = card.locator("a.card-action").first();
             const expectLaunchVisible =
                 project.status !== "WIP" &&
-                Boolean(project.app) &&
-                (project.launchEnabled !== false);
+                project.launch.enabled &&
+                Boolean(project.launch.url);
 
             await expect(action).toHaveCount(expectLaunchVisible ? 1 : 0);
-            if (expectLaunchVisible) {
-                await expect(action).toHaveAttribute("href", project.app);
+            if (expectLaunchVisible && project.launch.url) {
+                await expect(action).toHaveAttribute("href", project.launch.url);
             }
         }
     });
@@ -74,9 +74,8 @@ test.describe("Marco Polo Research Lab landing page", () => {
             const classesAfterClick = await card.getAttribute("class");
 
             const hasActiveSubscribe =
-                project.subscribe &&
-                project.subscribe.enabled !== false &&
-                project.subscribe.script;
+                project.subscribe.enabled &&
+                Boolean(project.subscribe.script);
             const shouldFlip =
                 project.status === "Beta" ||
                 project.status === "WIP" ||
@@ -188,9 +187,8 @@ test.describe("Marco Polo Research Lab landing page", () => {
     test("subscribe-enabled cards render LoopAware forms after flipping", async ({page}) => {
         const subscribeProjects = catalog.projects.filter(
             project =>
-                project.subscribe &&
-                project.subscribe.script &&
-                project.subscribe.enabled !== false,
+                project.subscribe.enabled &&
+                Boolean(project.subscribe.script),
         );
         await page.goto("/index.html");
 
