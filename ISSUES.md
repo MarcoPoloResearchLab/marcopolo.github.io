@@ -73,10 +73,23 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 - [x] [MP-200] Hero text/CTA now lives below the video with refreshed cyberpunk styling so the motion stays unobstructed.
 - [x] [MP-201] Swapped in the new hero video (web-optimized MP4) and refreshed fonts (Orbitron + Space Grotesk) to match the cyberpunk aesthetic.
 - [ ] [MP-202] LoopAware-powered subscriptions for WIP cards
-      - On project cards with status WIP, make the WIP badge clickable so the card visually flips as if turned over and reveals a “subscribe to updates” surface.
+      - On project cards with status WIP, make the WIP badge clickable so the card visually flips as if turned over and reveals a "subscribe to updates" surface.
       - Embed the subscribe form from the LoopAware project (widget or inline form) so visitors can subscribe to news about that specific project without leaving the page.
-      - Decide whether each project maps to its own LoopAware site identifier or whether all WIP cards share a single “lab updates” subscription list, and document that mapping.
+      - Decide whether each project maps to its own LoopAware site identifier or whether all WIP cards share a single "lab updates" subscription list, and document that mapping.
       - Extend Playwright coverage to assert that WIP cards expose a working subscription surface and that Production/Beta cards continue to behave as in MP-103.
+- [ ] [MP-203] Band order in HTML does not match SECTION_ORDER constant in JavaScript
+      - `index.html` declares bands in visual order: Tools → Platform → Products → Research
+      - `script.js:28-33` defines `SECTION_ORDER = ["Research", "Tools", "Platform", "Products"]`
+      - The mismatch causes no functional bug (cards render correctly because JS iterates bands by `data-band-category` attribute), but it creates maintainability confusion when reasoning about section ordering.
+      - Fix option A: Reorder `<mpr-band>` elements in `index.html` to match `SECTION_ORDER` (Research → Tools → Platform → Products).
+      - Fix option B: Reorder `SECTION_ORDER` in `script.js` to match the intended visual order (Tools → Platform → Products → Research).
+      - Decide which order is canonical per MP-103 requirements ("Research → Tools → Platform → Products") and align both files.
+- [ ] [MP-204] Subscribe iframe uses `tabindex="-1"`, potentially blocking keyboard-only users from interacting with the LoopAware form
+      - Location: `script.js:159` sets `subscribeFrame.setAttribute("tabindex", "-1")`
+      - Current behavior: The iframe cannot receive focus via Tab navigation, which may prevent keyboard users from entering email or submitting the subscribe form.
+      - Rationale for current code: Likely added to prevent focus from jumping into the iframe during card flip animation or while card is not flipped.
+      - Fix: Conditionally set `tabindex="0"` on the iframe when the card enters the flipped state (`is-flipped` class added) and restore `tabindex="-1"` when unflipped. Update the `toggleFlip` handler in `script.js:207-225` to toggle the iframe's tabindex alongside the flip state.
+      - Extend Playwright test `subscribe-enabled cards render LoopAware forms after flipping` to assert that the iframe is focusable (`tabindex="0"`) when the card is flipped.
 
 ## BugFixes (300–399)
 
@@ -86,6 +99,14 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       class="mpr-footer"
       sticky="false"
 ```
+
+- [x] [MP-301] Footer host element has `position: relative` instead of `position: static`, causing Playwright test `footer respects non-sticky configuration` to fail — Fixed by adding `position: static !important` to override mpr-ui CDN defaults in `styles.css:538`.
+      - Test location: `tests/hero.spec.js:109`
+      - Expected: `position: static` on `mpr-footer` host element
+      - Actual: `position: relative`
+      - Root cause: The mpr-ui CDN stylesheet likely sets `position: relative` on the `mpr-footer` custom element, and our local `styles.css:536-541` does not explicitly override it to `static`.
+      - Fix: Add `position: static;` to the `mpr-footer { ... }` rule block in `styles.css` at line 536 to ensure the host element is not positioned, regardless of CDN defaults.
+      - Verify fix passes: `npx playwright test --grep "footer respects non-sticky"`.
 
 ## Maintenance (400–499)
 
@@ -115,6 +136,20 @@ Deliverables:
 - [x] [MP-406] Rebranded Product Scanner to **Poodle Scanner**, refreshed its description in `data/projects.(json|yml)`, and shipped the ProductScanner repo’s Poodle mark at `assets/projects/product-scanner/icon.png`.
 - [x] [MP-407] Normalized every raster project logo to 64×64 (storing the original favicons inside each `brand/` folder), resized the new Poodle icon from the 2048px source, and published `docs/assets-report.md` to document sizes + sources.
 - [x] [MP-408] Embedded the LoopAware subscribe widget on the LoopAware project card back face, restyled it to match the lab palette, and wired the flipping logic/tests so beta-style cards can host future LoopAware subscribe mounts.
+- [ ] [MP-409] PLAN.md is tracked in git history, violating AGENTS.GIT.md workflow rules
+      - AGENTS.GIT.md line 47 states: "PLAN.md is intentionally ignored in .gitignore; ensure it never appears in commits."
+      - Current state: `PLAN.md` was committed in branch `feature/MP-104-flippable-cards` and is visible in `git diff master...HEAD -- PLAN.md`.
+      - Root cause: `.gitignore` is missing the `PLAN.md` entry.
+      - Fix steps:
+        1. Add `PLAN.md` to `.gitignore` (append at end of file).
+        2. Remove PLAN.md from git tracking: `git rm --cached PLAN.md`.
+        3. Commit the `.gitignore` update and removal.
+        4. If PLAN.md must be purged from history (per AGENTS.GIT.md guidance), run: `git filter-repo --path PLAN.md --invert-paths` — but note this rewrites history and is forbidden by AGENTS.GIT.md ("Never use git push --force, git rebase..."). Safer alternative: leave the historical commit as-is and ensure future commits exclude PLAN.md.
+      - Verify: `git status` should show PLAN.md as untracked after fix.
+- [ ] [MP-410] Double blank line before DOMContentLoaded listener in script.js
+      - Location: `script.js:469-470` has two consecutive blank lines before `document.addEventListener("DOMContentLoaded", ...)`.
+      - AGENTS.FRONTEND.md requires tidy code without dead code or duplicate logic; while not a functional issue, the extra blank line is a style inconsistency.
+      - Fix: Remove one of the two blank lines at `script.js:469` so only a single blank line separates the `setupHeroAudioToggle` function from the `DOMContentLoaded` listener.
 
-## Planning 
+## Planning
 **Do not work on these, not ready**
