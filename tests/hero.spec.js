@@ -73,10 +73,14 @@ test.describe("Marco Polo Research Lab landing page", () => {
 
             const classesAfterClick = await card.getAttribute("class");
 
+            const hasActiveSubscribe =
+                project.subscribe &&
+                project.subscribe.enabled !== false &&
+                project.subscribe.script;
             const shouldFlip =
                 project.status === "Beta" ||
                 project.status === "WIP" ||
-                Boolean(project.subscribe);
+                hasActiveSubscribe;
 
             if (shouldFlip) {
                 expect(classesAfterClick || "").toMatch(/is-flipped/);

@@ -11,7 +11,8 @@
       "docs": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md",
       "launchEnabled": false,
       "docsEnabled": false,
-      "icon": "assets/projects/issues-md/icon.png"
+      "icon": "assets/projects/issues-md/icon.png",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "photolab",
@@ -24,7 +25,8 @@
       "docs": null,
       "launchEnabled": false,
       "docsEnabled": false,
-      "icon": "assets/projects/photolab/icon.svg"
+      "icon": "assets/projects/photolab/icon.svg",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "ctx",
@@ -37,7 +39,8 @@
       "docs": "https://github.com/tyemirov/ctx#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/ctx/icon.png"
+      "icon": "assets/projects/ctx/icon.png",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "gix",
@@ -50,7 +53,8 @@
       "docs": "https://github.com/tyemirov/gix#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/gix/icon.png"
+      "icon": "assets/projects/gix/icon.png",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "ghttp",
@@ -63,7 +67,8 @@
       "docs": "https://github.com/temirov/ghttp#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/ghttp/icon.png"
+      "icon": "assets/projects/ghttp/icon.png",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "loopaware",
@@ -95,7 +100,8 @@
       "docs": "https://github.com/temirov/pinguin#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/pinguin/icon.png"
+      "icon": "assets/projects/pinguin/icon.png",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "ets",
@@ -108,7 +114,8 @@
       "docs": "https://github.com/tyemirov/ETS#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/ets/icon.svg"
+      "icon": "assets/projects/ets/icon.svg",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "tauth",
@@ -121,7 +128,8 @@
       "docs": "https://github.com/tyemirov/TAuth#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/tauth/icon.svg"
+      "icon": "assets/projects/tauth/icon.svg",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "ledger",
@@ -134,7 +142,8 @@
       "docs": "https://github.com/tyemirov/ledger#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/ledger/icon.png"
+      "icon": "assets/projects/ledger/icon.png",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "product-scanner",
@@ -147,7 +156,8 @@
       "docs": "https://github.com/MarcoPoloResearchLab/ProductScanner#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/product-scanner/icon.png"
+      "icon": "assets/projects/product-scanner/icon.png",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "sheet2tube",
@@ -160,7 +170,8 @@
       "docs": "https://github.com/MarcoPoloResearchLab/Sheet2Tube#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/sheet2tube/icon.svg"
+      "icon": "assets/projects/sheet2tube/icon.svg",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "gravity-notes",
@@ -193,7 +204,8 @@
       "docs": "https://github.com/MarcoPoloResearchLab/RSVP#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/rsvp/icon.png"
+      "icon": "assets/projects/rsvp/icon.png",
+      "subscribe": { "enabled": false }
     },
     {
       "id": "prompt-bubbles",
@@ -206,7 +218,8 @@
       "docs": "https://github.com/MarcoPoloResearchLab/prompts#readme",
       "launchEnabled": true,
       "docsEnabled": true,
-      "icon": "assets/projects/prompt-bubbles/icon.svg"
+      "icon": "assets/projects/prompt-bubbles/icon.svg",
+      "subscribe": { "enabled": false }
     }
   ]
 }
