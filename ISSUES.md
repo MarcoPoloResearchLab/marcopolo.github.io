@@ -77,14 +77,14 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Embed the subscribe form from the LoopAware project (widget or inline form) so visitors can subscribe to news about that specific project without leaving the page.
       - Decide whether each project maps to its own LoopAware site identifier or whether all WIP cards share a single "lab updates" subscription list, and document that mapping.
       - Extend Playwright coverage to assert that WIP cards expose a working subscription surface and that Production/Beta cards continue to behave as in MP-103.
-- [ ] [MP-203] Band order in HTML does not match SECTION_ORDER constant in JavaScript
+- [x] [MP-203] Band order in HTML does not match SECTION_ORDER constant in JavaScript — Fixed by reordering `<mpr-band>` elements in `index.html` to match MP-103 canonical order: Research → Tools → Platform → Products.
       - `index.html` declares bands in visual order: Tools → Platform → Products → Research
       - `script.js:28-33` defines `SECTION_ORDER = ["Research", "Tools", "Platform", "Products"]`
       - The mismatch causes no functional bug (cards render correctly because JS iterates bands by `data-band-category` attribute), but it creates maintainability confusion when reasoning about section ordering.
       - Fix option A: Reorder `<mpr-band>` elements in `index.html` to match `SECTION_ORDER` (Research → Tools → Platform → Products).
       - Fix option B: Reorder `SECTION_ORDER` in `script.js` to match the intended visual order (Tools → Platform → Products → Research).
       - Decide which order is canonical per MP-103 requirements ("Research → Tools → Platform → Products") and align both files.
-- [ ] [MP-204] Subscribe iframe uses `tabindex="-1"`, potentially blocking keyboard-only users from interacting with the LoopAware form
+- [x] [MP-204] Subscribe iframe uses `tabindex="-1"`, potentially blocking keyboard-only users from interacting with the LoopAware form — Fixed by toggling iframe tabindex in the `toggleFlip` handler: `tabindex="0"` when flipped, `tabindex="-1"` when unflipped. Added Playwright assertions to verify the behavior.
       - Location: `script.js:159` sets `subscribeFrame.setAttribute("tabindex", "-1")`
       - Current behavior: The iframe cannot receive focus via Tab navigation, which may prevent keyboard users from entering email or submitting the subscribe form.
       - Rationale for current code: Likely added to prevent focus from jumping into the iframe during card flip animation or while card is not flipped.

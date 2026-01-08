@@ -197,7 +197,12 @@ test.describe("Marco Polo Research Lab landing page", () => {
 
             const badge = card.locator(".status-badge").first();
             const overlay = card.locator(".project-card-subscribe-overlay");
+            const iframeElement = card.locator(".subscribe-widget-frame");
             await expect(overlay).toHaveAttribute("data-subscribe-loaded", "false");
+            await expect(
+                iframeElement,
+                `${project.name} iframe should be unfocusable before flip`,
+            ).toHaveAttribute("tabindex", "-1");
 
             await badge.click();
 
@@ -212,6 +217,16 @@ test.describe("Marco Polo Research Lab landing page", () => {
             ).toContainText(/subscribe|notify/i);
 
             await expect(overlay).toHaveAttribute("data-subscribe-loaded", "true");
+            await expect(
+                iframeElement,
+                `${project.name} iframe should be focusable after flip`,
+            ).toHaveAttribute("tabindex", "0");
+
+            await badge.click();
+            await expect(
+                iframeElement,
+                `${project.name} iframe should be unfocusable after unflip`,
+            ).toHaveAttribute("tabindex", "-1");
         }
     });
 });
