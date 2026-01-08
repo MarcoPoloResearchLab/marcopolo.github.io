@@ -293,6 +293,11 @@ function buildProjectCard(project) {
             if (nowFlipped && loadSubscribeWidget) {
                 loadSubscribeWidget();
             }
+
+            const iframe = card.querySelector(".subscribe-widget-frame");
+            if (iframe) {
+                iframe.setAttribute("tabindex", nowFlipped ? "0" : "-1");
+            }
         };
 
         card.addEventListener("click", toggleFlip);
