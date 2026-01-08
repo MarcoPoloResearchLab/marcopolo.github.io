@@ -146,7 +146,7 @@ Deliverables:
         3. Commit the `.gitignore` update and removal.
         4. If PLAN.md must be purged from history (per AGENTS.GIT.md guidance), run: `git filter-repo --path PLAN.md --invert-paths` — but note this rewrites history and is forbidden by AGENTS.GIT.md ("Never use git push --force, git rebase..."). Safer alternative: leave the historical commit as-is and ensure future commits exclude PLAN.md.
       - Verify: `git status` should show PLAN.md as untracked after fix.
-- [ ] [MP-410] Double blank line before DOMContentLoaded listener in script.js
+- [x] [MP-410] Double blank line before DOMContentLoaded listener in script.js — Removed extra blank line at `script.js:476`.
       - Location: `script.js:469-470` has two consecutive blank lines before `document.addEventListener("DOMContentLoaded", ...)`.
       - AGENTS.FRONTEND.md requires tidy code without dead code or duplicate logic; while not a functional issue, the extra blank line is a style inconsistency.
       - Fix: Remove one of the two blank lines at `script.js:469` so only a single blank line separates the `setupHeroAudioToggle` function from the `DOMContentLoaded` listener.
