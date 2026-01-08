@@ -84,7 +84,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Fix option A: Reorder `<mpr-band>` elements in `index.html` to match `SECTION_ORDER` (Research → Tools → Platform → Products).
       - Fix option B: Reorder `SECTION_ORDER` in `script.js` to match the intended visual order (Tools → Platform → Products → Research).
       - Decide which order is canonical per MP-103 requirements ("Research → Tools → Platform → Products") and align both files.
-- [ ] [MP-204] Subscribe iframe uses `tabindex="-1"`, potentially blocking keyboard-only users from interacting with the LoopAware form
+- [x] [MP-204] Subscribe iframe uses `tabindex="-1"`, potentially blocking keyboard-only users from interacting with the LoopAware form — Fixed by toggling iframe tabindex in the `toggleFlip` handler: `tabindex="0"` when flipped, `tabindex="-1"` when unflipped. Added Playwright assertions to verify the behavior.
       - Location: `script.js:159` sets `subscribeFrame.setAttribute("tabindex", "-1")`
       - Current behavior: The iframe cannot receive focus via Tab navigation, which may prevent keyboard users from entering email or submitting the subscribe form.
       - Rationale for current code: Likely added to prevent focus from jumping into the iframe during card flip animation or while card is not flipped.
