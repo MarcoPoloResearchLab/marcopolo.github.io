@@ -2,7 +2,7 @@
 
 const {test, expect} = require("@playwright/test");
 
-/** @type {{projects: Array<{name: string, status: string, category: string, description: string, app?: string|null, launchEnabled?: boolean}>}} */
+/** @type {{projects: Array<{name: string, status: string, category: string, description: string, app?: string|null, launchEnabled?: boolean, subscribe?: {enabled?: boolean, script?: string}}>}} */
 const catalog = require("../data/projects.json");
 
 test.describe("Marco Polo Research Lab landing page", () => {
@@ -186,7 +186,7 @@ test.describe("Marco Polo Research Lab landing page", () => {
             project =>
                 project.subscribe &&
                 project.subscribe.script &&
-                project.subscribeEnabled !== false,
+                project.subscribe.enabled !== false,
         );
         await page.goto("/index.html");
 

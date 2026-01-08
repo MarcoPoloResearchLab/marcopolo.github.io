@@ -15,13 +15,13 @@
  * @property {string | null | undefined} [repo]
  * @property {boolean | undefined} [launchEnabled]
  * @property {boolean | undefined} [docsEnabled]
- * @property {boolean | undefined} [subscribeEnabled]
  * @property {string | null | undefined} [icon]
  * @property {ProjectSubscribeConfig | null | undefined} [subscribe]
  */
 
 /**
  * @typedef {Object} ProjectSubscribeConfig
+ * @property {boolean | undefined} [enabled]
  * @property {string} script
  * @property {number | undefined} [height]
  * @property {string | undefined} [title]
@@ -114,7 +114,7 @@ function buildProjectCard(project) {
 
     const subscribeConfig = project.subscribe && project.subscribe.script ? project.subscribe : null;
     const subscribeEnabled =
-        Boolean(subscribeConfig) && (project.subscribeEnabled !== false);
+        Boolean(subscribeConfig) && (subscribeConfig.enabled !== false);
     const hasSubscribeWidget = subscribeEnabled;
     const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
     if (isFlippable) {
