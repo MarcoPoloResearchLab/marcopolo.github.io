@@ -470,10 +470,6 @@ a:focus {
 
 .subscribe-widget {
     padding: 1rem;
-    border-radius: 18px;
-    border: 1px solid var(--accent-outline);
-    background: rgba(0, 40, 46, 0.6);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
     overflow: hidden;
     height: 100%;
     display: flex;
@@ -503,33 +499,32 @@ a:focus {
     height: 240px;
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
     overflow: hidden;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .project-card-subscribe-overlay {
     position: absolute;
-    inset: 24px;
+    inset: 0;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     opacity: 0;
     pointer-events: none;
-    transform: rotateY(180deg) translateY(12px);
+    transform: translateY(12px);
     transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 2;
-    backface-visibility: hidden;
     overflow: hidden;
-    padding: 0;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 211, 105, 0.15);
-    background: radial-gradient(circle at top, rgba(3, 38, 46, 0.9), rgba(2, 20, 25, 0.85));
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    padding: 1.5rem;
+    border-radius: 24px;
+    background: rgba(2, 20, 25, 0.95);
     backdrop-filter: blur(18px);
 }
 
 .project-card-flippable.is-flipped .project-card-subscribe-overlay {
     opacity: 1;
     pointer-events: auto;
-    transform: rotateY(180deg) translateY(0);
+    transform: translateY(0);
 }
 
 /* ---------- Footer ---------- */

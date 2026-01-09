@@ -63,11 +63,10 @@ const FLIPPABLE_STATUSES = ["Beta", "WIP"];
 /**
  * Generates inline HTML used inside the subscribe iframe so the LoopAware script
  * can render its real widget without leaking global styles into the page.
- * @param {string} scriptUrl
+ * @param {string} scriptContent
  * @returns {string}
  */
-function buildSubscribeFrameDocument(scriptUrl) {
-    const safeUrl = String(scriptUrl).replace(/"/g, "&quot;");
+function buildSubscribeFrameDocument(scriptContent) {
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -83,12 +82,71 @@ function buildSubscribeFrameDocument(scriptUrl) {
         background: transparent;
         font-family: "Space Grotesk", "Roboto", sans-serif;
       }
+
+      #mp-subscribe-form {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+
+      #mp-subscribe-form > div:first-child {
+        display: none !important;
+      }
+
+      #mp-subscribe-form input {
+        background: rgba(255, 255, 255, 0.08) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        color: #fff !important;
+      }
+
+      #mp-subscribe-form input::placeholder {
+        color: rgba(255, 255, 255, 0.4) !important;
+      }
+
+      #mp-subscribe-form button {
+        background: #ffd369 !important;
+        color: #0a1a1f !important;
+      }
+
+      #mp-subscribe-form #mp-subscribe-status {
+        color: rgba(255, 255, 255, 0.7) !important;
+      }
     </style>
   </head>
   <body>
-    <script defer src="${safeUrl}"></script>
+    <script>${scriptContent}</script>
   </body>
 </html>`;
+}
+
+/** @type {Map<string, Promise<string>>} */
+const scriptCache = new Map();
+
+/**
+ * Fetches and caches the LoopAware subscribe script content.
+ * @param {string} scriptUrl
+ * @returns {Promise<string>}
+ */
+async function fetchSubscribeScript(scriptUrl) {
+    if (scriptCache.has(scriptUrl)) {
+        return scriptCache.get(scriptUrl);
+    }
+    const promise = fetch(scriptUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Failed to fetch subscribe script: ${response.status}`);
+            }
+            return response.text();
+        })
+        .catch(error => {
+            scriptCache.delete(scriptUrl);
+            console.error("Subscribe script fetch error:", error);
+            return "";
+        });
+    scriptCache.set(scriptUrl, promise);
+    return promise;
 }
 
 /**
@@ -267,7 +325,7 @@ function buildProjectCard(project) {
 
             let subscribeFrameLoaded = false;
 
-            loadSubscribeWidget = () => {
+            loadSubscribeWidget = async () => {
                 if (subscribeFrameLoaded) return;
                 subscribeFrameLoaded = true;
                 const overlayRect = subscribeOverlay.getBoundingClientRect();
@@ -279,7 +337,10 @@ function buildProjectCard(project) {
                 subscribeFrame.addEventListener("load", () => {
                     subscribeOverlay.dataset.subscribeLoaded = "true";
                 }, {once: true});
-                subscribeFrame.srcdoc = buildSubscribeFrameDocument(subscribeConfig.script);
+                const scriptContent = await fetchSubscribeScript(subscribeConfig.script);
+                if (scriptContent) {
+                    subscribeFrame.srcdoc = buildSubscribeFrameDocument(scriptContent);
+                }
             };
         }
         back.append(backHeader, backBody);
