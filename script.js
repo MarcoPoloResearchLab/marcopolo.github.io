@@ -64,9 +64,27 @@ const FLIPPABLE_STATUSES = ["Beta", "WIP"];
  * Generates inline HTML used inside the subscribe iframe so the LoopAware script
  * can render its real widget without leaking global styles into the page.
  * @param {string} scriptContent
+ * @param {string} scriptUrl - Original URL with query parameters for config parsing
  * @returns {string}
  */
-function buildSubscribeFrameDocument(scriptContent) {
+function buildSubscribeFrameDocument(scriptContent, scriptUrl) {
+    // Extract base URL for API endpoint (e.g., https://loopaware.mprlab.com)
+    const urlObj = new URL(scriptUrl);
+    const baseUrl = `${urlObj.protocol}//${urlObj.host}`;
+
+    // Patch the script to work inside srcdoc iframe:
+    // 1. Replace scriptTag.src fallback with original URL (for config parsing)
+    // 2. Replace location-based endpoint with correct LoopAware URL
+    //    (srcdoc iframes have origin "about:srcdoc" which can't make cross-origin requests)
+    const patchedScript = scriptContent
+        .replace(
+            /scriptTag\.src\s*\|\|\s*""/g,
+            JSON.stringify(scriptUrl)
+        )
+        .replace(
+            /location\.protocol\s*\+\s*"\/\/"\s*\+\s*location\.host/g,
+            JSON.stringify(baseUrl)
+        );
     return `
 <!DOCTYPE html>
 <html lang="en">
@@ -116,7 +134,7 @@ function buildSubscribeFrameDocument(scriptContent) {
     </style>
   </head>
   <body>
-    <script>${scriptContent}</script>
+    <script>${patchedScript}</script>
   </body>
 </html>`;
 }
@@ -339,7 +357,7 @@ function buildProjectCard(project) {
                 }, {once: true});
                 const scriptContent = await fetchSubscribeScript(subscribeConfig.script);
                 if (scriptContent) {
-                    subscribeFrame.srcdoc = buildSubscribeFrameDocument(scriptContent);
+                    subscribeFrame.srcdoc = buildSubscribeFrameDocument(scriptContent, subscribeConfig.script);
                 }
             };
         }
