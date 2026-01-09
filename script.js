@@ -60,111 +60,54 @@ const STATUS_CLASS = Object.freeze({
 /** @type {ProjectStatus[]} */
 const FLIPPABLE_STATUSES = ["Beta", "WIP"];
 
-/**
- * Generates inline HTML used inside the subscribe iframe so the LoopAware script
- * can render its real widget without leaking global styles into the page.
- * @param {string} scriptContent
- * @param {string} scriptUrl - Original URL with query parameters for config parsing
- * @returns {string}
- */
-function buildSubscribeFrameDocument(scriptContent, scriptUrl) {
-    // Extract base URL for API endpoint (e.g., https://loopaware.mprlab.com)
-    const urlObj = new URL(scriptUrl);
-    const baseUrl = `${urlObj.protocol}//${urlObj.host}`;
-
-    // Patch the script to work inside srcdoc iframe:
-    // 1. Replace scriptTag.src fallback with original URL (for config parsing)
-    // 2. Replace location-based endpoint with correct LoopAware URL
-    //    (srcdoc iframes have origin "about:srcdoc" which can't make cross-origin requests)
-    const patchedScript = scriptContent
-        .replace(
-            /scriptTag\.src\s*\|\|\s*""/g,
-            JSON.stringify(scriptUrl)
-        )
-        .replace(
-            /location\.protocol\s*\+\s*"\/\/"\s*\+\s*location\.host/g,
-            JSON.stringify(baseUrl)
-        );
-    return `
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      :root {
-        color-scheme: dark;
-      }
-
-      body {
-        margin: 0;
-        background: transparent;
-        font-family: "Space Grotesk", "Roboto", sans-serif;
-      }
-
-      #mp-subscribe-form {
-        background: transparent !important;
-        border: none !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-        max-width: 100% !important;
-      }
-
-      #mp-subscribe-form > div:first-child {
-        display: none !important;
-      }
-
-      #mp-subscribe-form input {
-        background: rgba(255, 255, 255, 0.08) !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
-        color: #fff !important;
-      }
-
-      #mp-subscribe-form input::placeholder {
-        color: rgba(255, 255, 255, 0.4) !important;
-      }
-
-      #mp-subscribe-form button {
-        background: #ffd369 !important;
-        color: #0a1a1f !important;
-      }
-
-      #mp-subscribe-form #mp-subscribe-status {
-        color: rgba(255, 255, 255, 0.7) !important;
-      }
-    </style>
-  </head>
-  <body>
-    <script>${patchedScript}</script>
-  </body>
-</html>`;
-}
-
-/** @type {Map<string, Promise<string>>} */
-const scriptCache = new Map();
+/** @type {Set<string>} */
+const loadedSubscribeScripts = new Set();
 
 /**
- * Fetches and caches the LoopAware subscribe script content.
- * @param {string} scriptUrl
- * @returns {Promise<string>}
+ * Loads the LoopAware subscribe script and moves the form to the target container.
+ * Workaround until LoopAware implements LA-113 (target parameter support).
+ * @param {string} scriptUrl - Full URL with query parameters
+ * @param {HTMLElement} targetContainer - Container to move the form into
+ * @returns {Promise<void>}
  */
-async function fetchSubscribeScript(scriptUrl) {
-    if (scriptCache.has(scriptUrl)) {
-        return scriptCache.get(scriptUrl);
-    }
-    const promise = fetch(scriptUrl)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Failed to fetch subscribe script: ${response.status}`);
+function loadSubscribeScript(scriptUrl, targetContainer) {
+    return new Promise((resolve) => {
+        // Script already loaded - form exists, move it
+        if (loadedSubscribeScripts.has(scriptUrl)) {
+            const form = document.getElementById("mp-subscribe-form");
+            if (form && !targetContainer.contains(form)) {
+                targetContainer.appendChild(form);
             }
-            return response.text();
-        })
-        .catch(error => {
-            scriptCache.delete(scriptUrl);
-            console.error("Subscribe script fetch error:", error);
-            return "";
-        });
-    scriptCache.set(scriptUrl, promise);
-    return promise;
+            resolve();
+            return;
+        }
+
+        const script = document.createElement("script");
+        script.src = scriptUrl;
+        script.async = true;
+
+        script.addEventListener("load", () => {
+            loadedSubscribeScripts.add(scriptUrl);
+            // Wait for form to be created, then move it to target
+            const moveForm = () => {
+                const form = document.getElementById("mp-subscribe-form");
+                if (form) {
+                    targetContainer.appendChild(form);
+                    resolve();
+                } else {
+                    requestAnimationFrame(moveForm);
+                }
+            };
+            moveForm();
+        }, {once: true});
+
+        script.addEventListener("error", () => {
+            console.error("Failed to load subscribe script:", scriptUrl);
+            resolve();
+        }, {once: true});
+
+        document.head.appendChild(script);
+    });
 }
 
 /**
@@ -327,38 +270,23 @@ function buildProjectCard(project) {
                 subscribeConfig.copy ||
                 "Leave your email to hear when this project ships new features and announcements.";
 
-            const subscribeFrame = document.createElement("iframe");
-            subscribeFrame.className = "subscribe-widget-frame";
-            subscribeFrame.loading = "lazy";
-            subscribeFrame.title = `${project.name} subscribe form`;
-            subscribeFrame.setAttribute("aria-label", `Subscribe for ${project.name} updates`);
-            subscribeFrame.setAttribute("tabindex", "-1");
-            const idealFrameHeight = Math.max(240, Math.min(subscribeConfig.height || 320, 420));
-            subscribeFrame.dataset.frameHeight = String(idealFrameHeight);
-            subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFrame);
+            // Container for LoopAware subscribe form (rendered by subscribe.js)
+            const subscribeFormContainer = document.createElement("div");
+            subscribeFormContainer.className = "subscribe-form-container";
+
+            subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFormContainer);
             subscribeOverlay = document.createElement("div");
             subscribeOverlay.className = "project-card-subscribe-overlay";
             subscribeOverlay.dataset.subscribeLoaded = "false";
             subscribeOverlay.append(subscribeWidget);
 
-            let subscribeFrameLoaded = false;
+            let subscribeScriptLoaded = false;
 
             loadSubscribeWidget = async () => {
-                if (subscribeFrameLoaded) return;
-                subscribeFrameLoaded = true;
-                const overlayRect = subscribeOverlay.getBoundingClientRect();
-                const maxFrameHeight = Math.max(160, overlayRect.height - 32);
-                const ideal = Number(subscribeFrame.dataset.frameHeight) || 320;
-                const frameHeight = Math.min(ideal, maxFrameHeight);
-                subscribeFrame.style.minHeight = `${frameHeight}px`;
-                subscribeFrame.style.height = `${frameHeight}px`;
-                subscribeFrame.addEventListener("load", () => {
-                    subscribeOverlay.dataset.subscribeLoaded = "true";
-                }, {once: true});
-                const scriptContent = await fetchSubscribeScript(subscribeConfig.script);
-                if (scriptContent) {
-                    subscribeFrame.srcdoc = buildSubscribeFrameDocument(scriptContent, subscribeConfig.script);
-                }
+                if (subscribeScriptLoaded) return;
+                subscribeScriptLoaded = true;
+                await loadSubscribeScript(subscribeConfig.script, subscribeFormContainer);
+                subscribeOverlay.dataset.subscribeLoaded = "true";
             };
         }
         back.append(backHeader, backBody);
@@ -380,11 +308,6 @@ function buildProjectCard(project) {
             card.setAttribute("aria-pressed", nowFlipped ? "true" : "false");
             if (nowFlipped && loadSubscribeWidget) {
                 loadSubscribeWidget();
-            }
-
-            const iframe = card.querySelector(".subscribe-widget-frame");
-            if (iframe) {
-                iframe.setAttribute("tabindex", nowFlipped ? "0" : "-1");
             }
         };
 

@@ -490,17 +490,48 @@ a:focus {
     font-size: 0.95rem;
 }
 
-.subscribe-widget-frame {
+.subscribe-form-container {
     width: 100%;
-    border: 0;
-    border-radius: 16px;
-    background: transparent;
-    min-height: 240px;
-    height: 240px;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-    overflow: hidden;
-    transform: translateZ(0);
-    backface-visibility: hidden;
+}
+
+/* LoopAware subscribe form styling */
+#mp-subscribe-form {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    font-family: "Space Grotesk", "Roboto", sans-serif !important;
+    color: var(--text-gold) !important;
+}
+
+#mp-subscribe-form > div:first-child {
+    display: none !important;
+}
+
+#mp-subscribe-form input {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+    font-family: inherit !important;
+}
+
+#mp-subscribe-form input::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+#mp-subscribe-form button {
+    background: var(--accent-gold) !important;
+    color: var(--bg-body) !important;
+    font-family: inherit !important;
+}
+
+#mp-subscribe-form button:hover {
+    filter: brightness(1.1);
+}
+
+#mp-subscribe-form #mp-subscribe-status {
+    color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .project-card-subscribe-overlay {

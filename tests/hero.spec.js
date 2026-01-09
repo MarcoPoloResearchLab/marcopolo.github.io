@@ -199,36 +199,23 @@ test.describe("Marco Polo Research Lab landing page", () => {
 
             const badge = card.locator(".status-badge").first();
             const overlay = card.locator(".project-card-subscribe-overlay");
-            const iframeElement = card.locator(".subscribe-widget-frame");
+            const formContainer = card.locator(".subscribe-form-container");
             await expect(overlay).toHaveAttribute("data-subscribe-loaded", "false");
-            await expect(
-                iframeElement,
-                `${project.name} iframe should be unfocusable before flip`,
-            ).toHaveAttribute("tabindex", "-1");
 
             await badge.click();
 
-            const cardBack = card.locator(".project-card-face.project-card-back");
-            const frame = cardBack.frameLocator(".subscribe-widget-frame");
-            const loopAwareForm = frame.locator("#mp-subscribe-form");
-            await expect(loopAwareForm, `${project.name} LoopAware form should render inside iframe`).toBeVisible();
-            await expect(frame.locator("input[type='email']")).toBeVisible();
+            // Form is rendered directly in the page (no iframe) via LoopAware subscribe.js
+            const loopAwareForm = formContainer.locator("#mp-subscribe-form");
+            await expect(loopAwareForm, `${project.name} LoopAware form should render`).toBeVisible();
+            await expect(formContainer.locator("input[type='email']")).toBeVisible();
             await expect(
-                frame.locator("button"),
+                formContainer.locator("button"),
                 `${project.name} LoopAware widget should expose a CTA button`,
             ).toContainText(/subscribe|notify/i);
 
             await expect(overlay).toHaveAttribute("data-subscribe-loaded", "true");
-            await expect(
-                iframeElement,
-                `${project.name} iframe should be focusable after flip`,
-            ).toHaveAttribute("tabindex", "0");
 
             await badge.click();
-            await expect(
-                iframeElement,
-                `${project.name} iframe should be unfocusable after unflip`,
-            ).toHaveAttribute("tabindex", "-1");
         }
     });
 });
