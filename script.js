@@ -254,6 +254,16 @@ function buildProjectCard(project) {
                 loadSubscribeScript(subscribeConfig.script, subscribeConfig.target);
                 subscribeOverlay.dataset.subscribeLoaded = "true";
             };
+
+            // Listen for successful subscription and flip card back after delay
+            subscribeFormContainer.addEventListener("loopaware:subscribe:success", () => {
+                setTimeout(() => {
+                    if (card.classList.contains("is-flipped")) {
+                        card.classList.remove("is-flipped");
+                        card.setAttribute("aria-pressed", "false");
+                    }
+                }, 2000); // 2 second delay to show success message
+            });
         }
         back.append(backHeader, backBody);
         if (subscribeOverlay) {
