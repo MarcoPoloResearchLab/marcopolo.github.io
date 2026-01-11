@@ -107,8 +107,7 @@ function buildProjectCard(project) {
     inner.className = "project-card-inner";
 
     const subscribeConfig = project.subscribe;
-    const subscribeEnabled = subscribeConfig.enabled && Boolean(subscribeConfig.script);
-    const hasSubscribeWidget = subscribeEnabled;
+    const hasSubscribeWidget = subscribeConfig.enabled && Boolean(subscribeConfig.script);
     const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
     if (isFlippable) {
         card.classList.add("project-card-flippable");
@@ -158,9 +157,9 @@ function buildProjectCard(project) {
     const actionsRow = document.createElement("div");
     actionsRow.className = "card-actions";
 
-    if (shouldShowLaunch && project.launch.url) {
+    if (shouldShowLaunch) {
         const link = document.createElement("a");
-        link.href = project.launch.url;
+        link.href = /** @type {string} */ (project.launch.url);
         link.className = "card-action";
         link.target = "_blank";
         link.rel = "noreferrer noopener";
@@ -168,9 +167,9 @@ function buildProjectCard(project) {
         actionsRow.append(link);
     }
 
-    if (shouldShowDocs && project.docs.url) {
+    if (shouldShowDocs) {
         const docsLink = document.createElement("a");
-        docsLink.href = project.docs.url;
+        docsLink.href = /** @type {string} */ (project.docs.url);
         docsLink.className = "card-action";
         docsLink.target = "_blank";
         docsLink.rel = "noreferrer noopener";
@@ -217,7 +216,7 @@ function buildProjectCard(project) {
         backBody.append(backCopy);
 
         let subscribeOverlay = null;
-        if (hasSubscribeWidget && subscribeConfig) {
+        if (hasSubscribeWidget) {
             card.classList.add("project-card-has-subscribe");
 
             const subscribeWidget = document.createElement("div");
@@ -257,11 +256,28 @@ function buildProjectCard(project) {
 
             // Listen for successful subscription and flip card back after delay
             subscribeFormContainer.addEventListener("loopaware:subscribe:success", () => {
+                const emailInput = /** @type {HTMLInputElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-email")
+                );
+                const submitButton = /** @type {HTMLElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-submit")
+                );
+                const statusElement = /** @type {HTMLElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-status")
+                );
+
+                // Hide form inputs, keep status message visible
+                emailInput.style.display = "none";
+                submitButton.style.display = "none";
+
                 setTimeout(() => {
-                    if (card.classList.contains("is-flipped")) {
-                        card.classList.remove("is-flipped");
-                        card.setAttribute("aria-pressed", "false");
-                    }
+                    card.classList.remove("is-flipped");
+                    card.setAttribute("aria-pressed", "false");
+                    // Reset form state for next flip
+                    emailInput.style.display = "";
+                    emailInput.value = "";
+                    submitButton.style.display = "";
+                    statusElement.textContent = "";
                 }, 2000); // 2 second delay to show success message
             });
         }
@@ -314,9 +330,7 @@ function buildProjectCard(project) {
  */
 function buildStatusBadge(status) {
     const badge = document.createElement("span");
-    badge.className = "status-badge";
-    const modifier = STATUS_CLASS[status];
-    if (modifier) badge.classList.add(modifier);
+    badge.className = `status-badge ${STATUS_CLASS[status]}`;
     badge.textContent = status;
     return badge;
 }
@@ -433,7 +447,7 @@ function layoutBandRows(grid) {
 }
 
 function setupHeroAudioToggle() {
-    const video = document.getElementById("hero-video");
+    const video = /** @type {HTMLVideoElement | null} */ (document.getElementById("hero-video"));
     const toggle = document.getElementById("hero-sound-toggle");
     if (!video || !toggle) return;
 
@@ -448,10 +462,7 @@ function setupHeroAudioToggle() {
     };
 
     const ensurePlayback = () => {
-        const playPromise = video.play();
-        if (playPromise && typeof playPromise.then === "function") {
-            playPromise.catch(() => {});
-        }
+        video.play().catch(() => {});
     };
 
     toggle.addEventListener("click", () => {

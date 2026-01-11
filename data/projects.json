@@ -196,7 +196,14 @@
         "enabled": true,
         "url": "https://github.com/MarcoPoloResearchLab/ProductScanner#readme"
       },
-      "subscribe": { "enabled": false }
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=cc91ba37-b47c-46bf-bd4a-d92611ca4b1a&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-product-scanner",
+        "title": "Get Gravity Notes release updates",
+        "copy": "Drop your email to hear when Gravity Notes ships fresh features, AI integrations, and new plugins.",
+        "height": 320
+      }
     },
     {
       "id": "sheet2tube",
