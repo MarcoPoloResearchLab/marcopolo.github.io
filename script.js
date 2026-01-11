@@ -266,7 +266,8 @@ function buildProjectCard(project) {
          */
         const toggleFlip = event => {
             const target = /** @type {HTMLElement} */ (event.target);
-            if (target.closest("a")) {
+            // Don't flip when interacting with links or form elements
+            if (target.closest("a, input, button, textarea, select, label, #mp-subscribe-form")) {
                 return;
             }
 
@@ -281,7 +282,8 @@ function buildProjectCard(project) {
         card.addEventListener("keydown", event => {
             if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
                 const target = /** @type {HTMLElement} */ (event.target);
-                if (target.closest("a")) {
+                // Don't flip when interacting with links or form elements
+                if (target.closest("a, input, button, textarea, select, label, #mp-subscribe-form")) {
                     return;
                 }
 
