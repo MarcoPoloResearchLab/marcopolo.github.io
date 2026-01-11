@@ -60,54 +60,19 @@ const STATUS_CLASS = Object.freeze({
 /** @type {ProjectStatus[]} */
 const FLIPPABLE_STATUSES = ["Beta", "WIP"];
 
-/** @type {Set<string>} */
-const loadedSubscribeScripts = new Set();
-
 /**
- * Loads the LoopAware subscribe script and moves the form to the target container.
- * Workaround until LoopAware implements LA-113 (target parameter support).
- * @param {string} scriptUrl - Full URL with query parameters
- * @param {HTMLElement} targetContainer - Container to move the form into
- * @returns {Promise<void>}
+ * Loads the LoopAware subscribe script with target parameter (LA-113).
+ * @param {string} scriptUrl - Base URL with query parameters
+ * @param {string} targetId - ID of the element to render the form into
  */
-function loadSubscribeScript(scriptUrl, targetContainer) {
-    return new Promise((resolve) => {
-        // Script already loaded - form exists, move it
-        if (loadedSubscribeScripts.has(scriptUrl)) {
-            const form = document.getElementById("mp-subscribe-form");
-            if (form && !targetContainer.contains(form)) {
-                targetContainer.appendChild(form);
-            }
-            resolve();
-            return;
-        }
+function loadSubscribeScript(scriptUrl, targetId) {
+    const url = new URL(scriptUrl);
+    url.searchParams.set("target", targetId);
 
-        const script = document.createElement("script");
-        script.src = scriptUrl;
-        script.async = true;
-
-        script.addEventListener("load", () => {
-            loadedSubscribeScripts.add(scriptUrl);
-            // Wait for form to be created, then move it to target
-            const moveForm = () => {
-                const form = document.getElementById("mp-subscribe-form");
-                if (form) {
-                    targetContainer.appendChild(form);
-                    resolve();
-                } else {
-                    requestAnimationFrame(moveForm);
-                }
-            };
-            moveForm();
-        }, {once: true});
-
-        script.addEventListener("error", () => {
-            console.error("Failed to load subscribe script:", scriptUrl);
-            resolve();
-        }, {once: true});
-
-        document.head.appendChild(script);
-    });
+    const script = document.createElement("script");
+    script.src = url.toString();
+    script.async = true;
+    document.head.appendChild(script);
 }
 
 /**
@@ -270,8 +235,10 @@ function buildProjectCard(project) {
                 subscribeConfig.copy ||
                 "Leave your email to hear when this project ships new features and announcements.";
 
-            // Container for LoopAware subscribe form (rendered by subscribe.js)
+            // Container for LoopAware subscribe form (rendered by subscribe.js with target param)
             const subscribeFormContainer = document.createElement("div");
+            const targetId = `subscribe-target-${project.id}`;
+            subscribeFormContainer.id = targetId;
             subscribeFormContainer.className = "subscribe-form-container";
 
             subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFormContainer);
@@ -282,10 +249,10 @@ function buildProjectCard(project) {
 
             let subscribeScriptLoaded = false;
 
-            loadSubscribeWidget = async () => {
+            loadSubscribeWidget = () => {
                 if (subscribeScriptLoaded) return;
                 subscribeScriptLoaded = true;
-                await loadSubscribeScript(subscribeConfig.script, subscribeFormContainer);
+                loadSubscribeScript(subscribeConfig.script, targetId);
                 subscribeOverlay.dataset.subscribeLoaded = "true";
             };
         }
