@@ -237,8 +237,7 @@ function buildProjectCard(project) {
 
             // Container for LoopAware subscribe form (rendered by subscribe.js with target param)
             const subscribeFormContainer = document.createElement("div");
-            const targetId = `subscribe-target-${project.id}`;
-            subscribeFormContainer.id = targetId;
+            subscribeFormContainer.id = subscribeConfig.target;
             subscribeFormContainer.className = "subscribe-form-container";
 
             subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFormContainer);
@@ -252,7 +251,7 @@ function buildProjectCard(project) {
             loadSubscribeWidget = () => {
                 if (subscribeScriptLoaded) return;
                 subscribeScriptLoaded = true;
-                loadSubscribeScript(subscribeConfig.script, targetId);
+                loadSubscribeScript(subscribeConfig.script, subscribeConfig.target);
                 subscribeOverlay.dataset.subscribeLoaded = "true";
             };
         }

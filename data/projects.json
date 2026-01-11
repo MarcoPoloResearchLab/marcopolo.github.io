@@ -103,6 +103,7 @@
       "subscribe": {
         "enabled": true,
         "script": "https://loopaware.mprlab.com/subscribe.js?site_id=a3222433-92ec-473a-9255-0797226c2273&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-loopaware",
         "title": "Get LoopAware release updates",
         "copy": "Drop your email to hear when LoopAware ships fresh drops, integrations, and subscriber tooling."
       }
@@ -234,6 +235,7 @@
       "subscribe": {
         "enabled": true,
         "script": "https://loopaware.mprlab.com/subscribe.js?site_id=d8c3d1c8-7968-43d0-8026-ee827ada7666&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-gravity-notes",
         "title": "Get Gravity Notes release updates",
         "copy": "Drop your email to hear when Gravity Notes ships fresh features, AI integrations, and new plugins.",
         "height": 320
