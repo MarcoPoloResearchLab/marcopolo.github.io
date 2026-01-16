@@ -22,3 +22,14 @@ services:
       - ./:${GHTTP_SERVE_DIRECTORY}:ro
       - ${GHTTP_TLS_CERT_HOST_PATH}:${GHTTP_TLS_CERT_CONTAINER_PATH}:ro
       - ${GHTTP_TLS_KEY_HOST_PATH}:${GHTTP_TLS_KEY_CONTAINER_PATH}:ro
+    develop:
+      watch:
+        - action: sync
+          path: ./index.html
+          target: ${GHTTP_SERVE_DIRECTORY}/index.html
+        - action: sync
+          path: ./script.js
+          target: ${GHTTP_SERVE_DIRECTORY}/script.js
+        - action: sync
+          path: ./styles.css
+          target: ${GHTTP_SERVE_DIRECTORY}/styles.css
