@@ -90,6 +90,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Rationale for current code: Likely added to prevent focus from jumping into the iframe during card flip animation or while card is not flipped.
       - Fix: Conditionally set `tabindex="0"` on the iframe when the card enters the flipped state (`is-flipped` class added) and restore `tabindex="-1"` when unflipped. Update the `toggleFlip` handler in `script.js:207-225` to toggle the iframe's tabindex alongside the flip state.
       - Extend Playwright test `subscribe-enabled cards render LoopAware forms after flipping` to assert that the iframe is focusable (`tabindex="0"`) when the card is flipped.
+- [ ] [MP-205] Add the four-way color theme switch and style all of the lements accordingly. Use theme-config in the footer to style all elements and choose theme-switcher="square". Read up @tools/mpr-ui/README.md and @tools/mpr-ui/docs/integration-guide.md
 
 ## BugFixes (300–399)
 
