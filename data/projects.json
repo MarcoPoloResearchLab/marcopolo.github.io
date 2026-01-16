@@ -16,12 +16,19 @@
         "enabled": false,
         "url": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md"
       },
-      "subscribe": { "enabled": false }
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=e771ca8b-51d9-4ea4-884a-eb769ca66550&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-issues-md",
+        "title": "Get ISSUES.md release updates",
+        "copy": "Drop your email to hear when ISSUES.md ships fresh features and AI integrations.",
+        "height": 320
+      }
     },
     {
       "id": "photolab",
       "name": "Photolab",
-      "description": "Local photo library classifier and search UI that writes high-confidence labels into EXIF, indexes metadata into SQLite, and serves a minimal browser-based search grid.",
+      "description": "Local photo library classifier and search UI that writes high-confidence labels into EXIF, indexes metadata, and serves a minimal browser-based search grid.",
       "status": "WIP",
       "category": "Research",
       "repo": null,
@@ -124,7 +131,14 @@
         "enabled": true,
         "url": "https://github.com/temirov/pinguin#readme"
       },
-      "subscribe": { "enabled": false }
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=e8f235c8-ddf2-46b7-ae42-022885fe8a44&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-pinguin",
+        "title": "Get Pinguin release updates",
+        "copy": "Drop your email to hear when Pinguin ships fresh features.",
+        "height": 320
+      }
     },
     {
       "id": "ets",
@@ -160,7 +174,14 @@
         "enabled": true,
         "url": "https://github.com/tyemirov/TAuth#readme"
       },
-      "subscribe": { "enabled": false }
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=0cdc4451-b928-4274-8db2-c8b9a23796bd&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-tauth",
+        "title": "Get TAuth release updates",
+        "copy": "Drop your email to hear when TAuth ships fresh features, OAuth integrations, and supports new platforms.",
+        "height": 320
+      }
     },
     {
       "id": "ledger",
@@ -178,7 +199,14 @@
         "enabled": true,
         "url": "https://github.com/tyemirov/ledger#readme"
       },
-      "subscribe": { "enabled": false }
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=f5c0dfd1-2943-43d0-8f46-a6064d04b05e&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-ledger",
+        "title": "Get Ledger's release updates",
+        "copy": "Drop your email to hear when Ledger ships fresh features and integrations.",
+        "height": 320
+      }
     },
     {
       "id": "product-scanner",
@@ -282,7 +310,14 @@
         "enabled": true,
         "url": "https://github.com/MarcoPoloResearchLab/prompts#readme"
       },
-      "subscribe": { "enabled": false }
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=efad9dff-1777-4710-b6b1-3218ee8c5cbb&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-prompt-bubbles",
+        "title": "Get Prompt Bubbles release updates",
+        "copy": "Drop your email to hear when Prompt Bubbles ships fresh features, platform integrations, and design changes.",
+        "height": 320
+      }
     }
   ]
 }
