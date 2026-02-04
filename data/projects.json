@@ -6,19 +6,36 @@
       "description": "Append-only lab worklog that tracks features, improvements, and maintenance activity across Marco Polo Research Lab projects.",
       "status": "WIP",
       "category": "Research",
-      "url": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md",
-      "public": true,
-      "icon": "assets/projects/issues-md.png"
+      "repo": "github.com/MarcoPoloResearchLab/marcopolo.github.io",
+      "icon": "assets/projects/issues-md/icon.png",
+      "launch": {
+        "enabled": false,
+        "url": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md"
+      },
+      "docs": {
+        "enabled": false,
+        "url": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md"
+      },
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=e771ca8b-51d9-4ea4-884a-eb769ca66550&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-issues-md",
+        "title": "Get ISSUES.md release updates",
+        "copy": "Drop your email to hear when ISSUES.md ships fresh features and AI integrations.",
+        "height": 320
+      }
     },
     {
       "id": "photolab",
       "name": "Photolab",
-      "description": "Local photo library classifier and search UI that writes high-confidence labels into EXIF, indexes metadata into SQLite, and serves a minimal browser-based search grid.",
+      "description": "Local photo library classifier and search UI that writes high-confidence labels into EXIF, indexes metadata, and serves a minimal browser-based search grid.",
       "status": "WIP",
       "category": "Research",
-      "url": null,
-      "public": false,
-      "icon": "assets/projects/photolab.svg"
+      "repo": null,
+      "icon": "assets/projects/photolab/icon.svg",
+      "launch": { "enabled": false },
+      "docs": { "enabled": false },
+      "subscribe": { "enabled": false }
     },
     {
       "id": "ctx",
@@ -26,9 +43,17 @@
       "description": "Terminal-first project explorer for browsing trees, reading files with embedded docs, analysing call chains, and fetching upstream docs from GitHub via one CLI.",
       "status": "Production",
       "category": "Tools",
-      "url": "https://github.com/tyemirov/ctx",
-      "public": true,
-      "icon": "assets/projects/ctx.png"
+      "repo": "github.com/tyemirov/ctx",
+      "icon": "assets/projects/ctx/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://ctx.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/ctx#readme"
+      },
+      "subscribe": { "enabled": false }
     },
     {
       "id": "gix",
@@ -36,9 +61,17 @@
       "description": "Git and GitHub maintenance CLI for keeping large fleets of repositories healthy by normalising folder names, aligning remotes, and automating audit/release workflows.",
       "status": "Production",
       "category": "Tools",
-      "url": "https://github.com/tyemirov/gix",
-      "public": true,
-      "icon": "assets/projects/gix.png"
+      "repo": "github.com/tyemirov/gix",
+      "icon": "assets/projects/gix/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://gix.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/gix#readme"
+      },
+      "subscribe": { "enabled": false }
     },
     {
       "id": "ghttp",
@@ -46,9 +79,17 @@
       "description": "Go-powered static file server that mirrors python -m http.server while adding Markdown rendering, structured logging, and easy HTTPS provisioning for local work or containers.",
       "status": "Production",
       "category": "Tools",
-      "url": "https://github.com/temirov/ghttp",
-      "public": true,
-      "icon": "assets/projects/ghttp.png"
+      "repo": "github.com/temirov/ghttp",
+      "icon": "assets/projects/ghttp/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://github.com/temirov/ghttp"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/temirov/ghttp#readme"
+      },
+      "subscribe": { "enabled": false }
     },
     {
       "id": "loopaware",
@@ -56,9 +97,23 @@
       "description": "Customer feedback platform with an embeddable widget, Google-authenticated dashboard, and APIs for collecting, triaging, and responding to product messages.",
       "status": "Production",
       "category": "Platform",
-      "url": "https://loopaware.mprlab.com",
-      "public": true,
-      "icon": "assets/projects/loopaware.svg"
+      "repo": "github.com/tyemirov/loopaware",
+      "icon": "assets/projects/loopaware/icon.svg",
+      "launch": {
+        "enabled": true,
+        "url": "https://loopaware.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/loopaware#readme"
+      },
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=a3222433-92ec-473a-9255-0797226c2273&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-loopaware",
+        "title": "Get LoopAware release updates",
+        "copy": "Drop your email to hear when LoopAware ships fresh drops, integrations, and subscriber tooling."
+      }
     },
     {
       "id": "pinguin",
@@ -66,9 +121,24 @@
       "description": "Production-ready notification service that exposes a gRPC API for email and SMS, persists jobs in SQLite, and retries failures with an exponential-backoff scheduler.",
       "status": "Production",
       "category": "Platform",
-      "url": "https://github.com/temirov/pinguin",
-      "public": true,
-      "icon": "assets/projects/pinguin.png"
+      "repo": "github.com/temirov/pinguin",
+      "icon": "assets/projects/pinguin/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://github.com/temirov/pinguin"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/temirov/pinguin#readme"
+      },
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=e8f235c8-ddf2-46b7-ae42-022885fe8a44&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-pinguin",
+        "title": "Get Pinguin release updates",
+        "copy": "Drop your email to hear when Pinguin ships fresh features.",
+        "height": 320
+      }
     },
     {
       "id": "ets",
@@ -76,9 +146,17 @@
       "description": "JWT + DPoP gateway that mints short-lived, browser-bound access tokens and reverse-proxies requests so front-end apps never handle provider secrets directly.",
       "status": "Beta",
       "category": "Platform",
-      "url": "https://ets.mprlab.com",
-      "public": true,
-      "icon": "assets/projects/ets.svg"
+      "repo": "github.com/tyemirov/ETS",
+      "icon": "assets/projects/ets/icon.svg",
+      "launch": {
+        "enabled": true,
+        "url": "https://ets.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/ETS#readme"
+      },
+      "subscribe": { "enabled": false }
     },
     {
       "id": "tauth",
@@ -86,9 +164,24 @@
       "description": "Google Sign-In and session service that verifies ID tokens, issues short-lived JWT cookies, and ships a tiny auth-client.js helper for same-origin apps.",
       "status": "Production",
       "category": "Platform",
-      "url": "https://tauth.mprlab.com",
-      "public": true,
-      "icon": "assets/projects/tauth.svg"
+      "repo": "github.com/tyemirov/TAuth",
+      "icon": "assets/projects/tauth/icon.svg",
+      "launch": {
+        "enabled": true,
+        "url": "https://tauth.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/TAuth#readme"
+      },
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=0cdc4451-b928-4274-8db2-c8b9a23796bd&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-tauth",
+        "title": "Get TAuth release updates",
+        "copy": "Drop your email to hear when TAuth ships fresh features, OAuth integrations, and supports new platforms.",
+        "height": 320
+      }
     },
     {
       "id": "ledger",
@@ -96,19 +189,49 @@
       "description": "Standalone gRPC-based virtual credits ledger that tracks grants, reservations, captures, and releases in an append-only store backed by SQL with full auditability.",
       "status": "Beta",
       "category": "Platform",
-      "url": "https://github.com/tyemirov/ledger",
-      "public": true,
-      "icon": "assets/projects/ledger.png"
+      "repo": "github.com/tyemirov/ledger",
+      "icon": "assets/projects/ledger/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/ledger"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/tyemirov/ledger#readme"
+      },
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=f5c0dfd1-2943-43d0-8f46-a6064d04b05e&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-ledger",
+        "title": "Get Ledger's release updates",
+        "copy": "Drop your email to hear when Ledger ships fresh features and integrations.",
+        "height": 320
+      }
     },
     {
       "id": "product-scanner",
-      "name": "Product Scanner",
-      "description": "Product detail page auditor that crawls listings, evaluates them against configurable rule packs, and reports gaps through a CLI and authenticated dashboard.",
+      "name": "Poodle Scanner",
+      "description": "AI-assisted storefront auditor nicknamed 'Poodle' that sniffs out PDP gaps, evaluates results against configurable rule packs, and reports issues through a CLI and authenticated dashboard.",
       "status": "Beta",
       "category": "Products",
-      "url": "https://ps.mprlab.com",
-      "public": true,
-      "icon": "assets/projects/product-scanner.svg"
+      "repo": "github.com/MarcoPoloResearchLab/ProductScanner",
+      "icon": "assets/projects/product-scanner/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://ps.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/MarcoPoloResearchLab/ProductScanner#readme"
+      },
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=cc91ba37-b47c-46bf-bd4a-d92611ca4b1a&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-product-scanner",
+        "title": "Get Gravity Notes release updates",
+        "copy": "Drop your email to hear when Gravity Notes ships fresh features, AI integrations, and new plugins.",
+        "height": 320
+      }
     },
     {
       "id": "sheet2tube",
@@ -116,9 +239,17 @@
       "description": "CSV and web toolkit that round-trips YouTube channel metadata between spreadsheets and your account plus a GPT-powered helper for expanding scripted placeholders.",
       "status": "Beta",
       "category": "Products",
-      "url": "https://sheet2tube.mprlab.com",
-      "public": true,
-      "icon": "assets/projects/sheet2tube.svg"
+      "repo": "github.com/MarcoPoloResearchLab/Sheet2Tube",
+      "icon": "assets/projects/sheet2tube/icon.svg",
+      "launch": {
+        "enabled": true,
+        "url": "https://sheet2tube.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/MarcoPoloResearchLab/Sheet2Tube#readme"
+      },
+      "subscribe": { "enabled": false }
     },
     {
       "id": "gravity-notes",
@@ -126,9 +257,24 @@
       "description": "Single-page Markdown notebook with an inline card grid, offline-first storage, and Google-backed sync so ideas flow without modal dialogs or context switches.",
       "status": "Production",
       "category": "Products",
-      "url": "https://gravity.mprlab.com",
-      "public": true,
-      "icon": "assets/projects/gravity-notes.png"
+      "repo": "github.com/MarcoPoloResearchLab/gravity",
+      "icon": "assets/projects/gravity-notes/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://gravity.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/MarcoPoloResearchLab/gravity#readme"
+      },
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=d8c3d1c8-7968-43d0-8026-ee827ada7666&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-gravity-notes",
+        "title": "Get Gravity Notes release updates",
+        "copy": "Drop your email to hear when Gravity Notes ships fresh features, AI integrations, and new plugins.",
+        "height": 320
+      }
     },
     {
       "id": "rsvp",
@@ -136,9 +282,42 @@
       "description": "Event invitation platform that generates QR-code-powered invites, tracks responses, and supports both local and production TLS setups for secure guest flows.",
       "status": "Production",
       "category": "Products",
-      "url": "https://rsvp.mprlab.com",
-      "public": true,
-      "icon": "assets/projects/rsvp.png"
+      "repo": "github.com/MarcoPoloResearchLab/RSVP",
+      "icon": "assets/projects/rsvp/icon.png",
+      "launch": {
+        "enabled": true,
+        "url": "https://rsvp.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/MarcoPoloResearchLab/RSVP#readme"
+      },
+      "subscribe": { "enabled": false }
+    },
+    {
+      "id": "prompt-bubbles",
+      "name": "Prompt Bubbles",
+      "description": "Browser-first prompt library with inline editing, deep-linkable cards, local likes, and a Bootstrap/Alpine interface tuned for fast search and keyboard-friendly navigation.",
+      "status": "Production",
+      "category": "Products",
+      "repo": "github.com/MarcoPoloResearchLab/prompts",
+      "icon": "assets/projects/prompt-bubbles/icon.svg",
+      "launch": {
+        "enabled": true,
+        "url": "https://prompts.mprlab.com"
+      },
+      "docs": {
+        "enabled": true,
+        "url": "https://github.com/MarcoPoloResearchLab/prompts#readme"
+      },
+      "subscribe": {
+        "enabled": true,
+        "script": "https://loopaware.mprlab.com/subscribe.js?site_id=efad9dff-1777-4710-b6b1-3218ee8c5cbb&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+        "target": "subscribe-target-prompt-bubbles",
+        "title": "Get Prompt Bubbles release updates",
+        "copy": "Drop your email to hear when Prompt Bubbles ships fresh features, platform integrations, and design changes.",
+        "height": 320
+      }
     }
   ]
 }

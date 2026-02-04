@@ -10,9 +10,32 @@
  * @property {string} description
  * @property {ProjectStatus} status
  * @property {ProjectCategory} category
- * @property {string | null} url
- * @property {boolean} [public]
+ * @property {string | null | undefined} [repo]
  * @property {string | null | undefined} [icon]
+ * @property {ProjectLaunchConfig} launch
+ * @property {ProjectDocsConfig} docs
+ * @property {ProjectSubscribeConfig} subscribe
+ */
+
+/**
+ * @typedef {Object} ProjectLaunchConfig
+ * @property {boolean} enabled
+ * @property {string | undefined} [url]
+ */
+
+/**
+ * @typedef {Object} ProjectDocsConfig
+ * @property {boolean} enabled
+ * @property {string | undefined} [url]
+ */
+
+/**
+ * @typedef {Object} ProjectSubscribeConfig
+ * @property {boolean} enabled
+ * @property {string | undefined} [script]
+ * @property {number | undefined} [height]
+ * @property {string | undefined} [title]
+ * @property {string | undefined} [copy]
  */
 
 const SECTION_ORDER = /** @type {ProjectCategory[]} */ ([
@@ -33,6 +56,24 @@ const STATUS_CLASS = Object.freeze({
     Beta: "status-badge-beta",
     WIP: "status-badge-wip"
 });
+
+/** @type {ProjectStatus[]} */
+const FLIPPABLE_STATUSES = ["Beta", "WIP"];
+
+/**
+ * Loads the LoopAware subscribe script with target parameter (LA-113).
+ * @param {string} scriptUrl - Base URL with query parameters
+ * @param {string} targetId - ID of the element to render the form into
+ */
+function loadSubscribeScript(scriptUrl, targetId) {
+    const url = new URL(scriptUrl);
+    url.searchParams.set("target", targetId);
+
+    const script = document.createElement("script");
+    script.src = url.toString();
+    script.async = true;
+    document.head.appendChild(script);
+}
 
 /**
  * Fetches the JSON catalog for the landing page.
@@ -61,6 +102,19 @@ function buildProjectCard(project) {
     const card = document.createElement("article");
     card.className = "project-card";
     card.dataset.status = project.status.toLowerCase();
+
+    const inner = document.createElement("div");
+    inner.className = "project-card-inner";
+
+    const subscribeConfig = project.subscribe;
+    const hasSubscribeWidget = subscribeConfig.enabled && Boolean(subscribeConfig.script);
+    const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
+    if (isFlippable) {
+        card.classList.add("project-card-flippable");
+        card.setAttribute("role", "button");
+        card.tabIndex = 0;
+        card.setAttribute("aria-pressed", "false");
+    }
 
     const visual = document.createElement("div");
     visual.className = "project-card-visual";
@@ -93,17 +147,179 @@ function buildProjectCard(project) {
     description.textContent = project.description;
     body.append(description);
 
-    if (project.url && project.status !== "WIP") {
+    const shouldShowLaunch =
+        project.status !== "WIP" &&
+        project.launch.enabled &&
+        Boolean(project.launch.url);
+
+    const shouldShowDocs = project.docs.enabled && Boolean(project.docs.url);
+
+    const actionsRow = document.createElement("div");
+    actionsRow.className = "card-actions";
+
+    if (shouldShowLaunch) {
         const link = document.createElement("a");
-        link.href = project.url;
+        link.href = /** @type {string} */ (project.launch.url);
         link.className = "card-action";
         link.target = "_blank";
         link.rel = "noreferrer noopener";
         link.textContent = project.status === "Production" ? "Launch product" : "Explore beta";
-        body.append(link);
+        actionsRow.append(link);
     }
 
-    card.append(header, body);
+    if (shouldShowDocs) {
+        const docsLink = document.createElement("a");
+        docsLink.href = /** @type {string} */ (project.docs.url);
+        docsLink.className = "card-action";
+        docsLink.target = "_blank";
+        docsLink.rel = "noreferrer noopener";
+        docsLink.textContent = "Read documentation";
+        actionsRow.append(docsLink);
+    }
+
+    if (actionsRow.childElementCount > 0) {
+        body.append(actionsRow);
+    }
+
+    const front = document.createElement("div");
+    front.className = "project-card-face project-card-front";
+    front.append(header, body);
+
+    inner.append(front);
+
+    /** @type {null | (() => void)} */
+    let loadSubscribeWidget = null;
+
+    if (isFlippable) {
+        const back = document.createElement("div");
+        back.className = "project-card-face project-card-back";
+
+        const backHeader = document.createElement("div");
+        backHeader.className = "project-card-header";
+
+        const backTitle = document.createElement("h3");
+        backTitle.textContent = project.name;
+
+        const backStatus = buildStatusBadge(project.status);
+
+        backHeader.append(backTitle, backStatus);
+
+        const backBody = document.createElement("div");
+        backBody.className = "card-body";
+
+        const backCopy = document.createElement("p");
+        backCopy.textContent =
+            project.status === "WIP"
+                ? "Flip this card to preview where the LoopAware-powered subscription form for this project will appear."
+                : "Flip this card to preview the back surface where a LoopAware subscription form will live for beta updates.";
+
+        backBody.append(backCopy);
+
+        let subscribeOverlay = null;
+        if (hasSubscribeWidget) {
+            card.classList.add("project-card-has-subscribe");
+
+            const subscribeWidget = document.createElement("div");
+            subscribeWidget.className = "subscribe-widget";
+            subscribeWidget.dataset.subscribeTarget = project.id;
+
+            const subscribeHeading = document.createElement("p");
+            subscribeHeading.className = "subscribe-widget-title";
+            subscribeHeading.textContent =
+                subscribeConfig.title || `Get ${project.name} updates`;
+
+            const subscribeBlurb = document.createElement("p");
+            subscribeBlurb.className = "subscribe-widget-copy";
+            subscribeBlurb.textContent =
+                subscribeConfig.copy ||
+                "Leave your email to hear when this project ships new features and announcements.";
+
+            // Container for LoopAware subscribe form (rendered by subscribe.js with target param)
+            const subscribeFormContainer = document.createElement("div");
+            subscribeFormContainer.id = subscribeConfig.target;
+            subscribeFormContainer.className = "subscribe-form-container";
+
+            subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFormContainer);
+            subscribeOverlay = document.createElement("div");
+            subscribeOverlay.className = "project-card-subscribe-overlay";
+            subscribeOverlay.dataset.subscribeLoaded = "false";
+            subscribeOverlay.append(subscribeWidget);
+
+            let subscribeScriptLoaded = false;
+
+            loadSubscribeWidget = () => {
+                if (subscribeScriptLoaded) return;
+                subscribeScriptLoaded = true;
+                loadSubscribeScript(subscribeConfig.script, subscribeConfig.target);
+                subscribeOverlay.dataset.subscribeLoaded = "true";
+            };
+
+            // Listen for successful subscription and flip card back after delay
+            subscribeFormContainer.addEventListener("loopaware:subscribe:success", () => {
+                const emailInput = /** @type {HTMLInputElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-email")
+                );
+                const submitButton = /** @type {HTMLElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-submit")
+                );
+                const statusElement = /** @type {HTMLElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-status")
+                );
+
+                // Hide form inputs, keep status message visible
+                emailInput.style.display = "none";
+                submitButton.style.display = "none";
+
+                setTimeout(() => {
+                    card.classList.remove("is-flipped");
+                    card.setAttribute("aria-pressed", "false");
+                    // Reset form state for next flip
+                    emailInput.style.display = "";
+                    emailInput.value = "";
+                    submitButton.style.display = "";
+                    statusElement.textContent = "";
+                }, 2000); // 2 second delay to show success message
+            });
+        }
+        back.append(backHeader, backBody);
+        if (subscribeOverlay) {
+            back.append(subscribeOverlay);
+        }
+        inner.append(back);
+
+        /**
+         * @param {MouseEvent | KeyboardEvent} event
+         */
+        const toggleFlip = event => {
+            const target = /** @type {HTMLElement} */ (event.target);
+            // Don't flip when interacting with links or form elements
+            if (target.closest("a, input, button, textarea, select, label, #mp-subscribe-form")) {
+                return;
+            }
+
+            const nowFlipped = card.classList.toggle("is-flipped");
+            card.setAttribute("aria-pressed", nowFlipped ? "true" : "false");
+            if (nowFlipped && loadSubscribeWidget) {
+                loadSubscribeWidget();
+            }
+        };
+
+        card.addEventListener("click", toggleFlip);
+        card.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+                const target = /** @type {HTMLElement} */ (event.target);
+                // Don't flip when interacting with links or form elements
+                if (target.closest("a, input, button, textarea, select, label, #mp-subscribe-form")) {
+                    return;
+                }
+
+                event.preventDefault();
+                toggleFlip(event);
+            }
+        });
+    }
+
+    card.append(inner);
     return card;
 }
 
@@ -114,9 +330,7 @@ function buildProjectCard(project) {
  */
 function buildStatusBadge(status) {
     const badge = document.createElement("span");
-    badge.className = "status-badge";
-    const modifier = STATUS_CLASS[status];
-    if (modifier) badge.classList.add(modifier);
+    badge.className = `status-badge ${STATUS_CLASS[status]}`;
     badge.textContent = status;
     return badge;
 }
@@ -233,7 +447,7 @@ function layoutBandRows(grid) {
 }
 
 function setupHeroAudioToggle() {
-    const video = document.getElementById("hero-video");
+    const video = /** @type {HTMLVideoElement | null} */ (document.getElementById("hero-video"));
     const toggle = document.getElementById("hero-sound-toggle");
     if (!video || !toggle) return;
 
@@ -248,10 +462,7 @@ function setupHeroAudioToggle() {
     };
 
     const ensurePlayback = () => {
-        const playPromise = video.play();
-        if (playPromise && typeof playPromise.then === "function") {
-            playPromise.catch(() => {});
-        }
+        video.play().catch(() => {});
     };
 
     toggle.addEventListener("click", () => {
