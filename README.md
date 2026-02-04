@@ -60,6 +60,32 @@ Each entry in the project gallery is powered by `data/projects.json`:
 
 Vectorizing images or text to SVG can be done using the tools available in the [svg_tools](https://github.com/tyemirov/svg_tools) repository.
 
+## Adding Subscribe Forms
+
+Projects can display a LoopAware-powered subscribe form on their card back. To enable:
+
+1. **Create a site in LoopAware** – register your project at [loopaware.mprlab.com](https://loopaware.mprlab.com) and note the `site_id`.
+
+2. **Add the subscribe config** to the project entry in `data/projects.json`:
+
+   ```json
+   "subscribe": {
+     "enabled": true,
+     "script": "https://loopaware.mprlab.com/subscribe.js?site_id=YOUR_SITE_ID&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+     "target": "subscribe-target-YOUR_PROJECT_ID",
+     "title": "Get PROJECT_NAME updates",
+     "copy": "Drop your email to hear when PROJECT_NAME ships new features."
+   }
+   ```
+
+3. **Key fields**:
+   - `script` – LoopAware widget URL with your `site_id` and customization params
+   - `target` – unique DOM ID where the form renders (use pattern `subscribe-target-{project-id}`)
+   - `title` – heading shown above the form
+   - `copy` – description text below the heading
+
+The card will automatically become flippable and load the subscribe widget when the user flips it.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

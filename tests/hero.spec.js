@@ -2,7 +2,7 @@
 
 const {test, expect} = require("@playwright/test");
 
-/** @type {{projects: Array<{name: string, status: string, category: string, description: string, app?: string|null, launchEnabled?: boolean}>}} */
+/** @type {{projects: Array<{name: string, status: string, category: string, description: string, launch: {enabled: boolean, url?: string}, docs: {enabled: boolean, url?: string}, subscribe: {enabled: boolean, script?: string}}>}} */
 const catalog = require("../data/projects.json");
 
 test.describe("Marco Polo Research Lab landing page", () => {
@@ -45,12 +45,12 @@ test.describe("Marco Polo Research Lab landing page", () => {
             const action = card.locator("a.card-action").first();
             const expectLaunchVisible =
                 project.status !== "WIP" &&
-                Boolean(project.app) &&
-                (project.launchEnabled !== false);
+                project.launch.enabled &&
+                Boolean(project.launch.url);
 
             await expect(action).toHaveCount(expectLaunchVisible ? 1 : 0);
-            if (expectLaunchVisible) {
-                await expect(action).toHaveAttribute("href", project.app);
+            if (expectLaunchVisible && project.launch.url) {
+                await expect(action).toHaveAttribute("href", project.launch.url);
             }
         }
     });
@@ -73,10 +73,13 @@ test.describe("Marco Polo Research Lab landing page", () => {
 
             const classesAfterClick = await card.getAttribute("class");
 
+            const hasActiveSubscribe =
+                project.subscribe.enabled &&
+                Boolean(project.subscribe.script);
             const shouldFlip =
                 project.status === "Beta" ||
                 project.status === "WIP" ||
-                Boolean(project.subscribe);
+                hasActiveSubscribe;
 
             if (shouldFlip) {
                 expect(classesAfterClick || "").toMatch(/is-flipped/);
@@ -184,9 +187,8 @@ test.describe("Marco Polo Research Lab landing page", () => {
     test("subscribe-enabled cards render LoopAware forms after flipping", async ({page}) => {
         const subscribeProjects = catalog.projects.filter(
             project =>
-                project.subscribe &&
-                project.subscribe.script &&
-                project.subscribeEnabled !== false,
+                project.subscribe.enabled &&
+                Boolean(project.subscribe.script),
         );
         await page.goto("/index.html");
 
@@ -197,36 +199,23 @@ test.describe("Marco Polo Research Lab landing page", () => {
 
             const badge = card.locator(".status-badge").first();
             const overlay = card.locator(".project-card-subscribe-overlay");
-            const iframeElement = card.locator(".subscribe-widget-frame");
+            const formContainer = card.locator(".subscribe-form-container");
             await expect(overlay).toHaveAttribute("data-subscribe-loaded", "false");
-            await expect(
-                iframeElement,
-                `${project.name} iframe should be unfocusable before flip`,
-            ).toHaveAttribute("tabindex", "-1");
 
             await badge.click();
 
-            const cardBack = card.locator(".project-card-face.project-card-back");
-            const frame = cardBack.frameLocator(".subscribe-widget-frame");
-            const loopAwareForm = frame.locator("#mp-subscribe-form");
-            await expect(loopAwareForm, `${project.name} LoopAware form should render inside iframe`).toBeVisible();
-            await expect(frame.locator("input[type='email']")).toBeVisible();
+            // Form is rendered directly in the page (no iframe) via LoopAware subscribe.js
+            const loopAwareForm = formContainer.locator("#mp-subscribe-form");
+            await expect(loopAwareForm, `${project.name} LoopAware form should render`).toBeVisible();
+            await expect(formContainer.locator("input[type='email']")).toBeVisible();
             await expect(
-                frame.locator("button"),
+                formContainer.locator("button"),
                 `${project.name} LoopAware widget should expose a CTA button`,
             ).toContainText(/subscribe|notify/i);
 
             await expect(overlay).toHaveAttribute("data-subscribe-loaded", "true");
-            await expect(
-                iframeElement,
-                `${project.name} iframe should be focusable after flip`,
-            ).toHaveAttribute("tabindex", "0");
 
             await badge.click();
-            await expect(
-                iframeElement,
-                `${project.name} iframe should be unfocusable after unflip`,
-            ).toHaveAttribute("tabindex", "-1");
         }
     });
 });

@@ -90,6 +90,7 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Rationale for current code: Likely added to prevent focus from jumping into the iframe during card flip animation or while card is not flipped.
       - Fix: Conditionally set `tabindex="0"` on the iframe when the card enters the flipped state (`is-flipped` class added) and restore `tabindex="-1"` when unflipped. Update the `toggleFlip` handler in `script.js:207-225` to toggle the iframe's tabindex alongside the flip state.
       - Extend Playwright test `subscribe-enabled cards render LoopAware forms after flipping` to assert that the iframe is focusable (`tabindex="0"`) when the card is flipped.
+- [ ] [MP-205] Add the four-way color theme switch and style all of the lements accordingly. Use theme-config in the footer to style all elements and choose theme-switcher="square". Read up @tools/mpr-ui/README.md and @tools/mpr-ui/docs/integration-guide.md
 
 ## BugFixes (300–399)
 
@@ -107,6 +108,16 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Root cause: The mpr-ui CDN stylesheet likely sets `position: relative` on the `mpr-footer` custom element, and our local `styles.css:536-541` does not explicitly override it to `static`.
       - Fix: Add `position: static;` to the `mpr-footer { ... }` rule block in `styles.css` at line 536 to ensure the host element is not positioned, regardless of CDN defaults.
       - Verify fix passes: `npx playwright test --grep "footer respects non-sticky"`.
+- [ ] [MP-302] Subscribe iframe positioned off-screen in Safari due to nested 3D transform issues
+      - Symptom: LoopAware subscribe form renders inside iframe (verified via `contentDocument.body.innerHTML`) but is visually invisible when card is flipped.
+      - Debug findings:
+        - Overlay `getBoundingClientRect()`: `y: 61.9` (correct, visible)
+        - Iframe `getBoundingClientRect()`: `y: -580` (incorrect, ~640px above viewport)
+        - Iframe dimensions: `436x180` (correct)
+        - Iframe content: form with `#mp-subscribe-form` renders correctly
+      - Root cause: Safari miscalculates iframe position within nested 3D-transformed containers. The `.project-card-subscribe-overlay` has `transform: rotateY(180deg)` to counter the card flip, but Safari's compositor places the iframe at pre-transform coordinates.
+      - Additional issue: Cross-origin script loading from `srcdoc` iframe was blocked by Safari; fixed by fetching script content and inlining it.
+      - Fix: Flatten 3D context for subscribe widget content using `transform-style: flat` on the overlay, ensuring child elements use 2D positioning within the already-transformed container.
 
 ## Maintenance (400–499)
 

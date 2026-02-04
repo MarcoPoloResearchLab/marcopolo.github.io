@@ -10,19 +10,29 @@
  * @property {string} description
  * @property {ProjectStatus} status
  * @property {ProjectCategory} category
- * @property {string | null} app
- * @property {string | null | undefined} [docs]
  * @property {string | null | undefined} [repo]
- * @property {boolean | undefined} [launchEnabled]
- * @property {boolean | undefined} [docsEnabled]
- * @property {boolean | undefined} [subscribeEnabled]
  * @property {string | null | undefined} [icon]
- * @property {ProjectSubscribeConfig | null | undefined} [subscribe]
+ * @property {ProjectLaunchConfig} launch
+ * @property {ProjectDocsConfig} docs
+ * @property {ProjectSubscribeConfig} subscribe
+ */
+
+/**
+ * @typedef {Object} ProjectLaunchConfig
+ * @property {boolean} enabled
+ * @property {string | undefined} [url]
+ */
+
+/**
+ * @typedef {Object} ProjectDocsConfig
+ * @property {boolean} enabled
+ * @property {string | undefined} [url]
  */
 
 /**
  * @typedef {Object} ProjectSubscribeConfig
- * @property {string} script
+ * @property {boolean} enabled
+ * @property {string | undefined} [script]
  * @property {number | undefined} [height]
  * @property {string | undefined} [title]
  * @property {string | undefined} [copy]
@@ -51,34 +61,18 @@ const STATUS_CLASS = Object.freeze({
 const FLIPPABLE_STATUSES = ["Beta", "WIP"];
 
 /**
- * Generates inline HTML used inside the subscribe iframe so the LoopAware script
- * can render its real widget without leaking global styles into the page.
- * @param {string} scriptUrl
- * @returns {string}
+ * Loads the LoopAware subscribe script with target parameter (LA-113).
+ * @param {string} scriptUrl - Base URL with query parameters
+ * @param {string} targetId - ID of the element to render the form into
  */
-function buildSubscribeFrameDocument(scriptUrl) {
-    const safeUrl = String(scriptUrl).replace(/"/g, "&quot;");
-    return `
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <style>
-      :root {
-        color-scheme: dark;
-      }
+function loadSubscribeScript(scriptUrl, targetId) {
+    const url = new URL(scriptUrl);
+    url.searchParams.set("target", targetId);
 
-      body {
-        margin: 0;
-        background: transparent;
-        font-family: "Space Grotesk", "Roboto", sans-serif;
-      }
-    </style>
-  </head>
-  <body>
-    <script defer src="${safeUrl}"></script>
-  </body>
-</html>`;
+    const script = document.createElement("script");
+    script.src = url.toString();
+    script.async = true;
+    document.head.appendChild(script);
 }
 
 /**
@@ -112,10 +106,8 @@ function buildProjectCard(project) {
     const inner = document.createElement("div");
     inner.className = "project-card-inner";
 
-    const subscribeConfig = project.subscribe && project.subscribe.script ? project.subscribe : null;
-    const subscribeEnabled =
-        Boolean(subscribeConfig) && (project.subscribeEnabled !== false);
-    const hasSubscribeWidget = subscribeEnabled;
+    const subscribeConfig = project.subscribe;
+    const hasSubscribeWidget = subscribeConfig.enabled && Boolean(subscribeConfig.script);
     const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
     if (isFlippable) {
         card.classList.add("project-card-flippable");
@@ -157,17 +149,17 @@ function buildProjectCard(project) {
 
     const shouldShowLaunch =
         project.status !== "WIP" &&
-        Boolean(project.app) &&
-        (project.launchEnabled !== false);
+        project.launch.enabled &&
+        Boolean(project.launch.url);
 
-    const shouldShowDocs = Boolean(project.docs) && (project.docsEnabled !== false);
+    const shouldShowDocs = project.docs.enabled && Boolean(project.docs.url);
 
     const actionsRow = document.createElement("div");
     actionsRow.className = "card-actions";
 
-    if (shouldShowLaunch && project.app) {
+    if (shouldShowLaunch) {
         const link = document.createElement("a");
-        link.href = project.app;
+        link.href = /** @type {string} */ (project.launch.url);
         link.className = "card-action";
         link.target = "_blank";
         link.rel = "noreferrer noopener";
@@ -175,9 +167,9 @@ function buildProjectCard(project) {
         actionsRow.append(link);
     }
 
-    if (shouldShowDocs && project.docs) {
+    if (shouldShowDocs) {
         const docsLink = document.createElement("a");
-        docsLink.href = project.docs;
+        docsLink.href = /** @type {string} */ (project.docs.url);
         docsLink.className = "card-action";
         docsLink.target = "_blank";
         docsLink.rel = "noreferrer noopener";
@@ -224,7 +216,7 @@ function buildProjectCard(project) {
         backBody.append(backCopy);
 
         let subscribeOverlay = null;
-        if (hasSubscribeWidget && subscribeConfig) {
+        if (hasSubscribeWidget) {
             card.classList.add("project-card-has-subscribe");
 
             const subscribeWidget = document.createElement("div");
@@ -242,36 +234,52 @@ function buildProjectCard(project) {
                 subscribeConfig.copy ||
                 "Leave your email to hear when this project ships new features and announcements.";
 
-            const subscribeFrame = document.createElement("iframe");
-            subscribeFrame.className = "subscribe-widget-frame";
-            subscribeFrame.loading = "lazy";
-            subscribeFrame.title = `${project.name} subscribe form`;
-            subscribeFrame.setAttribute("aria-label", `Subscribe for ${project.name} updates`);
-            subscribeFrame.setAttribute("tabindex", "-1");
-            const idealFrameHeight = Math.max(240, Math.min(subscribeConfig.height || 320, 420));
-            subscribeFrame.dataset.frameHeight = String(idealFrameHeight);
-            subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFrame);
+            // Container for LoopAware subscribe form (rendered by subscribe.js with target param)
+            const subscribeFormContainer = document.createElement("div");
+            subscribeFormContainer.id = subscribeConfig.target;
+            subscribeFormContainer.className = "subscribe-form-container";
+
+            subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFormContainer);
             subscribeOverlay = document.createElement("div");
             subscribeOverlay.className = "project-card-subscribe-overlay";
             subscribeOverlay.dataset.subscribeLoaded = "false";
             subscribeOverlay.append(subscribeWidget);
 
-            let subscribeFrameLoaded = false;
+            let subscribeScriptLoaded = false;
 
             loadSubscribeWidget = () => {
-                if (subscribeFrameLoaded) return;
-                subscribeFrameLoaded = true;
-                const overlayRect = subscribeOverlay.getBoundingClientRect();
-                const maxFrameHeight = Math.max(160, overlayRect.height - 32);
-                const ideal = Number(subscribeFrame.dataset.frameHeight) || 320;
-                const frameHeight = Math.min(ideal, maxFrameHeight);
-                subscribeFrame.style.minHeight = `${frameHeight}px`;
-                subscribeFrame.style.height = `${frameHeight}px`;
-                subscribeFrame.addEventListener("load", () => {
-                    subscribeOverlay.dataset.subscribeLoaded = "true";
-                }, {once: true});
-                subscribeFrame.srcdoc = buildSubscribeFrameDocument(subscribeConfig.script);
+                if (subscribeScriptLoaded) return;
+                subscribeScriptLoaded = true;
+                loadSubscribeScript(subscribeConfig.script, subscribeConfig.target);
+                subscribeOverlay.dataset.subscribeLoaded = "true";
             };
+
+            // Listen for successful subscription and flip card back after delay
+            subscribeFormContainer.addEventListener("loopaware:subscribe:success", () => {
+                const emailInput = /** @type {HTMLInputElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-email")
+                );
+                const submitButton = /** @type {HTMLElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-submit")
+                );
+                const statusElement = /** @type {HTMLElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-status")
+                );
+
+                // Hide form inputs, keep status message visible
+                emailInput.style.display = "none";
+                submitButton.style.display = "none";
+
+                setTimeout(() => {
+                    card.classList.remove("is-flipped");
+                    card.setAttribute("aria-pressed", "false");
+                    // Reset form state for next flip
+                    emailInput.style.display = "";
+                    emailInput.value = "";
+                    submitButton.style.display = "";
+                    statusElement.textContent = "";
+                }, 2000); // 2 second delay to show success message
+            });
         }
         back.append(backHeader, backBody);
         if (subscribeOverlay) {
@@ -284,7 +292,8 @@ function buildProjectCard(project) {
          */
         const toggleFlip = event => {
             const target = /** @type {HTMLElement} */ (event.target);
-            if (target.closest("a")) {
+            // Don't flip when interacting with links or form elements
+            if (target.closest("a, input, button, textarea, select, label, #mp-subscribe-form")) {
                 return;
             }
 
@@ -293,18 +302,14 @@ function buildProjectCard(project) {
             if (nowFlipped && loadSubscribeWidget) {
                 loadSubscribeWidget();
             }
-
-            const iframe = card.querySelector(".subscribe-widget-frame");
-            if (iframe) {
-                iframe.setAttribute("tabindex", nowFlipped ? "0" : "-1");
-            }
         };
 
         card.addEventListener("click", toggleFlip);
         card.addEventListener("keydown", event => {
             if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
                 const target = /** @type {HTMLElement} */ (event.target);
-                if (target.closest("a")) {
+                // Don't flip when interacting with links or form elements
+                if (target.closest("a, input, button, textarea, select, label, #mp-subscribe-form")) {
                     return;
                 }
 
@@ -325,9 +330,7 @@ function buildProjectCard(project) {
  */
 function buildStatusBadge(status) {
     const badge = document.createElement("span");
-    badge.className = "status-badge";
-    const modifier = STATUS_CLASS[status];
-    if (modifier) badge.classList.add(modifier);
+    badge.className = `status-badge ${STATUS_CLASS[status]}`;
     badge.textContent = status;
     return badge;
 }
@@ -444,7 +447,7 @@ function layoutBandRows(grid) {
 }
 
 function setupHeroAudioToggle() {
-    const video = document.getElementById("hero-video");
+    const video = /** @type {HTMLVideoElement | null} */ (document.getElementById("hero-video"));
     const toggle = document.getElementById("hero-sound-toggle");
     if (!video || !toggle) return;
 
@@ -459,10 +462,7 @@ function setupHeroAudioToggle() {
     };
 
     const ensurePlayback = () => {
-        const playPromise = video.play();
-        if (playPromise && typeof playPromise.then === "function") {
-            playPromise.catch(() => {});
-        }
+        video.play().catch(() => {});
     };
 
     toggle.addEventListener("click", () => {

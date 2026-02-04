@@ -37,6 +37,176 @@
     --band-products: #031a21;
 }
 
+/* ---------- Theme Palettes ---------- */
+
+/* Cyberpunk Dark (default) - already defined in :root */
+body.theme-dark[data-mpr-palette="cyberpunk"],
+body[data-mpr-theme="dark"][data-mpr-palette="cyberpunk"] {
+    --bg-deep: #002c34;
+    --bg-panel: #003e46;
+    --bg-panel-alt: #00515b;
+    --text-gold: #f8e39a;
+    --text-gold-strong: #ffe4a9;
+    --text-gold-muted: #eacb73;
+    --accent-gold: #ffd369;
+    --accent-gold-dark: #f2b94c;
+    --accent-outline: rgba(248, 227, 154, 0.35);
+    --shadow-strong: rgba(0, 0, 0, 0.45);
+    --mpr-color-surface-primary: var(--bg-panel);
+    --mpr-color-surface-elevated: var(--bg-panel-alt);
+    --mpr-color-text-primary: var(--text-gold-strong);
+    --mpr-color-accent: var(--accent-gold);
+    --mpr-color-accent-contrast: #042326;
+    --mpr-color-border: var(--accent-outline);
+    --mpr-chip-bg: rgba(255, 211, 105, 0.15);
+    --mpr-chip-hover-bg: rgba(255, 211, 105, 0.28);
+    --mpr-menu-hover-bg: rgba(255, 211, 105, 0.2);
+    --mpr-theme-toggle-bg: rgba(0, 40, 46, 0.8);
+    --mpr-shadow-elevated: 0 25px 50px rgba(0, 20, 24, 0.55);
+    --band-research: #052832;
+    --band-tools: #05333d;
+    --band-platform: #04222a;
+    --band-products: #031a21;
+    --hero-gradient-start: #001c21;
+    --hero-gradient-mid: #00353d;
+    --hero-gradient-end: #001f24;
+    --hero-overlay-start: rgba(0, 44, 48, 0.65);
+    --hero-overlay-mid: rgba(0, 84, 93, 0.4);
+    --hero-overlay-end: rgba(0, 32, 34, 0.7);
+    --hero-text-bg: rgba(0, 40, 46, 0.85);
+    --card-bg: rgba(3, 27, 32, 0.85);
+    --card-border: rgba(248, 227, 154, 0.25);
+    --card-hover-border: rgba(255, 221, 172, 0.55);
+    --card-back-bg: rgba(0, 40, 46, 0.8);
+    --subscribe-overlay-bg: rgba(2, 20, 25, 0.95);
+}
+
+/* Cyberpunk Light - Light turquoise/teal with gold accents */
+body.theme-light[data-mpr-palette="cyberpunk"],
+body[data-mpr-theme="light"][data-mpr-palette="cyberpunk"] {
+    --bg-deep: #e8f4f5;
+    --bg-panel: #d4eaec;
+    --bg-panel-alt: #c0dfe2;
+    --text-gold: #1a4a4f;
+    --text-gold-strong: #0d3538;
+    --text-gold-muted: #2d5c61;
+    --accent-gold: #d4a012;
+    --accent-gold-dark: #b8890f;
+    --accent-outline: rgba(26, 74, 79, 0.25);
+    --shadow-strong: rgba(0, 44, 52, 0.15);
+    --mpr-color-surface-primary: rgba(212, 234, 236, 0.95);
+    --mpr-color-surface-elevated: rgba(255, 255, 255, 0.98);
+    --mpr-color-text-primary: #0d3538;
+    --mpr-color-accent: #d4a012;
+    --mpr-color-accent-contrast: #fffef5;
+    --mpr-color-border: rgba(26, 74, 79, 0.25);
+    --mpr-chip-bg: rgba(212, 160, 18, 0.15);
+    --mpr-chip-hover-bg: rgba(212, 160, 18, 0.25);
+    --mpr-menu-hover-bg: rgba(212, 160, 18, 0.12);
+    --mpr-theme-toggle-bg: rgba(192, 223, 226, 0.8);
+    --mpr-shadow-elevated: 0 18px 36px rgba(0, 44, 52, 0.12);
+    --band-research: #d9eff1;
+    --band-tools: #cce6e9;
+    --band-platform: #e5f3f4;
+    --band-products: #f0f8f9;
+    --hero-gradient-start: #d4eaec;
+    --hero-gradient-mid: #a8d4d8;
+    --hero-gradient-end: #c0dfe2;
+    --hero-overlay-start: rgba(232, 244, 245, 0.5);
+    --hero-overlay-mid: rgba(168, 212, 216, 0.35);
+    --hero-overlay-end: rgba(212, 234, 236, 0.55);
+    --hero-text-bg: rgba(255, 255, 255, 0.92);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --card-border: rgba(26, 74, 79, 0.18);
+    --card-hover-border: rgba(212, 160, 18, 0.45);
+    --card-back-bg: rgba(232, 244, 245, 0.95);
+    --subscribe-overlay-bg: rgba(255, 255, 255, 0.98);
+}
+
+/* Sunrise Light - Warm orange/amber light theme */
+body.theme-light[data-mpr-palette="sunrise"],
+body[data-mpr-theme="light"][data-mpr-palette="sunrise"] {
+    --bg-deep: #fff7ed;
+    --bg-panel: #ffedd5;
+    --bg-panel-alt: #fde4c8;
+    --text-gold: #7c2d12;
+    --text-gold-strong: #5c1d0d;
+    --text-gold-muted: #9a3412;
+    --accent-gold: #f97316;
+    --accent-gold-dark: #ea580c;
+    --accent-outline: rgba(249, 115, 22, 0.3);
+    --shadow-strong: rgba(124, 45, 18, 0.12);
+    --mpr-color-surface-primary: rgba(255, 237, 213, 0.95);
+    --mpr-color-surface-elevated: rgba(255, 255, 255, 0.98);
+    --mpr-color-text-primary: #5c1d0d;
+    --mpr-color-accent: #f97316;
+    --mpr-color-accent-contrast: #fff7ed;
+    --mpr-color-border: rgba(249, 115, 22, 0.25);
+    --mpr-chip-bg: rgba(249, 115, 22, 0.15);
+    --mpr-chip-hover-bg: rgba(249, 115, 22, 0.25);
+    --mpr-menu-hover-bg: rgba(251, 146, 60, 0.15);
+    --mpr-theme-toggle-bg: rgba(253, 228, 200, 0.8);
+    --mpr-shadow-elevated: 0 18px 36px rgba(124, 45, 18, 0.12);
+    --band-research: #fff1e0;
+    --band-tools: #ffe8cc;
+    --band-platform: #fff5e6;
+    --band-products: #fffaf5;
+    --hero-gradient-start: #ffedd5;
+    --hero-gradient-mid: #fed7aa;
+    --hero-gradient-end: #fde4c8;
+    --hero-overlay-start: rgba(255, 247, 237, 0.5);
+    --hero-overlay-mid: rgba(254, 215, 170, 0.35);
+    --hero-overlay-end: rgba(255, 237, 213, 0.55);
+    --hero-text-bg: rgba(255, 255, 255, 0.92);
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --card-border: rgba(249, 115, 22, 0.18);
+    --card-hover-border: rgba(249, 115, 22, 0.45);
+    --card-back-bg: rgba(255, 247, 237, 0.95);
+    --subscribe-overlay-bg: rgba(255, 255, 255, 0.98);
+}
+
+/* Forest Dark - Cool forest green dark theme */
+body.theme-dark[data-mpr-palette="forest"],
+body[data-mpr-theme="dark"][data-mpr-palette="forest"] {
+    --bg-deep: #022c22;
+    --bg-panel: #064e3b;
+    --bg-panel-alt: #065f46;
+    --text-gold: #a7f3d0;
+    --text-gold-strong: #d1fae5;
+    --text-gold-muted: #86efac;
+    --accent-gold: #22c55e;
+    --accent-gold-dark: #16a34a;
+    --accent-outline: rgba(34, 197, 94, 0.35);
+    --shadow-strong: rgba(0, 0, 0, 0.45);
+    --mpr-color-surface-primary: rgba(6, 78, 59, 0.92);
+    --mpr-color-surface-elevated: rgba(6, 95, 70, 0.96);
+    --mpr-color-text-primary: #d1fae5;
+    --mpr-color-accent: #22c55e;
+    --mpr-color-accent-contrast: #052e16;
+    --mpr-color-border: rgba(34, 197, 94, 0.3);
+    --mpr-chip-bg: rgba(34, 197, 94, 0.18);
+    --mpr-chip-hover-bg: rgba(34, 197, 94, 0.28);
+    --mpr-menu-hover-bg: rgba(21, 128, 61, 0.25);
+    --mpr-theme-toggle-bg: rgba(6, 78, 59, 0.8);
+    --mpr-shadow-elevated: 0 25px 50px rgba(2, 44, 34, 0.55);
+    --band-research: #053224;
+    --band-tools: #064228;
+    --band-platform: #042a1e;
+    --band-products: #032217;
+    --hero-gradient-start: #022118;
+    --hero-gradient-mid: #053d2d;
+    --hero-gradient-end: #02291d;
+    --hero-overlay-start: rgba(2, 44, 34, 0.65);
+    --hero-overlay-mid: rgba(6, 78, 59, 0.4);
+    --hero-overlay-end: rgba(3, 34, 23, 0.7);
+    --hero-text-bg: rgba(6, 78, 59, 0.85);
+    --card-bg: rgba(3, 34, 23, 0.85);
+    --card-border: rgba(167, 243, 208, 0.25);
+    --card-hover-border: rgba(209, 250, 229, 0.55);
+    --card-back-bg: rgba(6, 78, 59, 0.8);
+    --subscribe-overlay-bg: rgba(2, 30, 22, 0.95);
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -45,6 +215,7 @@ body {
     font-family: "Space Grotesk", "Roboto", sans-serif;
     line-height: 1.6;
     overflow-x: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 .container {
@@ -58,13 +229,14 @@ body {
     width: 100%;
     margin: 0;
     padding: 60px 20px 80px;
-    background: linear-gradient(180deg, #001c21 0%, #00353d 45%, #001f24 100%);
+    background: linear-gradient(180deg, var(--hero-gradient-start, #001c21) 0%, var(--hero-gradient-mid, #00353d) 45%, var(--hero-gradient-end, #001f24) 100%);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 32px;
     border-radius: 0;
+    transition: background 0.3s ease;
 }
 
 .hero-media {
@@ -80,10 +252,11 @@ body {
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(120deg, rgba(0, 44, 48, 0.65) 0%, rgba(0, 84, 93, 0.4) 55%, rgba(0, 32, 34, 0.7) 100%);
+    background: linear-gradient(120deg, var(--hero-overlay-start, rgba(0, 44, 48, 0.65)) 0%, var(--hero-overlay-mid, rgba(0, 84, 93, 0.4)) 55%, var(--hero-overlay-end, rgba(0, 32, 34, 0.7)) 100%);
     border-radius: 0;
     pointer-events: none;
     z-index: 1;
+    transition: background 0.3s ease;
 }
 
 .hero-video {
@@ -102,10 +275,11 @@ body {
     padding: 32px;
     border-radius: 18px;
     color: var(--text-gold-strong);
-    background: rgba(0, 40, 46, 0.85);
+    background: var(--hero-text-bg, rgba(0, 40, 46, 0.85));
     border: 1px solid var(--accent-outline);
     box-shadow: 0 24px 60px var(--shadow-strong);
     backdrop-filter: blur(6px);
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .hero-title {
@@ -163,7 +337,7 @@ body {
     border-radius: 50%;
     font-family: "Space Grotesk", sans-serif;
     font-weight: 600;
-    background: rgba(0, 37, 43, 0.8);
+    background: var(--mpr-theme-toggle-bg, rgba(0, 37, 43, 0.8));
     color: var(--text-gold);
     border: 2px solid var(--accent-outline);
     transition: background 0.3s, color 0.3s, border-color 0.3s;
@@ -179,7 +353,7 @@ body {
 
 .hero-sound-toggle:hover,
 .hero-sound-toggle[aria-pressed="true"] {
-    background: rgba(255, 211, 105, 0.15);
+    background: var(--mpr-chip-hover-bg, rgba(255, 211, 105, 0.15));
     color: var(--text-gold);
 }
 
@@ -225,6 +399,7 @@ a:focus {
     border: none;
     box-shadow: none;
     overflow: hidden;
+    transition: background 0.3s ease;
 }
 
 .band-inner {
@@ -265,6 +440,7 @@ a:focus {
     letter-spacing: 0.08em;
     color: var(--text-gold);
     text-align: left;
+    transition: color 0.3s ease;
 }
 
 .band-grid {
@@ -292,14 +468,14 @@ a:focus {
 }
 
 .project-card {
-    background: rgba(3, 27, 32, 0.85);
+    background: var(--card-bg, rgba(3, 27, 32, 0.85));
     border-radius: 24px;
-    border: 1px solid rgba(248, 227, 154, 0.25);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+    border: 1px solid var(--card-border, rgba(248, 227, 154, 0.25));
+    box-shadow: var(--mpr-shadow-elevated, 0 25px 60px rgba(0, 0, 0, 0.55));
     position: relative;
     overflow: hidden;
     min-height: 260px;
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
     width: 520px;
     max-width: 100%;
     flex: 0 0 520px;
@@ -334,13 +510,13 @@ a:focus {
 }
 
 .project-card-flippable .project-card-back {
-    background: rgba(0, 40, 46, 0.8);
+    background: var(--card-back-bg, rgba(0, 40, 46, 0.8));
     backdrop-filter: blur(10px);
     transform: rotateY(180deg);
 }
 
 .project-card:hover:not(.is-flipped) {
-    border-color: rgba(255, 221, 172, 0.55);
+    border-color: var(--card-hover-border, rgba(255, 221, 172, 0.55));
     transform: translateY(-6px);
 }
 
@@ -377,8 +553,8 @@ a:focus {
     width: 58px;
     height: 58px;
     border-radius: 16px;
-    background: rgba(255, 211, 105, 0.12);
-    border: 1px solid rgba(255, 211, 105, 0.2);
+    background: var(--mpr-chip-bg, rgba(255, 211, 105, 0.12));
+    border: 1px solid var(--mpr-color-border, rgba(255, 211, 105, 0.2));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -386,6 +562,7 @@ a:focus {
     font-weight: 600;
     color: var(--accent-gold);
     overflow: hidden;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
 .project-card-visual img {
@@ -454,26 +631,22 @@ a:focus {
 .card-action {
     border-radius: 999px;
     padding: 0.55rem 1.6rem;
-    border: 1px solid rgba(255, 211, 105, 0.4);
+    border: 1px solid var(--accent-outline, rgba(255, 211, 105, 0.4));
     font-weight: 600;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--text-gold-strong);
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 .card-action:hover,
 .card-action:focus-visible {
-    background: rgba(255, 211, 105, 0.2);
+    background: var(--mpr-chip-hover-bg, rgba(255, 211, 105, 0.2));
     color: var(--accent-gold);
 }
 
 .subscribe-widget {
     padding: 1rem;
-    border-radius: 18px;
-    border: 1px solid var(--accent-outline);
-    background: rgba(0, 40, 46, 0.6);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
     overflow: hidden;
     height: 100%;
     display: flex;
@@ -494,42 +667,72 @@ a:focus {
     font-size: 0.95rem;
 }
 
-.subscribe-widget-frame {
+.subscribe-form-container {
     width: 100%;
-    border: 0;
-    border-radius: 16px;
-    background: transparent;
-    min-height: 240px;
-    height: 240px;
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-    overflow: hidden;
+}
+
+/* LoopAware subscribe form styling */
+#mp-subscribe-form {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    font-family: "Space Grotesk", "Roboto", sans-serif !important;
+    color: var(--text-gold) !important;
+}
+
+#mp-subscribe-form > div:first-child {
+    display: none !important;
+}
+
+#mp-subscribe-form input {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #fff !important;
+    font-family: inherit !important;
+}
+
+#mp-subscribe-form input::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+#mp-subscribe-form button {
+    background: var(--accent-gold) !important;
+    color: var(--bg-body) !important;
+    font-family: inherit !important;
+}
+
+#mp-subscribe-form button:hover {
+    filter: brightness(1.1);
+}
+
+#mp-subscribe-form #mp-subscribe-status {
+    color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .project-card-subscribe-overlay {
     position: absolute;
-    inset: 24px;
+    inset: 0;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
     opacity: 0;
     pointer-events: none;
-    transform: rotateY(180deg) translateY(12px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(12px);
+    transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
     z-index: 2;
-    backface-visibility: hidden;
     overflow: hidden;
-    padding: 0;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 211, 105, 0.15);
-    background: radial-gradient(circle at top, rgba(3, 38, 46, 0.9), rgba(2, 20, 25, 0.85));
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+    padding: 1.5rem;
+    border-radius: 24px;
+    background: var(--subscribe-overlay-bg, rgba(2, 20, 25, 0.95));
     backdrop-filter: blur(18px);
 }
 
 .project-card-flippable.is-flipped .project-card-subscribe-overlay {
     opacity: 1;
     pointer-events: auto;
-    transform: rotateY(180deg) translateY(0);
+    transform: translateY(0);
 }
 
 /* ---------- Footer ---------- */
@@ -539,6 +742,7 @@ mpr-footer {
     margin-top: 0;
     padding-top: 0;
     background: var(--bg-panel);
+    transition: background 0.3s ease;
 }
 
 .mpr-footer {
@@ -551,6 +755,7 @@ mpr-footer {
     border-top: 1px solid var(--accent-outline);
     box-shadow: none;
     backdrop-filter: none;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 /* stylelint-disable selector-class-pattern */
@@ -598,7 +803,7 @@ mpr-footer {
 }
 
 .mpr-footer__menu-button {
-    background: rgba(0, 64, 70, 0.9);
+    background: var(--mpr-theme-toggle-bg, rgba(0, 64, 70, 0.9));
     color: var(--accent-gold);
     border: 1px solid var(--accent-outline);
     border-radius: 999px;
@@ -607,12 +812,12 @@ mpr-footer {
     letter-spacing: 0.04em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: background 0.3s, color 0.3s, transform 0.2s;
+    transition: background 0.3s, color 0.3s, transform 0.2s, border-color 0.3s;
 }
 
 .mpr-footer__menu-button:hover,
 .mpr-footer__menu-button:focus-visible {
-    background: rgba(255, 211, 105, 0.15);
+    background: var(--mpr-chip-hover-bg, rgba(255, 211, 105, 0.15));
     color: var(--text-gold);
     transform: translateY(-1px);
 }
@@ -628,8 +833,9 @@ mpr-footer {
     background: var(--bg-panel-alt);
     border: 1px solid var(--accent-outline);
     border-radius: 0.75rem;
-    box-shadow: 0 30px 60px var(--shadow-strong);
+    box-shadow: var(--mpr-shadow-elevated, 0 30px 60px var(--shadow-strong));
     display: none;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .mpr-footer__menu--open {
@@ -665,7 +871,7 @@ mpr-footer {
 
 .mpr-footer__menu-item a:hover,
 .mpr-footer__menu-item a:focus {
-    background: rgba(255, 211, 105, 0.15);
+    background: var(--mpr-menu-hover-bg, rgba(255, 211, 105, 0.15));
     color: var(--accent-gold);
 }
 
