@@ -3,18 +3,18 @@
     {
       "id": "issues-md",
       "name": "ISSUES.md",
-      "description": "Append-only lab worklog that tracks features, improvements, and maintenance activity across Marco Polo Research Lab projects.",
+      "description": "An opinionated agentic framework to automate the development cycle using AI Agents. End-to-end automation: from an issue to working code.",
       "status": "WIP",
-      "category": "Research",
-      "repo": "github.com/MarcoPoloResearchLab/marcopolo.github.io",
+      "category": "Products",
+      "repo": "github.com/MarcoPoloResearchLab/issues.md",
       "icon": "assets/projects/issues-md/icon.png",
       "launch": {
         "enabled": false,
-        "url": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md"
+        "url": "https://github.com/MarcoPoloResearchLab/issues.md/blob/main/ISSUES.md"
       },
       "docs": {
         "enabled": false,
-        "url": "https://github.com/MarcoPoloResearchLab/marcopolo.github.io/blob/main/ISSUES.md"
+        "url": "https://github.com/MarcoPoloResearchLab/issues.md/blob/main/ISSUES.md"
       },
       "subscribe": {
         "enabled": true,
@@ -24,6 +24,18 @@
         "copy": "Drop your email to hear when ISSUES.md ships fresh features and AI integrations.",
         "height": 320
       }
+    },
+    {
+      "id": "dyd",
+      "name": "Download Your Data",
+      "description": "Download your data from any large provider: Netfix, Facebook, OpenAI, Google  YouTube etc. Make your data yours and personalize.",
+      "status": "WIP",
+      "category": "Research",
+      "repo": null,
+      "icon": "assets/projects/city-finder/icon.svg",
+      "launch": { "enabled": false },
+      "docs": { "enabled": false },
+      "subscribe": { "enabled": false }
     },
     {
       "id": "photolab",
