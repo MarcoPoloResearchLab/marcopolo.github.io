@@ -1,6 +1,6 @@
 services:
   site:
-    image: ghcr.io/temirov/ghttp:latest
+    image: ghcr.io/tyemirov/ghttp:latest
     container_name: mprlab-site
     restart: unless-stopped
     env_file:
@@ -11,8 +11,25 @@ services:
       - "${GHTTP_BIND_ADDRESS}"
       - "--directory"
       - "${GHTTP_SERVE_DIRECTORY}"
+      - "--tls-cert"
+      - ${GHTTP_TLS_CERT_CONTAINER_PATH}
+      - "--tls-key"
+      - "${GHTTP_TLS_KEY_CONTAINER_PATH}"
       - "${CONTAINER_HTTP_PORT}"
     ports:
       - "${HOST_HTTP_PORT}:${CONTAINER_HTTP_PORT}"
     volumes:
       - ./:${GHTTP_SERVE_DIRECTORY}:ro
+      - ${GHTTP_TLS_CERT_HOST_PATH}:${GHTTP_TLS_CERT_CONTAINER_PATH}:ro
+      - ${GHTTP_TLS_KEY_HOST_PATH}:${GHTTP_TLS_KEY_CONTAINER_PATH}:ro
+    develop:
+      watch:
+        - action: sync
+          path: ./index.html
+          target: ${GHTTP_SERVE_DIRECTORY}/index.html
+        - action: sync
+          path: ./script.js
+          target: ${GHTTP_SERVE_DIRECTORY}/script.js
+        - action: sync
+          path: ./styles.css
+          target: ${GHTTP_SERVE_DIRECTORY}/styles.css

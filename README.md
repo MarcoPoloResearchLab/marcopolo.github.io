@@ -2,17 +2,19 @@
 
 Landing page for Marco Polo Research Lab.
 
-The home page features an animated hero section, an about overview and a gallery of our public apps.
-
-This repository hosts the static website built with HTML, CSS and JavaScript. [Three.js](https://threejs.org/) is used to draw and animate the lab's logo and project icons.
+The site ships a data-driven hero and project gallery built with semantic HTML, web components from `mpr-ui`, vanilla CSS, and Alpine-powered behaviors in `script.js`. Static assets now live under a consistent `assets/` hierarchy so projects, site chrome, and favicons pull from predictable locations.
 
 You can open `index.html` directly in your browser or serve the site through GitHub Pages.
 
 ## Structure
 
-- `index.html` – main page with hero section, about information and a gallery of apps
-- `script.js` – initializes Three.js and animates the SVG assets
-- `assets/` – fonts and SVG illustrations
+- `index.html` – main page with the hero video, CTA, `<mpr-band>` project sections, and the lab footer.
+- `script.js` – fetches `data/projects.json`, renders the project cards, and wires up interactive affordances such as the LoopAware-ready flip state.
+- `styles.css` – layout, typography, and per-band styling.
+- `data/projects.json` – canonical catalog that drives the landing page and tests.
+- `assets/` – canonical home for static assets:
+  - `assets/site/` – hero video, fonts, favicon bundle, and Marco Polo brand imagery
+  - `assets/projects/<project-id>/icon.(png|svg)` – project card icons plus any extra brand files under `assets/projects/<project-id>/brand/`
 
 ## Local Development with Docker Compose
 
@@ -50,13 +52,39 @@ Playwright downloads Chromium automatically during `npm install`; the tests load
 
 ## Adding a New App
 
-Each entry in the project gallery consists of an SVG logo, a `<canvas>` element and a call to `initProjectAnimation()` in `script.js`. To add a new app:
+Each entry in the project gallery is powered by `data/projects.json`:
 
-1. create a new SVG logo in the `assets/` folder
-2. add a project card in `index.html` following existing examples
-3. reference the SVG from `script.js`
+1. create a new `assets/projects/<project-id>/icon.(png|svg)` and keep any supporting references in `assets/projects/<project-id>/brand/`
+2. add the project metadata to `data/projects.json`
+3. open `index.html` locally or run `npm test` to ensure the Playwright suite exercises the new entry cleanly
 
 Vectorizing images or text to SVG can be done using the tools available in the [svg_tools](https://github.com/tyemirov/svg_tools) repository.
+
+## Adding Subscribe Forms
+
+Projects can display a LoopAware-powered subscribe form on their card back. To enable:
+
+1. **Create a site in LoopAware** – register your project at [loopaware.mprlab.com](https://loopaware.mprlab.com) and note the `site_id`.
+
+2. **Add the subscribe config** to the project entry in `data/projects.json`:
+
+   ```json
+   "subscribe": {
+     "enabled": true,
+     "script": "https://loopaware.mprlab.com/subscribe.js?site_id=YOUR_SITE_ID&mode=inline&accent=%23ffd369&cta=Subscribe&success=Thanks%20for%20subscribing&name_field=false",
+     "target": "subscribe-target-YOUR_PROJECT_ID",
+     "title": "Get PROJECT_NAME updates",
+     "copy": "Drop your email to hear when PROJECT_NAME ships new features."
+   }
+   ```
+
+3. **Key fields**:
+   - `script` – LoopAware widget URL with your `site_id` and customization params
+   - `target` – unique DOM ID where the form renders (use pattern `subscribe-target-{project-id}`)
+   - `title` – heading shown above the form
+   - `copy` – description text below the heading
+
+The card will automatically become flippable and load the subscribe widget when the user flips it.
 
 ## License
 

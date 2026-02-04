@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <linearGradient id="tauth-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#022a34" />
+      <stop offset="1" stop-color="#03505a" />
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="256" height="256" rx="40" fill="url(#tauth-bg)" />
+  <path
+    d="M128 40 L188 64 V124 C188 162 164 198 128 216 C92 198 68 162 68 124 V64 Z"
+    fill="none"
+    stroke="#FFD369"
+    stroke-width="10"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M112 92 H144 M128 92 V168"
+    stroke="#FFD369"
+    stroke-width="12"
+    stroke-linecap="round"
+  />
+</svg>
+

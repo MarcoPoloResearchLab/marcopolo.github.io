@@ -1,369 +1,453 @@
-/* ---------- asset paths ---------- */
-const SOCIAL_THREADER_SVG = "assets/social_threader.svg";
-const COUNTDOWN_CALENDAR_SVG = "assets/countdown_calendar.svg";
-const CITY_FINDER_SVG = "assets/city_finder.svg";
-const RSVP_SVG = "assets/rsvp.svg";
-const LLM_CROSSWORD_SVG = "assets/llm_crossword.svg";
-const OLD_MILLIONAIRE_SVG = "assets/old_millionaire.svg";
-const ALLERGY_WHEEL_SVG = "assets/allergy_wheel.svg";
-/* ---------- visual tuning ---------- */
-const PROJECT_SCALE = 1.5;
-const PROJECT_X_SCALE_FACTOR = 0.80;
-const PROJECT_Y_SCALE_FACTOR = 0.30;
+// @ts-check
 
-/* ---------- timing ---------- */
-const PROJECT_DRAW_SECONDS = 3;
-const FPS = 60;
-const PROJECT_TOTAL_FRAMES = PROJECT_DRAW_SECONDS * FPS;
+/**
+ * @typedef {"Research" | "Tools" | "Platform" | "Products"} ProjectCategory
+ * @typedef {"Production" | "Beta" | "WIP"} ProjectStatus
+ *
+ * @typedef {Object} Project
+ * @property {string} id
+ * @property {string} name
+ * @property {string} description
+ * @property {ProjectStatus} status
+ * @property {ProjectCategory} category
+ * @property {string | null | undefined} [repo]
+ * @property {string | null | undefined} [icon]
+ * @property {ProjectLaunchConfig} launch
+ * @property {ProjectDocsConfig} docs
+ * @property {ProjectSubscribeConfig} subscribe
+ */
 
-/* ---------- stroke ---------- */
-const COLOR = 0xffd369;
-const WIDTH = 1.2;
+/**
+ * @typedef {Object} ProjectLaunchConfig
+ * @property {boolean} enabled
+ * @property {string | undefined} [url]
+ */
 
-/* ---------- project animations ---------- */
-const projectAnimations = new Map();
-const PROJECT_CANVASES = [
-    {id: "social-threader-canvas", svg: SOCIAL_THREADER_SVG},
-    {id: "countdown-calendar-canvas", svg: COUNTDOWN_CALENDAR_SVG},
-    {id: "city-finder-canvas", svg: CITY_FINDER_SVG},
-    {id: "rsvp-canvas", svg: RSVP_SVG},
-    {id: "llm-crossword-canvas", svg: LLM_CROSSWORD_SVG},
-    {id: "old-millionaire-canvas", svg: OLD_MILLIONAIRE_SVG},
-    {id: "allergy-wheel-canvas", svg: ALLERGY_WHEEL_SVG},
-];
+/**
+ * @typedef {Object} ProjectDocsConfig
+ * @property {boolean} enabled
+ * @property {string | undefined} [url]
+ */
 
-/* ───── SVG parsing ───── */
-function parsePath(d, W, H, scale) {
-    const pts = [];
-    let cp = {x: 0, y: 0}, sp = {x: 0, y: 0};
-    const cmds = d.match(/[a-zA-Z][^a-zA-Z]*/g) || [];
-    const abs = (v, i, rel) => (rel ? (i % 2 ? cp.y + v : cp.x + v) : v);
-    const push = p => pts.push({
-        x: (p.x / W - 0.5) * scale,
-        y: (0.5 - p.y / H) * scale
-    });
+/**
+ * @typedef {Object} ProjectSubscribeConfig
+ * @property {boolean} enabled
+ * @property {string | undefined} [script]
+ * @property {number | undefined} [height]
+ * @property {string | undefined} [title]
+ * @property {string | undefined} [copy]
+ */
 
-    for (const s of cmds) {
-        const c = s[0], C = c.toUpperCase(), rel = c !== C;
-        // Extract numeric tokens (including negatives and decimals) from the
-        // command string. Regex breakdown:
-        //  [-+]?            -> optional sign
-        //  (?:\d*\.\d+|\d+) -> decimal numbers with optional leading digits or integers
-        const v = (s.slice(1).trim().match(/[-+]?(?:\d*\.\d+|\d+)/g) || [])
-            .map(parseFloat);
-        let i = 0;
+const SECTION_ORDER = /** @type {ProjectCategory[]} */ ([
+    "Research",
+    "Tools",
+    "Platform",
+    "Products"
+]);
 
-        switch (C) {
-            case "M":
-            case "L":
-                for (; i < v.length; i += 2) {
-                    cp.x = abs(v[i], 0, rel);
-                    cp.y = abs(v[i + 1], 1, rel);
-                    if (C === "M" && i === 0) sp = {...cp};
-                    push(cp);
-                }
-                break;
-            case "H":
-                v.forEach(e => {
-                    cp.x = rel ? cp.x + e : e;
-                    push(cp);
-                });
-                break;
-            case "V":
-                v.forEach(e => {
-                    cp.y = rel ? cp.y + e : e;
-                    push(cp);
-                });
-                break;
-            case "C":
-                while (i + 5 < v.length) {
-                    const p0 = {...cp};
-                    const p1 = {x: abs(v[i], 0, rel), y: abs(v[i + 1], 1, rel)};
-                    const p2 = {x: abs(v[i + 2], 0, rel), y: abs(v[i + 3], 1, rel)};
-                    const p3 = {x: abs(v[i + 4], 0, rel), y: abs(v[i + 5], 1, rel)};
-                    for (let k = 1; k <= 12; k++) {
-                        const t = k / 12, it = 1 - t;
-                        push({
-                            x: it * it * it * p0.x + 3 * it * it * t * p1.x + 3 * it * t * t * p2.x + t * t * t * p3.x,
-                            y: it * it * it * p0.y + 3 * it * it * t * p1.y + 3 * it * t * t * p2.y + t * t * t * p3.y
-                        });
-                    }
-                    cp = {...p3};
-                    i += 6;
-                }
-                break;
-            case "Q":
-                while (i + 3 < v.length) {
-                    const p0 = {...cp};
-                    const p1 = {x: abs(v[i], 0, rel), y: abs(v[i + 1], 1, rel)};
-                    const p2 = {x: abs(v[i + 2], 0, rel), y: abs(v[i + 3], 1, rel)};
-                    for (let k = 1; k <= 10; k++) {
-                        const t = k / 10, it = 1 - t;
-                        push({
-                            x: it * it * p0.x + 2 * it * t * p1.x + t * t * p2.x,
-                            y: it * it * p0.y + 2 * it * t * p1.y + t * t * p2.y
-                        });
-                    }
-                    cp = {...p2};
-                    i += 4;
-                }
-                break;
-            case "Z":
-                push(sp);
-                cp = {...sp};
-                break;
-        }
-    }
-    return pts;
+const STATUS_PRIORITY = Object.freeze({
+    Production: 0,
+    Beta: 1,
+    WIP: 2
+});
+
+const STATUS_CLASS = Object.freeze({
+    Production: "status-badge-production",
+    Beta: "status-badge-beta",
+    WIP: "status-badge-wip"
+});
+
+/** @type {ProjectStatus[]} */
+const FLIPPABLE_STATUSES = ["Beta", "WIP"];
+
+/**
+ * Loads the LoopAware subscribe script with target parameter (LA-113).
+ * @param {string} scriptUrl - Base URL with query parameters
+ * @param {string} targetId - ID of the element to render the form into
+ */
+function loadSubscribeScript(scriptUrl, targetId) {
+    const url = new URL(scriptUrl);
+    url.searchParams.set("target", targetId);
+
+    const script = document.createElement("script");
+    script.src = url.toString();
+    script.async = true;
+    document.head.appendChild(script);
 }
 
-async function loadSVG(url, scale) {
-    try {
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`${url}: ${res.status}`);
-
-        const svg = new DOMParser()
-            .parseFromString(await res.text(), "image/svg+xml")
-            .documentElement;
-
-        const vb = (svg.getAttribute("viewBox") || "0 0 300 300")
-            .split(/[ ,]+/).map(Number);
-
-        const W = parseFloat(svg.getAttribute("width")) || vb[2];
-        const H = parseFloat(svg.getAttribute("height")) || vb[3];
-
-        return [...svg.querySelectorAll("path")]
-            .map(p => parsePath(p.getAttribute("d") || "", W, H, scale))
-            .filter(s => s.length > 1);
-    } catch (err) {
-        console.error(`Error loading SVG from ${url}:`, err);
-        return [];
-    }
-}
-
-/* ───── THREE.js helpers ───── */
-function makeLines(segs, targetScene) {
-    const mat = new THREE.LineBasicMaterial({color: COLOR, linewidth: WIDTH});
-    return segs.map(seg => {
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute(
-            "position",
-            new THREE.BufferAttribute(new Float32Array(seg.length * 3), 3)
-        );
-        geo.setDrawRange(0, 0);
-        const line = new THREE.Line(geo, mat);
-        line.userData = {pts: seg, drawn: 0};
-        targetScene.add(line);
-        return line;
-    });
-}
-
-function draw(lines, count) {
-    let left = count;
-    for (const l of lines) {
-        const {pts, drawn} = l.userData;
-        if (drawn >= pts.length) continue;
-
-        const n = Math.min(left, pts.length - drawn);
-        const pos = l.geometry.attributes.position;
-
-        for (let i = 0; i < n; i++) {
-            const p = pts[drawn + i];
-            pos.setXYZ(drawn + i, p.x, p.y, 0);
-        }
-
-        l.userData.drawn += n;
-        pos.needsUpdate = true;
-        l.geometry.setDrawRange(0, l.userData.drawn);
-
-        left -= n;
-        if (!left) break;
-    }
-}
-
-/* ───── Layout helpers ───── */
-function projectWorldHeight(projectCamera) {
-    return 2 * projectCamera.position.z * Math.tan(THREE.MathUtils.degToRad(projectCamera.fov / 2));
-}
-
-function projectWorldWidth(projectCamera) {
-    const h = projectWorldHeight(projectCamera);
-    return h * projectCamera.aspect;
-}
-
-function positionProjectSegments(segments, projectCamera) {
-    const allPoints = segments.flatMap(s => s);
-    if (!allPoints.length) return;
-
-    let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-    allPoints.forEach(p => {
-        if (p.x < minX) minX = p.x;
-        if (p.x > maxX) maxX = p.x;
-        if (p.y < minY) minY = p.y;
-        if (p.y > maxY) maxY = p.y;
-    });
-
-    const initialWidth = maxX - minX;
-    const initialHeight = maxY - minY;
-    const initialCenterX = (minX + maxX) / 2;
-    const initialCenterY = (minY + maxY) / 2;
-
-    const wWidth = projectWorldWidth(projectCamera);
-    const wHeight = projectWorldHeight(projectCamera);
-
-    const targetWidth = wWidth * PROJECT_X_SCALE_FACTOR;
-    const targetHeight = wHeight * PROJECT_Y_SCALE_FACTOR;
-
-    let xScaleFactor = 1;
-    if (initialWidth > 0.0001) {
-        xScaleFactor = targetWidth / initialWidth;
+/**
+ * Fetches the JSON catalog for the landing page.
+ * @returns {Promise<Project[]>}
+ */
+async function loadProjectCatalog() {
+    const response = await fetch("data/projects.json", {cache: "no-store"});
+    if (!response.ok) {
+        throw new Error(`projects.json: ${response.status}`);
     }
 
-    let yScaleFactor = 1;
-    if (initialHeight > 0.0001) {
-        yScaleFactor = targetHeight / initialHeight;
+    /** @type {{projects?: Project[]}} */
+    const payload = await response.json();
+    if (!Array.isArray(payload.projects)) {
+        throw new Error("projects.json missing projects array");
     }
-
-    segments.forEach(seg =>
-        seg.forEach(p => {
-            p.x = (p.x - initialCenterX) * xScaleFactor;
-            p.y = (p.y - initialCenterY) * yScaleFactor;
-        })
-    );
+    return payload.projects;
 }
 
-/* ───── Project Animation Setup ───── */
-async function initProjectAnimation(canvasId, svgPath) {
-    const canvas = document.getElementById(canvasId);
-    if (!canvas) return;
+/**
+ * Creates semantic markup for a project card.
+ * @param {Project} project
+ * @returns {HTMLElement}
+ */
+function buildProjectCard(project) {
+    const card = document.createElement("article");
+    card.className = "project-card";
+    card.dataset.status = project.status.toLowerCase();
 
-    const container = canvas.parentElement;
+    const inner = document.createElement("div");
+    inner.className = "project-card-inner";
 
-    const projectScene = new THREE.Scene();
-    const projectCamera = new THREE.PerspectiveCamera(
-        75,
-        container.offsetWidth / container.offsetHeight,
-        0.1,
-        100
-    );
-    projectCamera.position.z = 4;
+    const subscribeConfig = project.subscribe;
+    const hasSubscribeWidget = subscribeConfig.enabled && Boolean(subscribeConfig.script);
+    const isFlippable = hasSubscribeWidget || FLIPPABLE_STATUSES.includes(project.status);
+    if (isFlippable) {
+        card.classList.add("project-card-flippable");
+        card.setAttribute("role", "button");
+        card.tabIndex = 0;
+        card.setAttribute("aria-pressed", "false");
+    }
 
-    const projectRenderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        alpha: true,
-        antialias: true
-    });
-    projectRenderer.setPixelRatio(window.devicePixelRatio);
-    projectRenderer.setSize(container.offsetWidth, container.offsetHeight);
+    const visual = document.createElement("div");
+    visual.className = "project-card-visual";
 
-    const loadedSegments = await loadSVG(svgPath, PROJECT_SCALE);
-    if (loadedSegments.length === 0) return;
+    if (project.icon) {
+        const img = document.createElement("img");
+        img.src = project.icon;
+        img.alt = `${project.name} favicon`;
+        img.loading = "lazy";
+        visual.append(img);
+    } else {
+        visual.textContent = deriveMonogram(project.name);
+    }
 
-    const segmentsTemp = JSON.parse(JSON.stringify(loadedSegments));
-    positionProjectSegments(loadedSegments, projectCamera);
+    const title = document.createElement("h3");
+    title.textContent = project.name;
 
-    const projectLines = makeLines(loadedSegments, projectScene);
-    const projectTotalPts = loadedSegments.reduce((s, a) => s + a.length, 0);
+    const titleGroup = document.createElement("div");
+    titleGroup.className = "project-card-title";
+    titleGroup.append(visual, title);
 
-    projectAnimations.set(canvasId, {
-        scene: projectScene,
-        camera: projectCamera,
-        renderer: projectRenderer,
-        lines: projectLines,
-        totalPts: projectTotalPts,
-        frameCount: 0,
-        drawn: 0,
-        isAnimating: false,
-        hasAnimated: false, // Add this flag
-        segments: loadedSegments,
-        segmentsTemp: segmentsTemp
-    });
+    const header = document.createElement("div");
+    header.className = "project-card-header";
+    header.append(titleGroup, buildStatusBadge(project.status));
 
-    const resizeHandler = () => {
-        projectCamera.aspect = container.offsetWidth / container.offsetHeight;
-        projectCamera.updateProjectionMatrix();
-        projectRenderer.setSize(container.offsetWidth, container.offsetHeight);
+    const body = document.createElement("div");
+    body.className = "card-body";
 
-        const animation = projectAnimations.get(canvasId);
-        if (animation && animation.segmentsTemp.length > 0) {
-            const freshSegments = JSON.parse(JSON.stringify(animation.segmentsTemp));
-            positionProjectSegments(freshSegments, projectCamera);
-            animation.lines.forEach((line, index) => {
-                const seg = freshSegments[index];
-                const pos = line.geometry.attributes.position;
-                for (let i = 0; i < seg.length; i++) pos.setXYZ(i, seg[i].x, seg[i].y, 0);
-                pos.needsUpdate = true;
-                line.userData.pts = seg;
-                if (animation.frameCount > PROJECT_TOTAL_FRAMES) line.geometry.setDrawRange(0, seg.length);
+    const description = document.createElement("p");
+    description.textContent = project.description;
+    body.append(description);
+
+    const shouldShowLaunch =
+        project.status !== "WIP" &&
+        project.launch.enabled &&
+        Boolean(project.launch.url);
+
+    const shouldShowDocs = project.docs.enabled && Boolean(project.docs.url);
+
+    const actionsRow = document.createElement("div");
+    actionsRow.className = "card-actions";
+
+    if (shouldShowLaunch) {
+        const link = document.createElement("a");
+        link.href = /** @type {string} */ (project.launch.url);
+        link.className = "card-action";
+        link.target = "_blank";
+        link.rel = "noreferrer noopener";
+        link.textContent = project.status === "Production" ? "Launch product" : "Explore beta";
+        actionsRow.append(link);
+    }
+
+    if (shouldShowDocs) {
+        const docsLink = document.createElement("a");
+        docsLink.href = /** @type {string} */ (project.docs.url);
+        docsLink.className = "card-action";
+        docsLink.target = "_blank";
+        docsLink.rel = "noreferrer noopener";
+        docsLink.textContent = "Read documentation";
+        actionsRow.append(docsLink);
+    }
+
+    if (actionsRow.childElementCount > 0) {
+        body.append(actionsRow);
+    }
+
+    const front = document.createElement("div");
+    front.className = "project-card-face project-card-front";
+    front.append(header, body);
+
+    inner.append(front);
+
+    /** @type {null | (() => void)} */
+    let loadSubscribeWidget = null;
+
+    if (isFlippable) {
+        const back = document.createElement("div");
+        back.className = "project-card-face project-card-back";
+
+        const backHeader = document.createElement("div");
+        backHeader.className = "project-card-header";
+
+        const backTitle = document.createElement("h3");
+        backTitle.textContent = project.name;
+
+        const backStatus = buildStatusBadge(project.status);
+
+        backHeader.append(backTitle, backStatus);
+
+        const backBody = document.createElement("div");
+        backBody.className = "card-body";
+
+        const backCopy = document.createElement("p");
+        backCopy.textContent =
+            project.status === "WIP"
+                ? "Flip this card to preview where the LoopAware-powered subscription form for this project will appear."
+                : "Flip this card to preview the back surface where a LoopAware subscription form will live for beta updates.";
+
+        backBody.append(backCopy);
+
+        let subscribeOverlay = null;
+        if (hasSubscribeWidget) {
+            card.classList.add("project-card-has-subscribe");
+
+            const subscribeWidget = document.createElement("div");
+            subscribeWidget.className = "subscribe-widget";
+            subscribeWidget.dataset.subscribeTarget = project.id;
+
+            const subscribeHeading = document.createElement("p");
+            subscribeHeading.className = "subscribe-widget-title";
+            subscribeHeading.textContent =
+                subscribeConfig.title || `Get ${project.name} updates`;
+
+            const subscribeBlurb = document.createElement("p");
+            subscribeBlurb.className = "subscribe-widget-copy";
+            subscribeBlurb.textContent =
+                subscribeConfig.copy ||
+                "Leave your email to hear when this project ships new features and announcements.";
+
+            // Container for LoopAware subscribe form (rendered by subscribe.js with target param)
+            const subscribeFormContainer = document.createElement("div");
+            subscribeFormContainer.id = subscribeConfig.target;
+            subscribeFormContainer.className = "subscribe-form-container";
+
+            subscribeWidget.append(subscribeHeading, subscribeBlurb, subscribeFormContainer);
+            subscribeOverlay = document.createElement("div");
+            subscribeOverlay.className = "project-card-subscribe-overlay";
+            subscribeOverlay.dataset.subscribeLoaded = "false";
+            subscribeOverlay.append(subscribeWidget);
+
+            let subscribeScriptLoaded = false;
+
+            loadSubscribeWidget = () => {
+                if (subscribeScriptLoaded) return;
+                subscribeScriptLoaded = true;
+                loadSubscribeScript(subscribeConfig.script, subscribeConfig.target);
+                subscribeOverlay.dataset.subscribeLoaded = "true";
+            };
+
+            // Listen for successful subscription and flip card back after delay
+            subscribeFormContainer.addEventListener("loopaware:subscribe:success", () => {
+                const emailInput = /** @type {HTMLInputElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-email")
+                );
+                const submitButton = /** @type {HTMLElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-submit")
+                );
+                const statusElement = /** @type {HTMLElement} */ (
+                    subscribeFormContainer.querySelector("#mp-subscribe-status")
+                );
+
+                // Hide form inputs, keep status message visible
+                emailInput.style.display = "none";
+                submitButton.style.display = "none";
+
+                setTimeout(() => {
+                    card.classList.remove("is-flipped");
+                    card.setAttribute("aria-pressed", "false");
+                    // Reset form state for next flip
+                    emailInput.style.display = "";
+                    emailInput.value = "";
+                    submitButton.style.display = "";
+                    statusElement.textContent = "";
+                }, 2000); // 2 second delay to show success message
             });
         }
-    };
-
-    window.addEventListener("resize", resizeHandler);
-}
-
-function startProjectAnimation(canvasId) {
-    const animation = projectAnimations.get(canvasId);
-    if (!animation || animation.isAnimating || animation.hasAnimated) return; // Check hasAnimated flag
-
-    animation.isAnimating = true;
-    animation.frameCount = 0;
-    animation.drawn = 0;
-
-    animation.lines.forEach(line => {
-        line.userData.drawn = 0;
-        line.geometry.setDrawRange(0, 0);
-    });
-
-    const animate = () => {
-        if (!animation.isAnimating) return;
-
-        if (animation.frameCount <= PROJECT_TOTAL_FRAMES) {
-            const prog = animation.frameCount / PROJECT_TOTAL_FRAMES;
-            const ptsToDrawProject = Math.floor(prog * animation.totalPts);
-
-            draw(animation.lines, ptsToDrawProject - animation.drawn);
-            animation.drawn = ptsToDrawProject;
-            animation.frameCount++;
-
-            requestAnimationFrame(animate);
-        } else {
-            animation.isAnimating = false;
-            animation.hasAnimated = true; // Set flag when animation completes
+        back.append(backHeader, backBody);
+        if (subscribeOverlay) {
+            back.append(subscribeOverlay);
         }
+        inner.append(back);
 
-        animation.renderer.render(animation.scene, animation.camera);
-    };
+        /**
+         * @param {MouseEvent | KeyboardEvent} event
+         */
+        const toggleFlip = event => {
+            const target = /** @type {HTMLElement} */ (event.target);
+            // Don't flip when interacting with links or form elements
+            if (target.closest("a, input, button, textarea, select, label, #mp-subscribe-form")) {
+                return;
+            }
 
-    animate();
+            const nowFlipped = card.classList.toggle("is-flipped");
+            card.setAttribute("aria-pressed", nowFlipped ? "true" : "false");
+            if (nowFlipped && loadSubscribeWidget) {
+                loadSubscribeWidget();
+            }
+        };
+
+        card.addEventListener("click", toggleFlip);
+        card.addEventListener("keydown", event => {
+            if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+                const target = /** @type {HTMLElement} */ (event.target);
+                // Don't flip when interacting with links or form elements
+                if (target.closest("a, input, button, textarea, select, label, #mp-subscribe-form")) {
+                    return;
+                }
+
+                event.preventDefault();
+                toggleFlip(event);
+            }
+        });
+    }
+
+    card.append(inner);
+    return card;
 }
 
-/* ───── Initialization ───── */
-async function initProjectGallery() {
+/**
+ * Builds a badge element scoped to the project status.
+ * @param {ProjectStatus} status
+ * @returns {HTMLElement}
+ */
+function buildStatusBadge(status) {
+    const badge = document.createElement("span");
+    badge.className = `status-badge ${STATUS_CLASS[status]}`;
+    badge.textContent = status;
+    return badge;
+}
+
+/**
+ * Renders project cards inside each section band.
+ * @param {Project[]} projects
+ */
+function renderProjectBands(projects) {
+    SECTION_ORDER.forEach(category => {
+        const band = document.querySelector(`[data-band-category="${category}"]`);
+        if (!band) return;
+        const grid = band.querySelector("[data-band-cards]");
+        if (!grid) return;
+
+        grid.innerHTML = "";
+        const scopedProjects = projects
+            .filter(project => project.category === category)
+            .sort((a, b) => {
+                const byStatus = STATUS_PRIORITY[a.status] - STATUS_PRIORITY[b.status];
+                if (byStatus !== 0) return byStatus;
+                return a.name.localeCompare(b.name);
+            });
+
+        scopedProjects.forEach(project => {
+            grid.append(buildProjectCard(project));
+        });
+
+        layoutBandRows(/** @type {HTMLElement} */ (grid));
+    });
+}
+
+/**
+ * Generates an uppercase monogram for the static icon block.
+ * @param {string} name
+ * @returns {string}
+ */
+function deriveMonogram(name) {
+    const initials = name
+        .split(/\s+/)
+        .filter(Boolean)
+        .map(part => part[0])
+        .slice(0, 2)
+        .join("");
+    return initials.toUpperCase() || name.slice(0, 2).toUpperCase();
+}
+
+async function hydrateProjectCatalog() {
     try {
-        await Promise.all(PROJECT_CANVASES.map(({id, svg}) => initProjectAnimation(id, svg)));
-    } catch (err) {
-        console.error("Failed to prepare project animations:", err);
+        const projects = await loadProjectCatalog();
+        renderProjectBands(projects);
+    } catch (error) {
+        console.error("Failed to render project catalog:", error);
+    }
+}
+
+const CARD_WIDTH_PX = 520;
+const CARD_GAP_PX = 28;
+const MOBILE_BREAKPOINT = 600;
+const BAND_ROW_PADDING_PX = 24;
+
+/**
+ * Arrange project cards into rows with fixed-width cards:
+ * - full rows alternate between left and right alignment
+ * - the final row (even if partial) follows the same alternation pattern
+ * @param {HTMLElement} grid
+ */
+function layoutBandRows(grid) {
+    const allCards = /** @type {HTMLElement[]} */ (Array.from(
+        grid.querySelectorAll(".project-card"),
+    ));
+    if (!allCards.length) return;
+
+    if (window.innerWidth <= MOBILE_BREAKPOINT) {
+        grid.innerHTML = "";
+        allCards.forEach(card => grid.append(card));
         return;
     }
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const canvasId = entry.target.id;
-                setTimeout(() => startProjectAnimation(canvasId), 0);
-            }
-        });
-    }, {threshold: 0.1});
+    grid.innerHTML = "";
 
-    PROJECT_CANVASES.forEach(({id}) => {
-        const canvas = document.getElementById(id);
-        if (canvas) observer.observe(canvas);
-    });
+    const containerWidth = grid.getBoundingClientRect().width || window.innerWidth;
+    const step = CARD_WIDTH_PX + CARD_GAP_PX;
+    const usableWidth = Math.max(0, containerWidth - BAND_ROW_PADDING_PX * 2);
+    const computedPerRow = Math.floor((usableWidth + CARD_GAP_PX) / step);
+    const maxPerRow = Math.max(1, Math.min(2, computedPerRow));
+    const total = allCards.length;
+
+    if (total <= maxPerRow) {
+        const singleRow = document.createElement("div");
+        singleRow.className = "band-row band-row-left";
+        allCards.forEach(card => singleRow.append(card));
+        grid.append(singleRow);
+        return;
+    }
+
+    let index = 0;
+    let rowIndex = 0;
+    while (index < total) {
+        const rowCards = allCards.slice(index, index + maxPerRow);
+        const row = document.createElement("div");
+        row.className = "band-row";
+
+        const alignLeft = rowIndex % 2 === 0;
+
+        row.classList.add(alignLeft ? "band-row-left" : "band-row-right");
+
+        rowCards.forEach(card => row.append(card));
+        grid.append(row);
+
+        index += maxPerRow;
+        rowIndex += 1;
+    }
 }
 
 function setupHeroAudioToggle() {
-    const video = document.getElementById("hero-video");
+    const video = /** @type {HTMLVideoElement | null} */ (document.getElementById("hero-video"));
     const toggle = document.getElementById("hero-sound-toggle");
     if (!video || !toggle) return;
 
@@ -378,10 +462,7 @@ function setupHeroAudioToggle() {
     };
 
     const ensurePlayback = () => {
-        const playPromise = video.play();
-        if (playPromise && typeof playPromise.then === "function") {
-            playPromise.catch(() => {});
-        }
+        video.play().catch(() => {});
     };
 
     toggle.addEventListener("click", () => {
@@ -395,13 +476,12 @@ function setupHeroAudioToggle() {
 
 document.addEventListener("DOMContentLoaded", () => {
     setupHeroAudioToggle();
+    hydrateProjectCatalog().catch(error => {
+        console.error("Initialization error:", error);
+    });
 
-    if (typeof THREE === "undefined") {
-        console.error("Three.js not loaded");
-        return;
-    }
-
-    initProjectGallery().catch(err => {
-        console.error("Failed to initialize project gallery:", err);
+    window.addEventListener("resize", () => {
+        const grids = document.querySelectorAll("[data-band-cards]");
+        grids.forEach(grid => layoutBandRows(/** @type {HTMLElement} */ (grid)));
     });
 });
