@@ -67,6 +67,9 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Integrate a LoopAware widget that lets visitors send structured feedback (text + contact details) straight from the landing page footer without jumping to another product surface.
       - Current difficulties: the LoopAware embed we ship today is hard-coded for “subscribe” flows (email-only, no free-form message fields), and the script instance assumes each card maps to a LoopAware property, so there is no single endpoint or schema for a global “site feedback” inbox. We need a LoopAware template that supports multi-field submissions plus a consolidated destination before wiring it into the footer drop-up.
 
+- [x] [MP-106] Add a founder card block with Vadym Tyemirov (Technical Founder & Engineering Leader) and a photo placeholder.
+      - Added a new `#founder` band with a founder card + photo placeholder, plus Playwright coverage asserting it renders.
+
 
 ## Improvements (204–299)
 

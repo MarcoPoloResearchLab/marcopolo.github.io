@@ -55,6 +55,22 @@ test.describe("Marco Polo Research Lab landing page", () => {
         }
     });
 
+    test("founder card renders with name, title, and photo placeholder", async ({page}) => {
+        await page.goto("/index.html");
+
+        const founderSection = page.locator("#founder");
+        await expect(
+            founderSection.getByRole("heading", {name: "Founder"}),
+        ).toBeVisible();
+        await expect(founderSection).toContainText("Vadym Tyemirov");
+        await expect(founderSection).toContainText(
+            "Technical Founder & Engineering Leader",
+        );
+        await expect(
+            founderSection.getByRole("img", {name: "Founder photo placeholder"}),
+        ).toBeVisible();
+    });
+
     test("beta and WIP cards flip while production cards remain static", async ({page}) => {
         await page.goto("/index.html");
 

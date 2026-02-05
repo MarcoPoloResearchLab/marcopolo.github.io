@@ -735,6 +735,125 @@ a:focus {
     transform: translateY(0);
 }
 
+/* ---------- Founder ---------- */
+.band-founder {
+    background: linear-gradient(180deg, var(--bg-panel) 0%, var(--bg-deep) 100%);
+}
+
+.band-founder::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(1200px circle at 18% 25%, var(--mpr-chip-hover-bg, rgba(255, 211, 105, 0.18)) 0%, transparent 55%),
+        radial-gradient(900px circle at 85% 40%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.founder-row {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    padding: 0 24px;
+}
+
+.founder-card {
+    width: min(860px, 100%);
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    padding: 28px;
+    background: var(--card-bg, rgba(3, 27, 32, 0.85));
+    border-radius: 24px;
+    border: 1px solid var(--card-border, rgba(248, 227, 154, 0.25));
+    box-shadow: var(--mpr-shadow-elevated, 0 25px 60px rgba(0, 0, 0, 0.55));
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.founder-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 60%);
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.founder-card:hover {
+    border-color: var(--card-hover-border, rgba(255, 221, 172, 0.55));
+    transform: translateY(-4px);
+}
+
+.founder-photo {
+    width: 172px;
+    flex: 0 0 172px;
+    aspect-ratio: 3 / 4;
+    border-radius: 18px;
+    border: 1px dashed var(--accent-outline, rgba(255, 211, 105, 0.35));
+    background:
+        radial-gradient(140px circle at 28% 24%, var(--mpr-chip-hover-bg, rgba(255, 211, 105, 0.18)) 0%, transparent 65%),
+        linear-gradient(135deg, var(--mpr-chip-bg, rgba(255, 211, 105, 0.12)) 0%, transparent 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-gold-strong);
+    position: relative;
+    overflow: hidden;
+}
+
+.founder-photo::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background: repeating-linear-gradient(
+        45deg,
+        var(--accent-outline, rgba(255, 211, 105, 0.35)) 0,
+        var(--accent-outline, rgba(255, 211, 105, 0.35)) 12px,
+        transparent 12px,
+        transparent 24px
+    );
+    opacity: 0.22;
+    transform: rotate(10deg);
+    pointer-events: none;
+}
+
+.founder-photo-label {
+    position: relative;
+    z-index: 1;
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.founder-details {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.founder-name {
+    margin: 0;
+    font-family: "Orbitron", "Space Grotesk", sans-serif;
+    font-size: clamp(1.7rem, 3.2vw, 2.3rem);
+    font-weight: 500;
+    color: var(--text-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.founder-role {
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-gold-muted);
+    letter-spacing: 0.02em;
+}
+
 /* ---------- Footer ---------- */
 mpr-footer {
     display: block;
@@ -974,6 +1093,23 @@ mpr-footer {
     .project-card {
         width: 100%;
         flex: 1 0 100%;
+    }
+
+    .founder-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+        padding: 24px;
+    }
+
+    .founder-photo {
+        width: min(240px, 100%);
+        flex: 0 0 auto;
+    }
+
+    .founder-details {
+        align-items: center;
     }
 
     .mpr-footer {
