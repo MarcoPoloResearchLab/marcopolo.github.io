@@ -70,6 +70,9 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 - [x] [MP-106] Add a founder card block with Vadym Tyemirov (Technical Founder & Engineering Leader) and a photo placeholder.
       - Added a new `#founder` band with a founder card + photo placeholder, plus Playwright coverage asserting it renders.
 
+- [x] [MP-107] Replace the founder card photo placeholder with the provided founder photo asset, optimized for the web.
+      - Added responsive `webp` + `jpg` variants under `assets/site/imagery/founder/` and updated the founder card + Playwright coverage to ensure the image loads.
+
 
 ## Improvements (204–299)
 

@@ -167,13 +167,28 @@
 
           <div class="founder-row">
             <article class="founder-card" aria-label="Founder card">
-              <div
-                aria-label="Founder photo placeholder"
-                class="founder-photo"
-                role="img"
-              >
-                <span aria-hidden="true" class="founder-photo-label">Photo</span>
-              </div>
+              <picture class="founder-photo">
+                <source
+                  type="image/webp"
+                  srcset="
+                    assets/site/imagery/founder/vadym-tyemirov-360.webp 360w,
+                    assets/site/imagery/founder/vadym-tyemirov-720.webp 720w
+                  "
+                  sizes="(max-width: 600px) 240px, 172px"
+                />
+                <img
+                  alt="Founder photo"
+                  decoding="async"
+                  height="540"
+                  loading="lazy"
+                  src="assets/site/imagery/founder/vadym-tyemirov-360.jpg"
+                  srcset="
+                    assets/site/imagery/founder/vadym-tyemirov-360.jpg 360w,
+                    assets/site/imagery/founder/vadym-tyemirov-720.jpg 720w
+                  "
+                  width="360"
+                />
+              </picture>
 
               <div class="founder-details">
                 <h3 class="founder-name">Vadym Tyemirov</h3>

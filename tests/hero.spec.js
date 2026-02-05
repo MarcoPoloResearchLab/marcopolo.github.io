@@ -55,7 +55,7 @@ test.describe("Marco Polo Research Lab landing page", () => {
         }
     });
 
-    test("founder card renders with name, title, and photo placeholder", async ({page}) => {
+    test("founder card renders with name, title, and photo", async ({page}) => {
         await page.goto("/index.html");
 
         const founderSection = page.locator("#founder");
@@ -66,9 +66,19 @@ test.describe("Marco Polo Research Lab landing page", () => {
         await expect(founderSection).toContainText(
             "Technical Founder & Engineering Leader",
         );
-        await expect(
-            founderSection.getByRole("img", {name: "Founder photo placeholder"}),
-        ).toBeVisible();
+
+        const founderPhoto = founderSection.getByAltText("Founder photo");
+        await expect(founderPhoto).toBeVisible();
+        await expect(founderPhoto).toHaveAttribute(
+            "src",
+            /assets\/site\/imagery\/founder\/vadym-tyemirov-360\.jpg$/,
+        );
+
+        const photoLoaded = await founderPhoto.evaluate((element) => {
+            if (!(element instanceof HTMLImageElement)) return false;
+            return element.complete && element.naturalWidth > 0;
+        });
+        expect(photoLoaded).toBe(true);
     });
 
     test("beta and WIP cards flip while production cards remain static", async ({page}) => {
