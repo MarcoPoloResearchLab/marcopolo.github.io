@@ -124,6 +124,9 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Additional issue: Cross-origin script loading from `srcdoc` iframe was blocked by Safari; fixed by fetching script content and inlining it.
       - Fix: Flatten 3D context for subscribe widget content using `transform-style: flat` on the overlay, ensuring child elements use 2D positioning within the already-transformed container.
 
+- [x] [MP-303] Site favicons are the Pinguin bundle instead of the Marco Polo Research Lab mark.
+      - Regenerated the favicon bundle from `assets/site/brand/marco-polo/reference/favicon_marcopolo_outline64_new.png`, updated the web manifest name, and added Playwright coverage to assert the served favicon matches the expected SHA-256.
+
 ## Maintenance (400–499)
 
 - [x] [MP-400] Added `docker-compose.yml` + `.env.ghttp` to run the site through `ghcr.io/temirov/ghttp` and documented the workflow in README.

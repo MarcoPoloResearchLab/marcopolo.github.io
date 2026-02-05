@@ -1,5 +1,6 @@
 // @ts-check
 
+const crypto = require("crypto");
 const {test, expect} = require("@playwright/test");
 
 /** @type {{projects: Array<{name: string, status: string, category: string, description: string, launch: {enabled: boolean, url?: string}, docs: {enabled: boolean, url?: string}, subscribe: {enabled: boolean, script?: string}}>}} */
@@ -53,6 +54,37 @@ test.describe("Marco Polo Research Lab landing page", () => {
                 await expect(action).toHaveAttribute("href", project.launch.url);
             }
         }
+    });
+
+    test("site favicon bundle uses the Marco Polo Research Lab mark", async ({page}) => {
+        await page.goto("/index.html");
+
+        const manifestResponse = await page.request.get(
+            "/assets/site/favicons/site.webmanifest",
+        );
+        expect(manifestResponse.ok()).toBe(true);
+        const manifest = await manifestResponse.json();
+
+        expect(manifest.name).toBe("Marco Polo Research Lab");
+        expect(manifest.short_name).toBe("Marco Polo Research Lab");
+
+        const faviconResponse = await page.request.get(
+            "/assets/site/favicons/favicon.svg",
+        );
+        expect(faviconResponse.ok()).toBe(true);
+        const faviconSvg = await faviconResponse.text();
+        const faviconMatch = faviconSvg.match(/base64,([A-Za-z0-9+/=]+)"/);
+        expect(faviconMatch).not.toBeNull();
+
+        const faviconBytes = Buffer.from(faviconMatch ? faviconMatch[1] : "", "base64");
+        const faviconDigest = crypto
+            .createHash("sha256")
+            .update(faviconBytes)
+            .digest("hex");
+
+        expect(faviconDigest).toBe(
+            "d4ae2335ca20e5243f940cff92540204829f6e83054e9372b6334d77d656c918",
+        );
     });
 
     test("founder card renders with name, title, and photo", async ({page}) => {
