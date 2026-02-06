@@ -402,6 +402,15 @@ a:focus {
     transition: background 0.3s ease;
 }
 
+.band-hero {
+    padding: 0;
+    background: transparent;
+
+    --mpr-band-background: transparent;
+    --mpr-band-line-top: transparent;
+    --mpr-band-line-bottom: transparent;
+}
+
 .band-inner {
     width: 100%;
     margin: 0;
@@ -507,6 +516,7 @@ a:focus {
     position: absolute;
     inset: 0;
     backface-visibility: hidden;
+    transform: rotateY(0deg);
 }
 
 .project-card-flippable .project-card-back {
@@ -760,18 +770,144 @@ a:focus {
 }
 
 .founder-card {
+    --founder-flip-duration: 0.4s;
+
     width: min(860px, 100%);
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    padding: 28px;
+    min-height: 320px;
     background: var(--card-bg, rgba(3, 27, 32, 0.85));
     border-radius: 24px;
     border: 1px solid var(--card-border, rgba(248, 227, 154, 0.25));
     box-shadow: var(--mpr-shadow-elevated, 0 25px 60px rgba(0, 0, 0, 0.55));
     position: relative;
     overflow: hidden;
+    box-sizing: border-box;
     transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    perspective: 2000px;
+}
+
+.founder-card-flippable {
+    cursor: pointer;
+    outline: none;
+}
+
+.founder-card-flippable:focus-visible {
+    outline: 3px solid var(--accent-gold);
+    outline-offset: 6px;
+}
+
+.founder-card-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+
+    /* Use a symmetric easing so the 50% time mark is also ~50% rotation,
+       keeping face visibility swaps aligned with the flip midpoint. */
+    transition: transform var(--founder-flip-duration) ease-in-out;
+}
+
+.founder-card-face {
+    position: absolute;
+    inset: 0;
+    padding: 28px;
+    display: flex;
+    box-sizing: border-box;
+    backface-visibility: hidden;
+    transform: rotateY(0deg);
+
+    /* Ensure the non-active face never bleeds through on browsers with
+       imperfect backface-visibility support. */
+    transition:
+        visibility 0s linear calc(var(--founder-flip-duration) / 2),
+        opacity 0s linear calc(var(--founder-flip-duration) / 2);
+    gap: 28px;
+}
+
+.founder-card-front {
+    flex-direction: row;
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+}
+
+.founder-card-back {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 18px;
+    background: var(--card-back-bg, rgba(0, 40, 46, 0.82));
+    backdrop-filter: blur(14px);
+    transform: rotateY(180deg);
+    opacity: 0;
+    visibility: hidden;
+}
+
+.founder-card-flippable.is-flipped .founder-card-inner {
+    transform: rotateY(180deg);
+}
+
+.founder-card-flippable.is-flipped .founder-card-front {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.founder-card-flippable.is-flipped .founder-card-back {
+    opacity: 1;
+    visibility: visible;
+}
+
+.founder-card-back-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.founder-back-name {
+    margin: 0;
+    font-family: "Orbitron", "Space Grotesk", sans-serif;
+    font-size: 1.45rem;
+    font-weight: 500;
+    color: var(--text-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.founder-back-role {
+    margin: 0;
+    font-weight: 600;
+    color: var(--text-gold-muted);
+    letter-spacing: 0.02em;
+}
+
+.founder-card-bio {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding-right: 0.85rem;
+    color: var(--text-gold-strong);
+    line-height: 1.6;
+}
+
+.founder-card-bio p {
+    margin: 0 0 1rem;
+}
+
+.founder-card-bio p:last-child {
+    margin-bottom: 0;
+}
+
+.founder-card-bio ul {
+    margin: 0 0 1rem;
+    padding-left: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+}
+
+.founder-card-bio li {
+    margin: 0;
+    color: inherit;
 }
 
 .founder-card::after {
@@ -781,9 +917,10 @@ a:focus {
     background: radial-gradient(600px circle at 30% 20%, rgba(255, 255, 255, 0.08), transparent 60%);
     opacity: 0.6;
     pointer-events: none;
+    z-index: 0;
 }
 
-.founder-card:hover {
+.founder-card:hover:not(.is-flipped) {
     border-color: var(--card-hover-border, rgba(255, 221, 172, 0.55));
     transform: translateY(-4px);
 }
@@ -1075,11 +1212,23 @@ mpr-footer footer.mpr-footer {
     }
 
     .founder-card {
+        min-height: 520px;
+    }
+
+    .founder-card-face {
+        padding: 24px;
+    }
+
+    .founder-card-front {
         flex-direction: column;
         align-items: center;
         text-align: center;
         gap: 20px;
-        padding: 24px;
+    }
+
+    .founder-card-back-header {
+        align-items: center;
+        text-align: center;
     }
 
     .founder-photo {

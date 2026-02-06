@@ -474,8 +474,55 @@ function setupHeroAudioToggle() {
     updateToggle();
 }
 
+function setupFounderCardFlip() {
+    const card = /** @type {HTMLElement | null} */ (document.querySelector("[data-founder-card]"));
+    if (!card) return;
+
+    const frontFace = card.querySelector("[data-founder-face='front']");
+    const backFace = card.querySelector("[data-founder-face='back']");
+
+    if (!(frontFace instanceof HTMLElement) || !(backFace instanceof HTMLElement)) {
+        return;
+    }
+
+    const setFlipped = isFlipped => {
+        card.classList.toggle("is-flipped", isFlipped);
+        card.setAttribute("aria-pressed", isFlipped ? "true" : "false");
+        frontFace.setAttribute("aria-hidden", isFlipped ? "true" : "false");
+        backFace.setAttribute("aria-hidden", isFlipped ? "false" : "true");
+    };
+
+    const shouldIgnoreToggle = target => Boolean(target.closest(
+        "a, input, button, textarea, select, label, .founder-card-bio",
+    ));
+
+    /**
+     * @param {MouseEvent | KeyboardEvent} event
+     */
+    const toggleFlip = event => {
+        const target = /** @type {HTMLElement} */ (event.target);
+        if (shouldIgnoreToggle(target)) return;
+
+        setFlipped(!card.classList.contains("is-flipped"));
+    };
+
+    setFlipped(false);
+
+    card.addEventListener("click", toggleFlip);
+    card.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+            const target = /** @type {HTMLElement} */ (event.target);
+            if (shouldIgnoreToggle(target)) return;
+
+            event.preventDefault();
+            toggleFlip(event);
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     setupHeroAudioToggle();
+    setupFounderCardFlip();
     hydrateProjectCatalog().catch(error => {
         console.error("Initialization error:", error);
     });
