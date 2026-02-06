@@ -200,6 +200,7 @@ test.describe("Marco Polo Research Lab landing page", () => {
         const stickyAttribute = await footerRoot.getAttribute("data-mpr-sticky");
         expect(stickyAttribute).not.toBe("false");
         await expect(footerHost).not.toHaveClass(/mpr-footer/);
+        await expect(footerHost).toHaveAttribute("size", "small");
 
         const rootPosition = await footerRoot.evaluate(
             (element) => window.getComputedStyle(element).position,

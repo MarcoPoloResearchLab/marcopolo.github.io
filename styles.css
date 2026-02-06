@@ -970,152 +970,6 @@ a:focus {
     letter-spacing: 0.02em;
 }
 
-/* ---------- Footer ---------- */
-mpr-footer {
-    display: block;
-    margin-top: 0;
-    padding-top: 0;
-    background: var(--bg-panel);
-    transition: background 0.3s ease;
-}
-
-/* Ensure the footer stays above scrolling content (sticky mode uses position: fixed). */
-mpr-footer footer[data-mpr-footer="root"] {
-    z-index: 50;
-}
-
-mpr-footer footer.mpr-footer {
-    width: 100%;
-    padding: 48px 0 36px;
-    background: var(--bg-panel);
-    color: var(--text-gold-strong);
-    border-top: 1px solid var(--accent-outline);
-    box-shadow: none;
-    backdrop-filter: none;
-    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-/* stylelint-disable selector-class-pattern */
-.mpr-footer .mpr-footer__inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.mpr-footer .mpr-footer__layout {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-
-
-.mpr-footer__prefix {
-    color: var(--text-gold-strong);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.mpr-footer__brand {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-left: auto;
-}
-
-.mpr-footer-built-by {
-    color: var(--text-gold-strong);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-}
-
-.mpr-footer__menu-wrapper {
-    position: relative;
-}
-
-.mpr-footer__menu-button {
-    background: var(--mpr-theme-toggle-bg, rgba(0, 64, 70, 0.9));
-    color: var(--accent-gold);
-    border: 1px solid var(--accent-outline);
-    border-radius: 999px;
-    padding: 0.35rem 0.95rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s, transform 0.2s, border-color 0.3s;
-}
-
-.mpr-footer__menu-button:hover,
-.mpr-footer__menu-button:focus-visible {
-    background: var(--mpr-chip-hover-bg, rgba(255, 211, 105, 0.15));
-    color: var(--text-gold);
-    transform: translateY(-1px);
-}
-
-.mpr-footer__menu {
-    list-style: none;
-    margin: 0;
-    padding: 0.4rem 0;
-    position: absolute;
-    bottom: calc(100% + 10px);
-    right: 0;
-    min-width: 230px;
-    background: var(--bg-panel-alt);
-    border: 1px solid var(--accent-outline);
-    border-radius: 0.75rem;
-    box-shadow: var(--mpr-shadow-elevated, 0 30px 60px var(--shadow-strong));
-    display: none;
-    transition: background 0.3s ease, border-color 0.3s ease;
-}
-
-.mpr-footer__menu--open {
-    display: block;
-}
-
-.mpr-footer__menu-item {
-    margin: 0;
-    padding: 0;
-}
-
-.mpr-footer__menu-item a {
-    display: block;
-    padding: 0.6rem 1rem;
-    color: var(--text-gold-strong);
-    text-decoration: none;
-    font-weight: 500;
-    transition: background 0.2s, color 0.2s;
-}
-
-.mpr-footer__privacy {
-    margin-right: auto;
-    font-size: 0.95rem;
-}
-
-.mpr-footer__privacy a {
-    color: var(--text-gold-strong);
-    font-weight: 600;
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: color 0.3s, border-color 0.3s;
-}
-
-.mpr-footer__menu-item a:hover,
-.mpr-footer__menu-item a:focus {
-    background: var(--mpr-menu-hover-bg, rgba(255, 211, 105, 0.15));
-    color: var(--accent-gold);
-}
-
-.mpr-footer__privacy a:hover,
-.mpr-footer__privacy a:focus {
-    color: var(--accent-gold);
-    border-color: var(--accent-gold);
-}
-
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
     #top-content-section {
@@ -1142,24 +996,6 @@ mpr-footer footer.mpr-footer {
     .hero-media {
         width: 100%;
         border-radius: 0;
-    }
-
-    mpr-footer footer.mpr-footer {
-        padding: 40px 0 32px;
-    }
-
-    .mpr-footer .mpr-footer__inner {
-        padding: 0 16px;
-    }
-
-    .mpr-footer .mpr-footer__layout {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.75rem;
-    }
-
-    .mpr-footer__prefix {
-        margin-left: 0;
     }
 }
 
@@ -1239,9 +1075,4 @@ mpr-footer footer.mpr-footer {
     .founder-details {
         align-items: center;
     }
-
-    mpr-footer footer.mpr-footer {
-        padding: 32px 0 26px;
-    }
 }
-/* stylelint-enable selector-class-pattern */
