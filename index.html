@@ -166,35 +166,109 @@
           </div>
 
           <div class="founder-row">
-            <article class="founder-card" aria-label="Founder card">
-              <picture class="founder-photo">
-                <source
-                  type="image/webp"
-                  srcset="
-                    assets/site/imagery/founder/vadym-tyemirov-360.webp 360w,
-                    assets/site/imagery/founder/vadym-tyemirov-720.webp 720w
-                  "
-                  sizes="(max-width: 600px) 240px, 172px"
-                />
-                <img
-                  alt="Founder photo"
-                  decoding="async"
-                  height="540"
-                  loading="lazy"
-                  src="assets/site/imagery/founder/vadym-tyemirov-360.jpg"
-                  srcset="
-                    assets/site/imagery/founder/vadym-tyemirov-360.jpg 360w,
-                    assets/site/imagery/founder/vadym-tyemirov-720.jpg 720w
-                  "
-                  width="360"
-                />
-              </picture>
+            <article
+              class="founder-card founder-card-flippable"
+              aria-label="Founder card"
+              aria-pressed="false"
+              role="button"
+              tabindex="0"
+              data-founder-card
+            >
+              <div class="founder-card-inner">
+                <div
+                  class="founder-card-face founder-card-front"
+                  aria-hidden="false"
+                  data-founder-face="front"
+                >
+                  <picture class="founder-photo">
+                    <source
+                      type="image/webp"
+                      srcset="
+                        assets/site/imagery/founder/vadym-tyemirov-360.webp 360w,
+                        assets/site/imagery/founder/vadym-tyemirov-720.webp 720w
+                      "
+                      sizes="(max-width: 600px) 240px, 172px"
+                    />
+                    <img
+                      alt="Founder photo"
+                      decoding="async"
+                      height="540"
+                      loading="lazy"
+                      src="assets/site/imagery/founder/vadym-tyemirov-360.jpg"
+                      srcset="
+                        assets/site/imagery/founder/vadym-tyemirov-360.jpg 360w,
+                        assets/site/imagery/founder/vadym-tyemirov-720.jpg 720w
+                      "
+                      width="360"
+                    />
+                  </picture>
 
-              <div class="founder-details">
-                <h3 class="founder-name">Vadym Tyemirov</h3>
-                <p class="founder-role">
-                  Technical Founder &amp; Engineering Leader
-                </p>
+                  <div class="founder-details">
+                    <h3 class="founder-name">Vadym Tyemirov</h3>
+                    <p class="founder-role">
+                      Technical Founder &amp; Engineering Leader
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  class="founder-card-face founder-card-back"
+                  aria-hidden="true"
+                  data-founder-face="back"
+                >
+                  <header class="founder-card-back-header">
+                    <h3 class="founder-back-name">Vadym Tyemirov</h3>
+                    <p class="founder-back-role">
+                      Technical Founder &amp; Engineering Leader
+                    </p>
+                  </header>
+
+                  <div class="founder-card-bio">
+                    <p>
+                      Vadym Tyemirov is a product-minded engineering leader who
+                      bridges the gap between cutting-edge Artificial
+                      Intelligence and scalable enterprise infrastructure. With
+                      a career spanning three decades at world-class companies
+                      including Meta, BlackRock, Shopify, and Morgan Stanley,
+                      Vadym specializes in turning complex technical challenges
+                      into revenue-generating products.
+                    </p>
+                    <p>
+                      Previously, Vadym was a Technical Program Manager at Meta,
+                      where he successfully scaled critical privacy compliance
+                      initiatives and completely redesigned large-scale ML
+                      infrastructure to handle growing global user demands. As
+                      a Senior Architect at BlackRock, he spearheaded the
+                      transition to a high-throughput Service-Oriented
+                      Architecture (SOA), successfully modernizing financial
+                      asset retrieval for the cloud era and delivering critical
+                      system resilience.
+                    </p>
+                    <p>
+                      Vadym's expertise in Applied AI/ML is rooted in tangible
+                      business outcomes:
+                    </p>
+                    <ul>
+                      <li>
+                        At Shopify, he built recommendation engines that
+                        directly drove merchant sales growth.
+                      </li>
+                      <li>
+                        At CrowdFlower, he led the "FlowerAI" initiative, a
+                        strategic pivot that transformed the company's business
+                        model from micro-tasking to automated ML data analysis.
+                      </li>
+                    </ul>
+                    <p>
+                      He holds a Master's degree in Artificial Intelligence from
+                      Taurida National University. Having built high-impact
+                      recommendation engines and led pivotal AI strategy shifts
+                      throughout his career, Vadym is now dedicated to
+                      leveraging his deep expertise to leverage AI in product
+                      development in an interesting way as a founder.
+                    </p>
+                  </div>
+                </div>
               </div>
             </article>
           </div>

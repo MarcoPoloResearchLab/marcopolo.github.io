@@ -97,6 +97,8 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Fix: Conditionally set `tabindex="0"` on the iframe when the card enters the flipped state (`is-flipped` class added) and restore `tabindex="-1"` when unflipped. Update the `toggleFlip` handler in `script.js:207-225` to toggle the iframe's tabindex alongside the flip state.
       - Extend Playwright test `subscribe-enabled cards render LoopAware forms after flipping` to assert that the iframe is focusable (`tabindex="0"`) when the card is flipped.
 - [ ] [MP-205] Add the four-way color theme switch and style all of the lements accordingly. Use theme-config in the footer to style all elements and choose theme-switcher="square". Read up @tools/mpr-ui/README.md and @tools/mpr-ui/docs/integration-guide.md
+- [x] [MP-206] Founder card flips to reveal a scrollable biography back face.
+      - Added a flippable back face for the founder card with scrollable long-form copy, and extended Playwright coverage to assert the flip + bio render.
 
 ## BugFixes (300–399)
 
@@ -134,6 +136,8 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 
 - [x] [MP-305] Remove the outer box around the hero band so the hero gradient renders full-bleed (no `<mpr-band>` default padding/background frame).
       - Overrode `.band-hero` padding/background and added Playwright coverage to guard against regressions.
+- [x] [MP-306] Founder card flip showed mirrored/bleeding front face while flipped in some browsers.
+      - Made the founder card faces explicitly swap visibility/opacity at the flip midpoint so only one face can render at a time, preventing backface bleed-through while keeping the 3D flip animation.
 
 ## Maintenance (400–499)
 
