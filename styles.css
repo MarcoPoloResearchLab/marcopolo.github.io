@@ -402,6 +402,15 @@ a:focus {
     transition: background 0.3s ease;
 }
 
+.band-hero {
+    padding: 0;
+    background: transparent;
+
+    --mpr-band-background: transparent;
+    --mpr-band-line-top: transparent;
+    --mpr-band-line-bottom: transparent;
+}
+
 .band-inner {
     width: 100%;
     margin: 0;

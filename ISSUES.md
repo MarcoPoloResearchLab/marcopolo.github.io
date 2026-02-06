@@ -132,6 +132,9 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Re-enable `<mpr-footer>` sticky mode (default) and remove local CSS overrides that force it non-sticky.
       - Regenerated the favicon bundle from a vectorized `favicon-mprlab-mark.svg` source (via `tools/svg_tools`) and updated footer styling/tests so sticky mode remains palette-aligned.
 
+- [x] [MP-305] Remove the outer box around the hero band so the hero gradient renders full-bleed (no `<mpr-band>` default padding/background frame).
+      - Overrode `.band-hero` padding/background and added Playwright coverage to guard against regressions.
+
 ## Maintenance (400–499)
 
 - [x] [MP-400] Added `docker-compose.yml` + `.env.ghttp` to run the site through `ghcr.io/temirov/ghttp` and documented the workflow in README.

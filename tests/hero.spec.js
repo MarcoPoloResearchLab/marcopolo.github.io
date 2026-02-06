@@ -10,6 +10,24 @@ test.describe("Marco Polo Research Lab landing page", () => {
     test("hero video renders with accessible controls", async ({page}) => {
         await page.goto("/index.html");
 
+        const heroBand = page.locator("mpr-band.band-hero");
+        await expect(heroBand).toBeVisible();
+        const heroBandPadding = await heroBand.evaluate((element) => {
+            const styles = window.getComputedStyle(element);
+            return {
+                top: styles.paddingTop,
+                right: styles.paddingRight,
+                bottom: styles.paddingBottom,
+                left: styles.paddingLeft
+            };
+        });
+        expect(heroBandPadding).toEqual({
+            top: "0px",
+            right: "0px",
+            bottom: "0px",
+            left: "0px"
+        });
+
         const video = page.locator("#hero-video");
         await expect(video).toBeVisible();
         await expect(video).toHaveJSProperty("muted", true);
