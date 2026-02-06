@@ -7,7 +7,7 @@
     "lint:js": "eslint script.js tests/**/*.js",
     "lint:css": "stylelint styles.css",
     "lint": "npm run lint:js && npm run lint:css",
-    "test": "playwright test",
+    "test": "bash scripts/run-playwright-tests.sh",
     "ci": "npm run lint && npm run test",
     "postinstall": "playwright install --with-deps chromium"
   },
