@@ -127,6 +127,32 @@ test.describe("Marco Polo Research Lab landing page", () => {
         expect(photoLoaded).toBe(true);
     });
 
+    test("founder card flips to reveal the bio back face", async ({page}) => {
+        await page.goto("/index.html");
+
+        const founderSection = page.locator("#founder");
+        const founderCard = founderSection.locator("[data-founder-card]");
+        await expect(founderCard).toBeVisible();
+
+        await expect(founderCard).toHaveAttribute("aria-pressed", "false");
+
+        await founderCard.click();
+        await expect(founderCard).toHaveAttribute("aria-pressed", "true");
+
+        const frontFace = founderCard.locator("[data-founder-face='front']");
+        const backFace = founderCard.locator("[data-founder-face='back']");
+        await expect(frontFace).toHaveAttribute("aria-hidden", "true");
+        await expect(backFace).toHaveAttribute("aria-hidden", "false");
+        await expect(backFace).toContainText("product-minded engineering leader");
+
+        // Guard against browsers that may render the front face mirrored while flipped.
+        await expect(frontFace).toHaveCSS("visibility", "hidden", {timeout: 1500});
+        await expect(backFace).toHaveCSS("visibility", "visible", {timeout: 1500});
+
+        await founderCard.locator(".founder-card-back-header").click();
+        await expect(founderCard).toHaveAttribute("aria-pressed", "false");
+    });
+
     test("beta and WIP cards flip while production cards remain static", async ({page}) => {
         await page.goto("/index.html");
 
