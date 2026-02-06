@@ -995,6 +995,12 @@ mpr-footer footer.mpr-footer {
     transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
+/* Sticky footer sits fixed at the viewport bottom. Keep it compact so it
+   doesn't crowd the page content. */
+mpr-footer footer.mpr-footer[data-mpr-footer="root"]:not([data-mpr-sticky="false"]) {
+    padding: 16px 0 14px;
+}
+
 /* stylelint-disable selector-class-pattern */
 .mpr-footer .mpr-footer__inner {
     max-width: 1100px;
@@ -1242,6 +1248,10 @@ mpr-footer footer.mpr-footer {
 
     mpr-footer footer.mpr-footer {
         padding: 32px 0 26px;
+    }
+
+    mpr-footer footer.mpr-footer[data-mpr-footer="root"]:not([data-mpr-sticky="false"]) {
+        padding: 12px 0 10px;
     }
 }
 /* stylelint-enable selector-class-pattern */

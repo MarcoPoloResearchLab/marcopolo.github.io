@@ -138,6 +138,8 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Overrode `.band-hero` padding/background and added Playwright coverage to guard against regressions.
 - [x] [MP-306] Founder card flip showed mirrored/bleeding front face while flipped in some browsers.
       - Made the founder card faces explicitly swap visibility/opacity at the flip midpoint so only one face can render at a time, preventing backface bleed-through while keeping the 3D flip animation.
+- [x] [MP-307] Sticky footer occupied too much vertical space.
+      - Reduced sticky footer padding so it stays compact while remaining fixed and accessible.
 
 ## Maintenance (400–499)
 
