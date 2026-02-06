@@ -127,6 +127,11 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 - [x] [MP-303] Site favicons are the Pinguin bundle instead of the Marco Polo Research Lab mark.
       - Regenerated the favicon bundle from `assets/site/brand/marco-polo/reference/favicon_marcopolo_outline64_new.png`, updated the web manifest name, and added Playwright coverage to assert the served favicon matches the expected SHA-256.
 
+- [x] [MP-304] Refresh site favicon bundle to use the updated Marco Polo Research Lab mark (turquoise profile with gold ring) and make the footer sticky.
+      - Replace the favicon set under `assets/site/favicons/` using `tools/svg_tools` pipelines and update Playwright coverage.
+      - Re-enable `<mpr-footer>` sticky mode (default) and remove local CSS overrides that force it non-sticky.
+      - Regenerated the favicon bundle from a vectorized `favicon-mprlab-mark.svg` source (via `tools/svg_tools`) and updated footer styling/tests so sticky mode remains palette-aligned.
+
 ## Maintenance (400–499)
 
 - [x] [MP-400] Added `docker-compose.yml` + `.env.ghttp` to run the site through `ghcr.io/temirov/ghttp` and documented the workflow in README.
