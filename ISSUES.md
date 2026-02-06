@@ -70,6 +70,9 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
 - [x] [MP-106] Add a founder card block with Vadym Tyemirov (Technical Founder & Engineering Leader) and a photo placeholder.
       - Added a new `#founder` band with a founder card + photo placeholder, plus Playwright coverage asserting it renders.
 
+- [x] [MP-107] Replace the founder card photo placeholder with the provided founder photo asset, optimized for the web.
+      - Added responsive `webp` + `jpg` variants under `assets/site/imagery/founder/` and updated the founder card + Playwright coverage to ensure the image loads.
+
 
 ## Improvements (204–299)
 
@@ -94,6 +97,8 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Fix: Conditionally set `tabindex="0"` on the iframe when the card enters the flipped state (`is-flipped` class added) and restore `tabindex="-1"` when unflipped. Update the `toggleFlip` handler in `script.js:207-225` to toggle the iframe's tabindex alongside the flip state.
       - Extend Playwright test `subscribe-enabled cards render LoopAware forms after flipping` to assert that the iframe is focusable (`tabindex="0"`) when the card is flipped.
 - [ ] [MP-205] Add the four-way color theme switch and style all of the lements accordingly. Use theme-config in the footer to style all elements and choose theme-switcher="square". Read up @tools/mpr-ui/README.md and @tools/mpr-ui/docs/integration-guide.md
+- [x] [MP-206] Founder card flips to reveal a scrollable biography back face.
+      - Added a flippable back face for the founder card with scrollable long-form copy, and extended Playwright coverage to assert the flip + bio render.
 
 ## BugFixes (300–399)
 
@@ -120,6 +125,19 @@ Each issue is formatted as `- [ ] [<ID>-<number>]`. When resolved it becomes -` 
       - Root cause: Safari miscalculates iframe position within nested 3D-transformed containers. The `.project-card-subscribe-overlay` has `transform: rotateY(180deg)` to counter the card flip, but Safari's compositor places the iframe at pre-transform coordinates.
       - Additional issue: Cross-origin script loading from `srcdoc` iframe was blocked by Safari; fixed by fetching script content and inlining it.
       - Fix: Flatten 3D context for subscribe widget content using `transform-style: flat` on the overlay, ensuring child elements use 2D positioning within the already-transformed container.
+
+- [x] [MP-303] Site favicons are the Pinguin bundle instead of the Marco Polo Research Lab mark.
+      - Regenerated the favicon bundle from `assets/site/brand/marco-polo/reference/favicon_marcopolo_outline64_new.png`, updated the web manifest name, and added Playwright coverage to assert the served favicon matches the expected SHA-256.
+
+- [x] [MP-304] Refresh site favicon bundle to use the updated Marco Polo Research Lab mark (turquoise profile with gold ring) and make the footer sticky.
+      - Replace the favicon set under `assets/site/favicons/` using `tools/svg_tools` pipelines and update Playwright coverage.
+      - Re-enable `<mpr-footer>` sticky mode (default) and remove local CSS overrides that force it non-sticky.
+      - Regenerated the favicon bundle from a vectorized `favicon-mprlab-mark.svg` source (via `tools/svg_tools`) and updated footer styling/tests so sticky mode remains palette-aligned.
+
+- [x] [MP-305] Remove the outer box around the hero band so the hero gradient renders full-bleed (no `<mpr-band>` default padding/background frame).
+      - Overrode `.band-hero` padding/background and added Playwright coverage to guard against regressions.
+- [x] [MP-306] Founder card flip showed mirrored/bleeding front face while flipped in some browsers.
+      - Made the founder card faces explicitly swap visibility/opacity at the flip midpoint so only one face can render at a time, preventing backface bleed-through while keeping the 3D flip animation.
 
 ## Maintenance (400–499)
 
